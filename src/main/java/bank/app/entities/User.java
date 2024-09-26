@@ -13,6 +13,7 @@ public class User {
 	private Roles role;
 	private String address;
 	private Date dateOfBirth;
+	private String status;
 	private String passwordSalt;
 	private String passwordHashed;
 	
@@ -20,8 +21,22 @@ public class User {
 		super();
 	}
 
+	public User(String username, String firstName, String lastName, String email, String phoneNo, Roles role,
+			String address, Date dateOfBirth, String status) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNo = phoneNo;
+		this.role = role;
+		this.address = address;
+		this.dateOfBirth = dateOfBirth;
+		this.status = status;
+	}
+
 	public User(int userId, String username, String firstName, String lastName, String email, String phoneNo,
-			Roles role, String address, Date dateOfBirth, String passwordSalt, String passwordHashed) {
+			Roles role, String address, Date dateOfBirth, String status, String passwordSalt, String passwordHashed) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -32,21 +47,9 @@ public class User {
 		this.role = role;
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
+		this.status = status;
 		this.passwordSalt = passwordSalt;
 		this.passwordHashed = passwordHashed;
-	}
-
-	public User(String username, String firstName, String lastName, String email, String phoneNo, Roles role,
-			String address, Date dateOfBirth) {
-		super();
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.phoneNo = phoneNo;
-		this.role = role;
-		this.address = address;
-		this.dateOfBirth = dateOfBirth;
 	}
 
 	public int getUserId() {
@@ -121,6 +124,14 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getPasswordSalt() {
 		return passwordSalt;
 	}
@@ -141,9 +152,10 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", email=" + email + ", phoneNo=" + phoneNo + ", role=" + role + ", address=" + address
-				+ ", dateOfBirth=" + dateOfBirth + ", passwordSalt=" + passwordSalt + ", passwordHashed="
-				+ passwordHashed + "]";
+				+ ", dateOfBirth=" + dateOfBirth + ", status=" + status + ", passwordSalt=" + passwordSalt
+				+ ", passwordHashed=" + passwordHashed + "]";
 	}
 
+	
 	
 }
