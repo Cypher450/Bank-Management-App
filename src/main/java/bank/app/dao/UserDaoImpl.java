@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 				+ "`phone`, " + "`role_id`, " + "`address`, " + "`dob`, " + "`status`) " + "VALUES (?,?,?,?,?,?,?,?,?)";
 
 		return jdbcTemplate.update(query, user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(),
-				user.getPhoneNo(), user.getRole(), user.getAddress(), user.getDateOfBirth(), user.getStatus());
+				user.getPhoneNo(), user.getRole().getRoleId(), user.getAddress(), user.getDateOfBirth(), user.getStatus());
 	}
 
 }
