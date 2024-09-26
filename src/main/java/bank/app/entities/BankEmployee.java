@@ -4,23 +4,20 @@ public class BankEmployee {
 
 	private int beId;
 	private int branchId;
-	private int bmId;
 	
 	public BankEmployee() {
 		super();
 	}
 	
-	public BankEmployee(int beId, int branchId, int bmId) {
+	public BankEmployee(int beId, int branchId) {
 		super();
 		this.beId = beId;
 		this.branchId = branchId;
-		this.bmId = bmId;
 	}
 	
-	public BankEmployee(int branchId, int bmId) {
+	public BankEmployee(int branchId) {
 		super();
 		this.branchId = branchId;
-		this.bmId = bmId;
 	}
 	
 	public int getBeId() {
@@ -35,16 +32,10 @@ public class BankEmployee {
 	public void setBranchId(int branchId) {
 		this.branchId = branchId;
 	}
-	public int getBmId() {
-		return bmId;
-	}
-	public void setBmId(int bmId) {
-		this.bmId = bmId;
-	}
 
 	@Override
 	public String toString() {
-		return "BankEmployee [beId=" + beId + ", branchId=" + branchId + ", bmId=" + bmId + "]";
+		return "BankEmployee [beId=" + beId + ", branchId=" + branchId + "]";
 	}
 	
 	
