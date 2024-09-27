@@ -25,12 +25,15 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int insertUser(User user) throws SQLException, IOException {
+		
+		System.out.println("impl called");
+		
+		//`username`, `first_name`, `last_name`, `email`, `phone`, `dob`, `address`
 
-		String query = "INSERT INTO user " + "(`username`, " + "`first_name`, " + "`last_name`, " + "`email`, "
-				+ "`phone`, " + "`role_id`, " + "`address`, " + "`dob`, " + "`status`) " + "VALUES (?,?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO user (`username`, `first_name`, `last_name`, email) "
+				+ "VALUES (?,?,?,?)";
 
-		return jdbcTemplate.update(query, user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(),
-				user.getPhoneNo(), user.getRole().getRoleId(), user.getAddress(), user.getDateOfBirth(), user.getStatus());
+		return jdbcTemplate.update(query, user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail());
 	}
 
 }

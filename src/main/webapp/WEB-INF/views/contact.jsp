@@ -17,12 +17,12 @@
 	    <section>
 	        <h2>We'd Love to Hear From You!</h2>
 	        <div class="contact-info">
-	            <p>Phone: <a href="tel:+123456789">+1 (234) 567-890</a></p>
+	            <p>Phone: <a href="tel:+91 9001967580">+91 9001967589</a></p>
 	            <p>Email: <a href="mailto:support@xyzbank.com">support@xyzbank.com</a></p>
-	            <p>Address: 123 Bank Street, Finance City, USA</p>
+	            <p>Address: Sector 59 Noida India</p>
 	        </div>
 
-	        <form action="#" method="POST">
+	        <form action="/coming-soon">
 	            <input type="text" name="name" placeholder="Your Name" required>
 	            <input type="email" name="email" placeholder="Your Email" required>
 	            <textarea name="message" placeholder="Your Message" required></textarea>
