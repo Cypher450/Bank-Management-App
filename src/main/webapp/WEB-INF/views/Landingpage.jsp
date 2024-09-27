@@ -34,7 +34,7 @@
 			<a href="/openLoginPageRegionalMgr" class="btn">Login as Regional Manager</a>
         </div>
 
-        <p>New here? <a href="/coming-soon">Register Now</a></p>
+        <p>New here? <a href="/userRegistration">Register Now</a></p>
     </section>
 
     <footer>
