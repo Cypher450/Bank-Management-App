@@ -15,7 +15,7 @@
 
 	    <div class="register-container">
 	        <h2>Register</h2>
-	        <form action="/register" method="POST">
+	        <form action="/coming-soon">
 	            <div class="input-group">
 	                <label for="firstName">FirstName</label>
 	                <input type="text" id="firstName" name="firstName" required>
