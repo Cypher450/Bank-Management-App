@@ -28,10 +28,10 @@
         <p>Manage your accounts, transactions, and banking needs securely from anywhere.</p>
         
         <div class="cta">
-			<a href="/coming-soon" class="btn">Login as Customer</a>
-			<a href="/coming-soon" class="btn">Login as Bank Employee</a>
-			<a href="/coming-soon" class="btn">Login as Bank Manager</a>
-			<a href="/coming-soon" class="btn">Login as Regional Manager</a>
+			<a href="/openLoginPageCustomer" class="btn">Login as Customer</a>
+			<a href="/openLoginPageBankEmp" class="btn">Login as Bank Employee</a>
+			<a href="/openLoginPageBankMgr" class="btn">Login as Bank Manager</a>
+			<a href="/openLoginPageRegionalMgr" class="btn">Login as Regional Manager</a>
         </div>
 
         <p>New here? <a href="/coming-soon">Register Now</a></p>
