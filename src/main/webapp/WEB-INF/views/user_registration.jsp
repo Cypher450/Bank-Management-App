@@ -70,7 +70,7 @@
 	            </div>
 	            <button type="submit">Register</button>
 	        </form>
-	        <p class="login-text">Already have an account? <a href="/comming-soon">Login here</a></p>
+	        <p class="login-text">Already have an account? <a href="/">Login here</a></p>
 	    </div>
 
 	    <footer class="footer">

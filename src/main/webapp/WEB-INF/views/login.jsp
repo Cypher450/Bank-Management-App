@@ -26,7 +26,7 @@
 	            </div>
 	            <button type="submit">Login</button>
 	        </form>
-	        <p class="register-text">Not Registered? <a href="/coming-soon">Register Now</a></p>
+	        <p class="register-text">Not Registered? <a href="/userRegistration">Register Now</a></p>
 	    </div>
 		<footer class="footer">
 	        <p>© 2024 XYZ Bank. All rights reserved.</p>
