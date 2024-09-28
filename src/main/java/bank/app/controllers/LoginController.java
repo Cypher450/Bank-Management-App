@@ -9,21 +9,21 @@ public class LoginController {
 
 	@GetMapping("/openLoginPageCustomer")
 	public String openLoginPageCustomer() {
-		return "login";
+		return "Login";
 	}
 
 	@GetMapping("/openLoginPageBankEmp")
 	public String openLoginPageBankEmp() {
-		return "login";
+		return "Login";
 	}
 
 	@GetMapping("/openLoginPageBankMgr")
 	public String openLoginPageBankMgr() {
-		return "login";
+		return "Login";
 	}
 
 	@GetMapping("/openLoginPageRegionalMgr")
 	public String openLoginPageRegionalMgr() {
-		return "login";
+		return "Login";
 	}
 }
