@@ -1,3 +1,6 @@
+<%@page import="bank.app.entities.Roles"%>
+<%@page import="bank.app.entities.Branch"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<!DOCTYPE html>
@@ -12,10 +15,28 @@
 	    <header>
 	        <h1>XYZ Bank</h1>
 	    </header>
+		
+		
+		<%!
+				String getUserFriendlyRoles(String technicalName){
+					if(technicalName.equals("Bank_MGR")) return "Bank Manager";
+					else if (technicalName.equals("Bank_EMP")) return "Bank Employee";
+					else if (technicalName.equals("Regional_MGR")) return "Regional Manager";
+					else return "Customer";
+				}
+			%>
+		
+
+		<%
+		    List<Roles> rolesList = (List<Roles>)request.getAttribute("listOfRoles");
+			
+			List<Branch> branchList = (List<Branch>)request.getAttribute("listOfBranch");
+		
+		%>
 
 	    <div class="register-container">
 	        <h2>Register</h2>
-	        <form action="/coming-soon">
+	        <form action="/register" method="POST">
 	            <div class="input-group">
 	                <label for="firstName">FirstName</label>
 	                <input type="text" id="firstName" name="firstName" required>
@@ -48,10 +69,16 @@
 	                <label for="branchId">Branch</label>
 	                <select id="branchId" name="branchId" required>
 						<option value="branch1">Select an Option</option>
-	                    <option value="branch1">Branch 1</option>
-	                    <option value="branch2">Branch 2</option>
-	                    <option value="branch3">Branch 3</option>
-	                    <option value="branch4">Branch 4</option>
+						<%
+				             for (Branch branch : branchList) {
+						%>
+								<option name="branch.branchId()" value="<%=branch.getBranchId()%>">
+									     <%= branch.getBranchName()+" : "+branch.getBranchId() %> 
+					            </option>
+						<%
+							}
+						%>
+
 	                </select>
 	            </div>
 	            <div class="input-group">
@@ -60,12 +87,22 @@
 	            </div>
 	            <div class="input-group">
 	                <label for="role">Role</label>
-	                <select id="role" name="role" required>
+	                <select id="role" name="roleId" required>
 						<option value="">Select an Option</option>
-	                    <option value="customer">Customer</option>
-	                    <option value="manager">Bank Employee</option>
-						<option value="manager">Bank Manager</option>
-						<option value="manager">Regional Manager</option>
+	         
+						<%
+						        for (Roles role : rolesList) {
+						%>
+						            <option  value="<%=role.getRoleId()%>">
+						                <%=getUserFriendlyRoles(role.getRoleName()) %> 
+						            </option>
+						<%
+						        }
+						%>
+
+						
+						
+						
 	                </select>
 	            </div>
 	            <button type="submit">Register</button>

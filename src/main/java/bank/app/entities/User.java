@@ -9,47 +9,50 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String phoneNo;
-	private Roles role;
+	private String phone;
+	private int roleId;
 	private String address;
 	private Date dateOfBirth;
 	private String status;
 	private String passwordSalt;
 	private String passwordHashed;
+	private String password;
 	
 	public User() {
 		super();
 	}
 
-	public User(String username, String firstName, String lastName, String email, String phoneNo, Roles role,
+	public User(String username, String firstName, String lastName, String email, String phone, int roleId,
 			String address, Date dateOfBirth, String status) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.phoneNo = phoneNo;
-		this.role = role;
+		this.phone = phone;
+		this.roleId = roleId;
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
 		this.status = status;
 	}
 
-	public User(int userId, String username, String firstName, String lastName, String email, String phoneNo,
-			Roles role, String address, Date dateOfBirth, String status, String passwordSalt, String passwordHashed) {
+	public User(int userId, String username, String firstName, String lastName, String email, String phone, int roleId,
+			String address, Date dateOfBirth, String status, String passwordSalt, String passwordHashed,
+			String password) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.phoneNo = phoneNo;
-		this.role = role;
+		this.phone = phone;
+		this.roleId = roleId;
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
 		this.status = status;
 		this.passwordSalt = passwordSalt;
 		this.passwordHashed = passwordHashed;
+		this.password = password;
 	}
 
 	public int getUserId() {
@@ -92,20 +95,20 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPhoneNo() {
-		return phoneNo;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public Roles getRole() {
-		return role;
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setRole(Roles role) {
-		this.role = role;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getAddress() {
@@ -148,14 +151,23 @@ public class User {
 		this.passwordHashed = passwordHashed;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", phoneNo=" + phoneNo + ", role=" + role + ", address=" + address
+				+ lastName + ", email=" + email + ", phone=" + phone + ", role=" + roleId + ", address=" + address
 				+ ", dateOfBirth=" + dateOfBirth + ", status=" + status + ", passwordSalt=" + passwordSalt
-				+ ", passwordHashed=" + passwordHashed + "]";
+				+ ", passwordHashed=" + passwordHashed + ", password=" + password + "]";
 	}
 
+	
 	
 	
 }
