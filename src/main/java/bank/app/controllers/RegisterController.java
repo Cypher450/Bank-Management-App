@@ -20,59 +20,67 @@ import bank.app.utility.Password;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
 @Controller
 public class RegisterController {
-	
+
 	@Autowired
 	UserDaoImpl userDaoImpl;
 
 	@GetMapping("/userRegistration")
 	public ModelAndView userRegistration(ModelAndView modelAndView) {
-		
+
 		List<Roles> listOfRoles = userDaoImpl.fetchAllRoles();
 		List<Branch> listOfBranch = userDaoImpl.fetchAllBranch();
-		
+
 		System.out.println("userRegistration invoked");
 		System.out.println("Roles : " + listOfRoles);
-		
+
 		modelAndView.addObject("listOfRoles", listOfRoles);
-		modelAndView.addObject("listOfBranch",listOfBranch);
-		modelAndView.setViewName("UserRegistration");
-		
+		modelAndView.addObject("listOfBranch", listOfBranch);
+		modelAndView.setViewName("userRegistration");
+
 		return modelAndView;
 	}
-	
-	
-	@PostMapping("/register")
-	public String register(@ModelAttribute User user, Model model ) throws SQLException, IOException {
 
-		
+	@PostMapping("/register")
+	public String register(@ModelAttribute User user, Model model) throws SQLException, IOException {
+
 		System.out.println(user);
-		
+
 		String passwordSalt = Password.generatePwdSalt(10);
 		user.setPasswordSalt(passwordSalt);
-		
+
 		String newPassword = passwordSalt + user.getPassword();
-		
-		
+
 		String passwordHash = Password.generatePwdHash(newPassword);
 		user.setPasswordHashed(passwordHash);
-		
-		
-		
-		
-		int result = userDaoImpl.insertUser(user);
-		
-		
-		if(result > 0) {
+		user.setApprovalStatus("Pending");
+
+		int userId = userDaoImpl.insertUser(user);
+
+		// Based on the role, insert into the appropriate table (Bank Manager, Employee,
+		// Customer)
+		switch (user.getRoleId()) {
+		case 2:
+			userDaoImpl.insertBankManager(userId, user.getBranchId());
+			break;
+		case 3:
+			userDaoImpl.insertEmployee(userId, user.getBranchId());
+			break;
+		case 4:
+			userDaoImpl.insertCustomer(userId, user.getBranchId());
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid role: " + user.getRoleId());
+		}
+
+		if (userId > 0) {
 			System.out.println("passed insertion");
-			return "LandingPage";
+			return "landingPage";
 		} else {
-			
+
 			System.out.println("failed insertion");
-			return "UserRegistration";
+			return "userRegistration";
 		}
 	}
 

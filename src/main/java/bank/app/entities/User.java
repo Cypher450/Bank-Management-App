@@ -13,17 +13,18 @@ public class User {
 	private int roleId;
 	private String address;
 	private Date dateOfBirth;
-	private String status;
+	private String approvalStatus;
 	private String passwordSalt;
 	private String passwordHashed;
 	private String password;
-	
+	private int branchId;
+
 	public User() {
 		super();
 	}
 
 	public User(String username, String firstName, String lastName, String email, String phone, int roleId,
-			String address, Date dateOfBirth, String status) {
+			String address, Date dateOfBirth, String approvalStatus, int branchId) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -33,12 +34,13 @@ public class User {
 		this.roleId = roleId;
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
-		this.status = status;
+		this.approvalStatus = approvalStatus;
+		this.branchId = branchId;
 	}
 
 	public User(int userId, String username, String firstName, String lastName, String email, String phone, int roleId,
-			String address, Date dateOfBirth, String status, String passwordSalt, String passwordHashed,
-			String password) {
+			String address, Date dateOfBirth, String approvalStatus, String passwordSalt, String passwordHashed,
+			String password, int branchId) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -49,10 +51,11 @@ public class User {
 		this.roleId = roleId;
 		this.address = address;
 		this.dateOfBirth = dateOfBirth;
-		this.status = status;
+		this.approvalStatus = approvalStatus;
 		this.passwordSalt = passwordSalt;
 		this.passwordHashed = passwordHashed;
 		this.password = password;
+		this.branchId = branchId;
 	}
 
 	public int getUserId() {
@@ -127,12 +130,12 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getApprovalStatus() {
+		return approvalStatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setApprovalStatus(String approvalStatus) {
+		this.approvalStatus = approvalStatus;
 	}
 
 	public String getPasswordSalt() {
@@ -159,15 +162,20 @@ public class User {
 		this.password = password;
 	}
 
+	public int getBranchId() {
+		return branchId;
+	}
+
+	public void setBranchId(int branchId) {
+		this.branchId = branchId;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", email=" + email + ", phone=" + phone + ", role=" + roleId + ", address=" + address
-				+ ", dateOfBirth=" + dateOfBirth + ", status=" + status + ", passwordSalt=" + passwordSalt
-				+ ", passwordHashed=" + passwordHashed + ", password=" + password + "]";
+				+ lastName + ", email=" + email + ", phone=" + phone + ", roleId=" + roleId + ", address=" + address
+				+ ", dateOfBirth=" + dateOfBirth + ", approvalStatus=" + approvalStatus + ", passwordSalt="
+				+ passwordSalt + ", passwordHashed=" + passwordHashed + ", password=" + password + ", branchId="
+				+ branchId + "]";
 	}
-
-	
-	
-	
 }

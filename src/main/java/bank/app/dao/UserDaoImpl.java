@@ -2,10 +2,16 @@ package bank.app.dao;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import bank.app.entities.Branch;
@@ -18,6 +24,9 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
@@ -26,24 +35,54 @@ public class UserDaoImpl implements UserDao {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
+		return namedParameterJdbcTemplate;
+	}
+
+	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+	}
+
 	@Override
 	public int insertUser(User user) throws SQLException, IOException {
-		
+
 		System.out.println("impl called");
-		
-		//`user_id`, `username`, `first_name`, `last_name`, `email`, `phone`, `role_id`, `dob`, `address`, `status`, `salt_password`, `hashed_password`
 
-		String query = "INSERT INTO user (`username`, `first_name`, `last_name`, `email`, `phone`,role_id, `dob`, `address`, `salt_password`, `hashed_password`) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+		// `first_name`, `last_name`,`username`,`salt_password`, `hashed_password`,
+		// `email`, `dob`, `phone`,
+		// `role_id`, `address`, `status`,
+		System.out.println(user);
 
-		return jdbcTemplate.update(query, user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),user.getRoleId(),user.getDateOfBirth(),user.getAddress(),user.getPasswordSalt(),user.getPasswordHashed());
+		String sql = "INSERT INTO user (first_name, last_name, username, salt_password, hashed_password, email, dob, phone, role_id, address, approval_status) "
+				+ "VALUES (:firstName, :lastName, :username, :saltPassword, :hashedPassword, :email, :dateOfBirth, :phone, :roleId, :address, :approvalStatus)";
+
+		Map<String, Object> params = new HashMap();
+		params.put("firstName", user.getFirstName());
+		params.put("lastName", user.getLastName());
+		params.put("username", user.getUsername());
+		params.put("saltPassword", user.getPasswordSalt());
+		params.put("hashedPassword", user.getPasswordHashed());
+		params.put("email", user.getEmail());
+		params.put("dateOfBirth", user.getDateOfBirth());
+		params.put("phone", user.getPhone());
+		params.put("roleId", user.getRoleId());
+		params.put("address", user.getAddress());
+		params.put("approvalStatus", user.getApprovalStatus());
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(params), keyHolder,
+				new String[] { "user_id" });
+
+		return keyHolder.getKey().intValue();
+
 	}
 
 	@Override
 	public List<Roles> fetchAllRoles() {
 
-		String query = "SELECT * FROM roles ORDER BY role_id";
-		
+		String query = "SELECT * FROM roles WHERE role_id > 1 ORDER BY role_id";
+
 		return jdbcTemplate.query(query, new BankRolesRowMapper());
 	}
 
@@ -51,10 +90,34 @@ public class UserDaoImpl implements UserDao {
 	public List<Branch> fetchAllBranch() {
 
 		String query = "SELECT * FROM branch ORDER BY branch_id";
-		
+
 		return jdbcTemplate.query(query, new BranchRowMapper());
 	}
 
-	
+	@Override
+	public void insertEmployee(int userId, int branchId) {
+		String sql = "INSERT INTO bank_employee (be_id, branch_id) VALUES (?, ?)";
+		jdbcTemplate.update(sql, userId, branchId);
 
+	}
+
+	@Override
+	public void insertCustomer(int userId, int branchId) {
+		String sql = "INSERT INTO customer (customer_id, branch_id) VALUES (?, ?)";
+		jdbcTemplate.update(sql, userId, branchId);
+
+	}
+
+	@Override
+	public void insertBankManager(int userId, int branchId) {
+		String sql = "INSERT INTO bank_manager (bm_id, branch_id) VALUES (?, ?)";
+		jdbcTemplate.update(sql, userId, branchId);
+
+	}
+
+	@Override
+	public Map<String, Object> fetchPwds(String username) {
+		String sql = "SELECT salt_password, hashed_password, role_id, approval_status FROM user WHERE username = ?";
+		return jdbcTemplate.queryForMap(sql, username);
+	}
 }

@@ -10,6 +10,7 @@ public class Branch {
 	private int regionId;
 	private int bankManagerId;
 	private int bankTypeId;
+	
 	public Branch(String branchName, String address, String phone, String pinCode, int regionId, int bankManagerId,
 			int bankTypeId) {
 		super();

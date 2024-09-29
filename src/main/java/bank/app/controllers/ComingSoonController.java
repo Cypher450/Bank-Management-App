@@ -8,6 +8,6 @@ public class ComingSoonController {
 
 	@GetMapping("/coming-soon")
 	public String openComingSoonPage() {
-		return "forward:/ComingSoon.html";
+		return "forward:/comingSoon.html";
 	}
 }

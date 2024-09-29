@@ -8,21 +8,21 @@ public class NavigationController {
 
 	@GetMapping("/")
 	public String openHomePage() {
-		return "LandingPage";
+		return "landingPage";
 	}
 
 	@GetMapping("/services")
 	public String openServicesPage() {
-		return "forward:/Services.html";
+		return "forward:/services.html";
 	}
-	
+
 	@GetMapping("/acccounts")
 	public String openAccountsPage() {
-		return "LandingPage";
+		return "landingPage";
 	}
-	
+
 	@GetMapping("/contact-us")
 	public String openContactUsPage() {
-		return "Contact";
+		return "contact";
 	}
 }
