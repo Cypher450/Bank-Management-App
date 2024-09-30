@@ -10,6 +10,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <title>Register Page</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/registration.css">
+		<script src="${pageContext.request.contextPath}/js/registerPageValidation.js"></script>
 	</head>
 	<body>
 	    <header>
@@ -36,38 +37,47 @@
 
 	    <div class="register-container">
 	        <h2>Register</h2>
-	        <form action="/register" method="POST">
+			
+	        <form action="/register" method="POST" onsubmit="return validateForm()">
+				
 	            <div class="input-group">
 	                <label for="firstName">FirstName</label>
-	                <input type="text" id="firstName" name="firstName" required>
+	                <input type="text" id="firstName" name="firstName">
+					<b><span id="firstName-error" style="color:red;"></span></b>	
 	            </div>
 	            <div class="input-group">
 	                <label for="lastName">LastName</label>
-	                <input type="text" id="lastName" name="lastName" required>
+	                <input type="text" id="lastName" name="lastName">
+					<b><span id="lastName-error" style="color:red;"></span></b>
 	            </div>
 	            <div class="input-group">
 	                <label for="username">Username</label>
-	                <input type="text" id="username" name="username" required>
+	                <input type="text" id="username" name="username">
+					<b><span id="username-error" style="color:red;"></span></b>
 	            </div>
 				<div class="input-group">
 	                <label for="password">Password</label>
-	                <input type="password" id="password" name="password" required>
+	                <input type="password" id="password" name="password">
+					<b><span id="password-error" style="color:red;"></span></b>
 	            </div>
 	            <div class="input-group">
 	                <label for="email">Email</label>
-	                <input type="email" id="email" name="email" required>
+	                <input type="email" id="email" name="email">
+					<b><span id="email-error" style="color:red;"></span></b>
 	            </div>
 	            <div class="input-group">
 	                <label for="dateOfBirth">DateOfBirth</label>
-	                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+	                <input type="date" id="dateOfBirth" name="dateOfBirth">
+					<b><span id="dob-error" style="color:red;"></span></b>
 	            </div>
 	            <div class="input-group">
 	                <label for="phone">Phone</label>
-	                <input type="tel" id="phone" name="phone" required>
+	                <input type="tel" id="phone" name="phone">
+					<b><span id="phone-error" style="color:red;"></span></b>
 	            </div>
 	            <div class="input-group">
 	                <label for="branchId">Branch</label>
-	                <select id="branchId" name="branchId" required>
+	                <select id="branchId" name="branchId">
 						<option>Select an Option</option>
 						<%
 				             for (Branch branch : branchList) {
@@ -83,7 +93,8 @@
 	            </div>
 	            <div class="input-group">
 	                <label for="address">Address</label>
-	                <input type="text" id="address" name="address" required>
+	                <input type="text" id="address" name="address">
+					<b><span id="address-error" style="color:red;"></span></b>
 	            </div>
 	            <div class="input-group">
 	                <label for="role">Role</label>
