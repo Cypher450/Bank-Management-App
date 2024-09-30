@@ -1,6 +1,7 @@
 package bank.app.dao;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +94,14 @@ public class UserDaoImpl implements UserDao {
 
 		return jdbcTemplate.query(query, new BranchRowMapper());
 	}
+	
+	@Override
+	public List<User> fetchAllDetails(String username) throws SQLException, IOException {
+
+		String query = "SELECT * FROM user WHERE username = ?";
+		
+		return jdbcTemplate.query(query,new ProfileDetailsRowMapper(), username);
+	}
 
 	@Override
 	public void insertEmployee(int userId, int branchId) {
@@ -120,4 +129,5 @@ public class UserDaoImpl implements UserDao {
 		String sql = "SELECT salt_password, hashed_password, role_id, approval_status FROM user WHERE username = ?";
 		return jdbcTemplate.queryForMap(sql, username);
 	}
+
 }

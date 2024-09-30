@@ -1,5 +1,7 @@
 package bank.app.controllers;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import bank.app.dao.UserDaoImpl;
+import bank.app.entities.User;
 import bank.app.utility.Password;
 
 @Controller
@@ -39,7 +42,9 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestParam String username, @RequestParam String password, Model model) {
+	public String login(@RequestParam String username, @RequestParam String password, Model model) throws SQLException, IOException {
+
+		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
 
 		System.out.println("\n login request data: " + username + ", " + password);
 
@@ -57,6 +62,9 @@ public class LoginController {
 		if (newPasswordHash.equals(oldPwdHash)) {
 
 			model.addAttribute("userData", userData);
+			model.addAttribute("userName", username);
+			model.addAttribute("userDetails", userDetails);
+		
 
 			int roleId = (Integer) userData.get("role_id");
 			System.out.println(roleId);

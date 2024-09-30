@@ -17,6 +17,8 @@ public interface UserDao {
 	List<Roles> fetchAllRoles() throws SQLException, IOException;
 
 	List<Branch> fetchAllBranch() throws SQLException, IOException;
+	
+	List<User> fetchAllDetails(String username) throws SQLException, IOException;
 
 	void insertEmployee(int userId, int branchId);
 
