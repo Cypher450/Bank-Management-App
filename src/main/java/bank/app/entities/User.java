@@ -58,6 +58,18 @@ public class User {
 		this.branchId = branchId;
 	}
 
+	
+
+	public User(String username, String firstName, String lastName, String email, String phone, String address) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+	}
+
 	public int getUserId() {
 		return userId;
 	}
