@@ -14,7 +14,7 @@
 	<body>
 		<%
 		 	String username = (String) request.getAttribute("userName");
-			User userDetails = (User)request.getAttribute("userDetails");
+			User userDetails = (User)session.getAttribute("userDetails");
 		%>
 
 	    <header>
@@ -26,7 +26,7 @@
 	        <a href="#">Dashboard</a>
 	        <a href="/view-profile/<%= username%>">Profile</a>
 	        <a href="/coming-soon">Open Account</a>
-	        <a href="/coming-soon" class="btn">Logout</a>
+	        <a href="/logout" class="btn">Logout</a>
 	    </nav>
 
 	    <div class="dashboard-container">

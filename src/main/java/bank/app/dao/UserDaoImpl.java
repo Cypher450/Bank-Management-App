@@ -2,10 +2,13 @@ package bank.app.dao;
 
 import java.io.IOException;
 
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -129,5 +132,28 @@ public class UserDaoImpl implements UserDao {
 		String sql = "SELECT salt_password, hashed_password, role_id, approval_status FROM user WHERE username = ?";
 		return jdbcTemplate.queryForMap(sql, username);
 	}
+
+	@Override
+	public User modifyUser(User user) throws SerialException, IOException, SQLException {
+		System.out.println("Use Id : " + user.getUserId());
+
+		String query = "UPDATE user SET username = ?,first_name = ?, last_name = ?,email = ?, address = ? ,dob = ? WHERE user_id = ?";
+		
+		jdbcTemplate.update(query,user.getUsername() ,user.getFirstName(), user.getLastName(),user.getEmail(),user.getAddress(),user.getDateOfBirth(), user.getUserId());
+	
+		System.out.println("updated : " + user);
+		
+		return getUserById(user.getUserId());
+	}
+
+	private User getUserById(int userId) {
+
+		String query = "SELECT * FROM user WHERE user_id = ?";
+		
+		return jdbcTemplate.queryForObject(query, new ProfileDetailsRowMapper(), userId);
+	}
+
+	
+	
 
 }
