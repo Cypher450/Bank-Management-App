@@ -29,7 +29,7 @@ public class ProfileDetailsRowMapper implements RowMapper<User> {
 		String passwordHash = rs.getString("hashed_password");
 	
 		
-		user = new User(userId, username, firstName, lastName, email, phone, roleId, address, dob, approvalStatus, passwordSalt, passwordHash, passwordHash);
+		user = new User(userId, username, firstName, lastName, email, phone, roleId, address, dob, approvalStatus, passwordSalt, passwordHash);
 		
 		return user;
 	}
