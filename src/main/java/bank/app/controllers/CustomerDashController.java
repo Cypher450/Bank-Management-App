@@ -59,8 +59,6 @@ public class CustomerDashController {
 			throws SerialException, IOException, SQLException {
 
 		User userDetails = (User) session.getAttribute("userDetails");
-
-		System.out.println("userDetails in updateDetails controller :" + userDetails);
 		updatedUser.setUserId(userDetails.getUserId());
 
 		try {
@@ -88,8 +86,6 @@ public class CustomerDashController {
 		User userDetails = (User) session.getAttribute("userDetails");
 
 		modelAndView.addObject("userDetails", userDetails);
-
-		System.out.println("user details : " + userDetails);
 		modelAndView.setViewName("customer/viewProfile");
 		return modelAndView;
 	}
@@ -111,28 +107,20 @@ public class CustomerDashController {
 	@PostMapping("openAccountSuccess")
 	public String openAccountSuccess(@ModelAttribute Account account, RedirectAttributes attributes) {
 		User userDetails = (User) session.getAttribute("userDetails");
-		System.out.println("userDetails in openAccountSuccess: " + userDetails);
 
 		try {
 			customer = userDaoImpl.fetchCustomerById(userDetails.getUserId());
-			System.out.println("customer in openAccountSuccess: " + customer);
 			branch = userDaoImpl.fetchBranchById(customer.getBranchId());
-			System.out.println(branch);
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
 
 		String accountNo = bank.app.utility.Account.accountNoGenerator(branch);
-		System.out.println("account no: " + accountNo);
-
 		String ifscCode = bank.app.utility.Account.ifsccodegenerator(branch);
-		System.out.println("ifsc code: " + ifscCode);
 
 		account.setAccountNumber(accountNo);
 		account.setIfscCode(ifscCode);
 		account.setCustomerId(customer.getCustomerId());
-
-		System.out.println("Account information: " + account);
 
 		try {
 			existingAccounts = accountDaoImpl.getAccountsByCustomerId(account.getCustomerId());
@@ -157,10 +145,8 @@ public class CustomerDashController {
 		// Validate account creation rules
 		if (account.getAccountTypeId() == 1 && hasSavingsAccount) {
 			attributes.addFlashAttribute("message", "You already have a savings account. You cannot open another.");
-			System.out.println("You already have savings account.");
 			return "customer/openAccount";
 		} else if (account.getAccountTypeId() == 2 && hasCurrentAccount) {
-			System.out.println("You already have current account.");
 			attributes.addFlashAttribute("error", "You already have a current account. You cannot open another.");
 			return "customer/openAccount";
 		}
@@ -184,7 +170,6 @@ public class CustomerDashController {
 				return "customer/openAccount";
 			}
 		} else {
-			System.out.println("Password is incorrect.");
 			attributes.addFlashAttribute("message", "Password is incorrect");
 			return "customer/openAccount";
 		}
