@@ -44,10 +44,10 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestParam String username, @RequestParam String password, Model model) throws SQLException, IOException {
+	public String login(@RequestParam String username, @RequestParam String password, Model model)
+			throws SQLException, IOException {
 
 		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
-		
 
 		System.out.println("\n login request data: " + username + ", " + password);
 
@@ -64,11 +64,10 @@ public class LoginController {
 
 		if (newPasswordHash.equals(oldPwdHash)) {
 			System.out.println("usersession : " + userDetails);
-			
+
 			if (userDetails != null) {
-			    session.setAttribute("userDetails", userDetails);
-			    session.setMaxInactiveInterval(30*60);
-			    
+				session.setAttribute("userDetails", userDetails);
+
 			} else {
 
 				System.out.println("User details are null");
@@ -77,18 +76,17 @@ public class LoginController {
 			model.addAttribute("userData", userData);
 			model.addAttribute("userName", username);
 			model.addAttribute("userDetails", userDetails);
-		
 
 			int roleId = (Integer) userData.get("role_id");
 			System.out.println(roleId);
 			if (roleId == 1) {
-				return "regionalManagerDash";
+				return "regional_mgr/regionalManagerDash";
 			} else if (roleId == 2) {
-				return "bankManagerDash";
+				return "bank_mgr/bankManagerDash";
 			} else if (roleId == 3) {
-				return "bankEmployeeDash";
+				return "bank_emp/bankEmployeeDash";
 			} else if (roleId == 4) {
-				return "customerDash";
+				return "customer/customerDash";
 			}
 		}
 

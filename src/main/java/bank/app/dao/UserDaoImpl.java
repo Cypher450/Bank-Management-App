@@ -136,10 +136,11 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User modifyUser(User user) throws SerialException, IOException, SQLException {
 		System.out.println("Use Id : " + user.getUserId());
-
-		String query = "UPDATE user SET username = ?,first_name = ?, last_name = ?,email = ?, address = ? ,dob = ? WHERE user_id = ?";
 		
-		jdbcTemplate.update(query,user.getUsername() ,user.getFirstName(), user.getLastName(),user.getEmail(),user.getAddress(),user.getDateOfBirth(), user.getUserId());
+
+		String query = "UPDATE user SET first_name = ?, last_name = ?,email = ?, address = ? ,dob = ? WHERE user_id = ?";
+		
+		jdbcTemplate.update(query, user.getFirstName(), user.getLastName(),user.getEmail(),user.getAddress(),user.getDateOfBirth(), user.getUserId());
 	
 		System.out.println("updated : " + user);
 		

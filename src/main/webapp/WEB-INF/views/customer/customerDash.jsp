@@ -9,11 +9,10 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <title>Customer Dashboard - XYZ Bank</title>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customerdash.css">
+		<link rel="stylesheet" href="../css/customerdash.css">
 	</head>
 	<body>
 		<%
-		 	String username = (String) request.getAttribute("userName");
 			User userDetails = (User)session.getAttribute("userDetails");
 		%>
 
@@ -23,8 +22,8 @@
 	    </header>
 
 	    <nav>
-	        <a href="#">Dashboard</a>
-	        <a href="/view-profile/<%= username%>">Profile</a>
+	        <a href="/customer/dashboard">Dashboard</a>
+	        <a href="/customer/view-profile/<%= userDetails.getUsername()%>">Profile</a>
 	        <a href="/coming-soon">Open Account</a>
 	        <a href="/logout" class="btn">Logout</a>
 	    </nav>
@@ -39,7 +38,7 @@
 	                <p>Account Number: SB5671318908</p>
 	                <p>Account Type: Savings Account</p>
 	            </div>
-	            <button class="btn" onclick="window.location.href = './coming-soon';">View Transactions</button>
+	            <button class="btn" onclick="window.location.href = '/coming-soon';">View Transactions</button>
 	        </div>
 
 	        <div class="dashboard-card">
@@ -49,14 +48,14 @@
 	                <p>Email: <%= userDetails.getEmail()%></p>
 	                <p>Phone: <%=userDetails.getPhone()%></p>
 	            </div>
-	            <button class="btn" onclick="window.location.href = './coming-soon';">Edit Profile</button>
+	            <button class="btn" onclick="window.location.href = '/customer/edit-profile';">Edit Profile</button>
 	        </div>
 
 	        <div class="dashboard-card">
 	            <h2>Services</h2>
-	            <button class="btn" onclick="window.location.href = './coming-soon';">Deposit Money</button>
-	            <button class="btn" onclick="window.location.href = './coming-soon';">Withdraw Money</button>
-	            <button class="btn" onclick="window.location.href = './coming-soon';">Account Statement</button>
+	            <button class="btn" onclick="window.location.href = '/coming-soon';">Deposit Money</button>
+	            <button class="btn" onclick="window.location.href = '/coming-soon';">Withdraw Money</button>
+	            <button class="btn" onclick="window.location.href = '/coming-soon';">Account Statement</button>
 	        </div>
 	    </div>
 

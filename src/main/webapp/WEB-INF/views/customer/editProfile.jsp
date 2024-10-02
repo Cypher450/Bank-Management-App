@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/editprofile.css">
+	<link rel="stylesheet" href="../css/editprofile.css">
    
 </head>
 <body>
@@ -16,7 +16,7 @@
     <div class="login-container">
 	
         <h2>Edit profile</h2>
-		<form action="/updateDetails" method="POST" modelAttribute="user">
+		<form action="/customer/updateDetails" method="POST" modelAttribute="user">
 			            <div class="input-group">
 			                <label for="firstName">FirstName</label>
 			                <input type="text" id="firstName" name="firstName">

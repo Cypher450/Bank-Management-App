@@ -7,7 +7,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <title>Change Password</title>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/changepassword.css">
+		<link rel="stylesheet" href="../css/changepassword.css">
 
 	</head>
 	<body>
@@ -18,7 +18,7 @@
 	    <nav>
 	        <a href="#">Dashboard</a>
 	        <a href="#">Profile</a>
-	        <a href="#">Accounts</a>
+	        <a href="#">View Account Info</a>
 	        <a href="#">Logout</a>
 	    </nav>
 

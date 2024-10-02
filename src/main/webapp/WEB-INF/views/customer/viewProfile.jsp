@@ -9,19 +9,18 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <title>Customer Profile</title>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/viewprofile.css">
-
+		<link rel="stylesheet" href="/css/viewprofile.css">
 	</head>
 	<body>
-		<%
-					User userDetails = (User)request.getAttribute("userDetails");
+		        <%
+					User userDetails = (User)session.getAttribute("userDetails");
 				%>
 	    <header>
 	        <h1>Customer Profile</h1>
 	    </header>
 		
 	    <nav>
-	        <a href="/customerDashboard">Dashboard</a>
+	        <a href="/customer/dashboard">Dashboard</a>
 	        <a href="/coming-soon">Accounts</a>
 	        <a href="/coming-soon">Transactions</a>
 	        <a href="/logout" class="logout-btn">Logout</a>
@@ -64,9 +63,9 @@
 	            </div>
 
 	            <div class="btn-container">
-	                <input type="button" class="btn"  onclick="window.location.href='/edit-profile'"  value="Edit Profile Details"/>
+	                <input type="button" class="btn"  onclick="window.location.href='/customer/edit-profile'"  value="Edit Profile Details"/>
 					
-					<input type="button" class="btn"  onclick="window.location.href='/change-password'"  value="Change Password"/>
+					<input type="button" class="btn"  onclick="window.location.href='/customer/change-password'"  value="Change Password"/>
 	            </div>
 	        </form>
 	    </div>

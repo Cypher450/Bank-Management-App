@@ -10,7 +10,7 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <title>Register Page</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/registration.css">
-		<script src="${pageContext.request.contextPath}/js/registerPageValidation.js"></script>
+		<script src="../js/registerPageValidation.js"></script>
 	</head>
 	<body>
 	    <header>
