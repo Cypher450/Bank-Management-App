@@ -25,8 +25,7 @@ public class User {
 
 	
 	public User(int userId, String username, String firstName, String lastName, String email, String phone, int roleId,
-			String address, Date dateOfBirth, String approvalStatus, String passwordSalt, String passwordHashed,
-			String password) {
+			String address, Date dateOfBirth, String approvalStatus, String passwordSalt, String passwordHashed) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -40,7 +39,6 @@ public class User {
 		this.approvalStatus = approvalStatus;
 		this.passwordSalt = passwordSalt;
 		this.passwordHashed = passwordHashed;
-		this.password = password;
 	}
 
 
