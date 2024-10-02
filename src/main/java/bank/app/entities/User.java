@@ -23,6 +23,26 @@ public class User {
 		super();
 	}
 
+	
+	public User(int userId, String username, String firstName, String lastName, String email, String phone, int roleId,
+			String address, Date dateOfBirth, String approvalStatus, String passwordSalt, String passwordHashed) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phone = phone;
+		this.roleId = roleId;
+		this.address = address;
+		this.dateOfBirth = dateOfBirth;
+		this.approvalStatus = approvalStatus;
+		this.passwordSalt = passwordSalt;
+		this.passwordHashed = passwordHashed;
+	}
+
+
+
 	public User(String username, String firstName, String lastName, String email, String phone, int roleId,
 			String address, Date dateOfBirth, String approvalStatus, int branchId) {
 		super();

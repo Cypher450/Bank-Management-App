@@ -16,38 +16,44 @@
     <div class="login-container">
 	
         <h2>Edit profile</h2>
-        <form id = "editProfileForm">
-        <div class="input-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="input-group">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" required>
-        </div>
-        <div class="input-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" required>
-        </div>
-        <div class="input-group">
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required>
-        </div>
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="input-group">
-            <label for="address">Address</label>
-            <input type="text" id="address" name="address" required>
-        </div>
-        <button type="submit" class="btn">Update</button>
-    </form>
+		<form action="/updateDetails" method="POST" modelAttribute="user">
+			            <div class="input-group">
+			                <label for="firstName">FirstName</label>
+			                <input type="text" id="firstName" name="firstName">
+							<b><span id="firstName-error" style="color:red;"></span></b>	
+			            </div>
+			            <div class="input-group">
+			                <label for="lastName">LastName</label>
+			                <input type="text" id="lastName" name="lastName" >
+							<b><span id="lastName-error" style="color:red;"></span></b>
+			            </div>
+						
+			            <div class="input-group">
+			                <label for="email">Email</label>
+			                <input type="email" id="email" name="email" >
+							<b><span id="email-error" style="color:red;"></span></b>
+			            </div>
+			            <div class="input-group">
+			                <label for="dateOfBirth">DateOfBirth</label>
+			                <input type="date" id="dateOfBirth" name="dateOfBirth">
+							<b><span id="dob-error" style="color:red;"></span></b>
+			            </div>
+			          
+			      
+			            <div class="input-group">
+			                <label for="address">Address</label>
+			                <input type="text" id="address" name="address">
+							<b><span id="address-error" style="color:red;"></span></b>
+			            </div>
+			            
+			            <button type="submit" class="btn">Update</button>
+			        </form>
 
     </div>
 	<footer class="footer">
         <p>© 2024 XYZ Bank. All rights reserved.</p>
     </footer>
+	
 	<script>
     document.getElementById('editProfileForm').addEventListener('submit', function(event) {
         // Prevent form submission

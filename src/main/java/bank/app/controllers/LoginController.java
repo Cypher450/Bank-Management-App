@@ -9,17 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import bank.app.dao.UserDaoImpl;
 import bank.app.entities.User;
 import bank.app.utility.Password;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
 
 	@Autowired
 	UserDaoImpl userDaoImpl;
+	@Autowired
+	HttpSession session;
 
 	@GetMapping("/openLoginPageCustomer")
 	public String openLoginPageCustomer() {
@@ -45,6 +47,7 @@ public class LoginController {
 	public String login(@RequestParam String username, @RequestParam String password, Model model) throws SQLException, IOException {
 
 		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
+		
 
 		System.out.println("\n login request data: " + username + ", " + password);
 
@@ -60,6 +63,16 @@ public class LoginController {
 		String newPasswordHash = Password.generatePwdHash(newPassword);
 
 		if (newPasswordHash.equals(oldPwdHash)) {
+			System.out.println("usersession : " + userDetails);
+			
+			if (userDetails != null) {
+			    session.setAttribute("userDetails", userDetails);
+			    session.setMaxInactiveInterval(30*60);
+			    
+			} else {
+
+				System.out.println("User details are null");
+			}
 
 			model.addAttribute("userData", userData);
 			model.addAttribute("userName", username);

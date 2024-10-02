@@ -13,21 +13,18 @@
 
 	</head>
 	<body>
+		<%
+					User userDetails = (User)request.getAttribute("userDetails");
+				%>
 	    <header>
 	        <h1>Customer Profile</h1>
 	    </header>
-
-		<%
-		      User userDetails = (User)request.getAttribute("userDetails");
-				
-		%>
 		
 	    <nav>
-	        <a href="#">Dashboard</a>
-	        <a href="#">Accounts</a>
-	        <a href="#">Transactions</a>
-	        <a href="#">Profile</a>
-	        <a href="#" class="logout-btn">Logout</a>
+	        <a href="/customerDashboard">Dashboard</a>
+	        <a href="/coming-soon">Accounts</a>
+	        <a href="/coming-soon">Transactions</a>
+	        <a href="/logout" class="logout-btn">Logout</a>
 	    </nav>
 
 	    <div class="profile-container">
@@ -67,8 +64,9 @@
 	            </div>
 
 	            <div class="btn-container">
-	                <button class="btn" onclick="window.location.href = './coming-soon';">Edit Profile Details</button>
-	                <button class="btn" onclick="window.location.href = './coming-soon';">Change Password</button>
+	                <input type="button" class="btn"  onclick="window.location.href='/edit-profile'"  value="Edit Profile Details"/>
+					
+					<input type="button" class="btn"  onclick="window.location.href='/change-password'"  value="Change Password"/>
 	            </div>
 	        </form>
 	    </div>

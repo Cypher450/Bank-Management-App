@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.rowset.serial.SerialException;
+
 import bank.app.entities.Branch;
 import bank.app.entities.Roles;
 import bank.app.entities.User;
@@ -27,5 +29,8 @@ public interface UserDao {
 	void insertBankManager(int userId, int branchId);
 
 	Map<String, Object> fetchPwds(String username);
+	
+	User modifyUser(User user) throws SerialException, IOException, SQLException;
+
 
 }
