@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@page import="bank.app.entities.User"%>
+
 	<!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -14,12 +16,15 @@
 	    <header>
 	        <h1>Change Password</h1>
 	    </header>
+		
+		<%
+		    User userDetails = (User) session.getAttribute("userDetails");
+		%>
 
 	    <nav>
-	        <a href="#">Dashboard</a>
-	        <a href="#">Profile</a>
-	        <a href="#">View Account Info</a>
-	        <a href="#">Logout</a>
+	        <a href="/customer/dashboard">Dashboard</a>
+	        <a href="/customer/view-profile/<%= userDetails.getUsername() %>">Profile</a>
+	        <a href="/logout">Logout</a>
 	    </nav>
 
 	    <div class="password-container">
@@ -27,15 +32,15 @@
 	            <h2>Update Your Password</h2>
 	        </div>
 
-	        <form>
+	        <form action="/customer/change-password" method="POST">
 	            <div class="password-info">
 	                <label for="current_password">Current Password:</label>
-	                <input type="password" id="current_password" name="current_password" required>
+	                <input type="password" id="currentPassword" name="currentPassword" required>
 	            </div>
 
 	            <div class="password-info">
 	                <label for="new_password">New Password:</label>
-	                <input type="password" id="new_password" name="new_password" required>
+	                <input type="password" id="newPassword" name="newPassword" required>
 	            </div>
 
 	            <div class="password-info">

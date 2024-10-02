@@ -16,6 +16,6 @@ public class LogoutController {
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "login";
+		return "landingPage";
 	}
 }

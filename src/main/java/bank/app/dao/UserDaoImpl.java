@@ -155,6 +155,16 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	
+	@Override
+	public User updatePassword(String HashPassword, User user) throws SerialException, IOException, SQLException {
+
+		String query = "UPDATE user SET hashed_password = ? WHERE user_id = ?";
+		System.out.println("hash : "+HashPassword);
+		
+		jdbcTemplate.update(query,HashPassword ,user.getUserId());
+
+		return getUserById(user.getUserId());
+	}
 	
 
 }
