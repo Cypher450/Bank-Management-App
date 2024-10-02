@@ -31,6 +31,8 @@ public interface UserDao {
 	Map<String, Object> fetchPwds(String username);
 	
 	User modifyUser(User user) throws SerialException, IOException, SQLException;
+	
+	User updatePassword(String HashPassword, User user) throws SerialException, IOException, SQLException;
 
 
 }
