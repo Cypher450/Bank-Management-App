@@ -39,6 +39,7 @@
 	                <p>Account Type: Savings Account</p>
 	            </div>
 	            <button class="btn" onclick="window.location.href = '/coming-soon';">View Transactions</button>
+				<button class="btn" onclick="window.location.href = '/coming-soon';">Account Details</button>
 	        </div>
 
 	        <div class="dashboard-card">
