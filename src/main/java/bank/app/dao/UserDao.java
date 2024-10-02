@@ -8,7 +8,9 @@ import java.util.Map;
 
 import javax.sql.rowset.serial.SerialException;
 
+import bank.app.entities.AccountType;
 import bank.app.entities.Branch;
+import bank.app.entities.Customer;
 import bank.app.entities.Roles;
 import bank.app.entities.User;
 
@@ -19,6 +21,10 @@ public interface UserDao {
 	List<Roles> fetchAllRoles() throws SQLException, IOException;
 
 	List<Branch> fetchAllBranch() throws SQLException, IOException;
+	Branch fetchBranchById(int branchId) throws SQLException, IOException;
+	Customer fetchCustomerById(int customerId) throws SQLException, IOException;
+	
+	List<AccountType> fetchAllAccountTypes() throws SQLException, IOException;
 	
 	List<User> fetchAllDetails(String username) throws SQLException, IOException;
 

@@ -24,7 +24,7 @@
 	    <nav>
 	        <a href="/customer/dashboard">Dashboard</a>
 	        <a href="/customer/view-profile/<%= userDetails.getUsername()%>">Profile</a>
-	        <a href="/coming-soon">Open Account</a>
+	        <a href="/customer/openAccountPage">Open Account</a>
 	        <a href="/logout" class="btn">Logout</a>
 	    </nav>
 

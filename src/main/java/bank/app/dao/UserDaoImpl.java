@@ -2,7 +2,6 @@ package bank.app.dao;
 
 import java.io.IOException;
 
-
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +17,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import bank.app.entities.AccountType;
 import bank.app.entities.Branch;
+import bank.app.entities.Customer;
 import bank.app.entities.Roles;
 import bank.app.entities.User;
 
@@ -97,13 +98,34 @@ public class UserDaoImpl implements UserDao {
 
 		return jdbcTemplate.query(query, new BranchRowMapper());
 	}
-	
+
+	@Override
+	public Branch fetchBranchById(int branchId) throws SQLException, IOException {
+		String query = "SELECT * FROM branch WHERE branch_id=?";
+
+		return jdbcTemplate.queryForObject(query, new BranchRowMapper(), branchId);
+	}
+
+	@Override
+	public Customer fetchCustomerById(int customerId) throws SQLException, IOException {
+		String query = "SELECT * FROM customer WHERE customer_id=?";
+
+		return jdbcTemplate.queryForObject(query, new CustomerRowMapper(), customerId);
+	}
+
+	@Override
+	public List<AccountType> fetchAllAccountTypes() throws SQLException, IOException {
+		String query = "SELECT * FROM account_type ORDER BY account_type_id";
+
+		return jdbcTemplate.query(query, new AccountTypeRowMapper());
+	}
+
 	@Override
 	public List<User> fetchAllDetails(String username) throws SQLException, IOException {
 
 		String query = "SELECT * FROM user WHERE username = ?";
-		
-		return jdbcTemplate.query(query,new ProfileDetailsRowMapper(), username);
+
+		return jdbcTemplate.query(query, new ProfileDetailsRowMapper(), username);
 	}
 
 	@Override
@@ -136,25 +158,22 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User modifyUser(User user) throws SerialException, IOException, SQLException {
 		System.out.println("Use Id : " + user.getUserId());
-		
 
 		String query = "UPDATE user SET first_name = ?, last_name = ?,email = ?, address = ? ,dob = ? WHERE user_id = ?";
-		
-		jdbcTemplate.update(query, user.getFirstName(), user.getLastName(),user.getEmail(),user.getAddress(),user.getDateOfBirth(), user.getUserId());
-	
+
+		jdbcTemplate.update(query, user.getFirstName(), user.getLastName(), user.getEmail(), user.getAddress(),
+				user.getDateOfBirth(), user.getUserId());
+
 		System.out.println("updated : " + user);
-		
+
 		return getUserById(user.getUserId());
 	}
 
 	private User getUserById(int userId) {
 
 		String query = "SELECT * FROM user WHERE user_id = ?";
-		
+
 		return jdbcTemplate.queryForObject(query, new ProfileDetailsRowMapper(), userId);
 	}
-
-	
-	
 
 }
