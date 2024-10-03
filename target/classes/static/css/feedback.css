@@ -1,0 +1,61 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	font-family: Arial, sans-serif;
+	background-color: #f9f9f9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #f4f4f4;
+	line-height: 1.6;
+}
+
+
+
+
+.thank-you-container {
+	text-align: center;
+	background-color: #fff;
+	padding: 40px;
+	border-radius: 15px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	max-width: 600px;
+	margin: 30px;
+}
+
+.thank-you-card {
+	padding: 30px;
+}
+
+.thank-you-image {
+	width: 100%;
+	max-width: 120px;
+	/* Decreased max width for a smaller image */
+	margin: 0 auto;
+}
+
+.thank-you-card p {
+	margin-top: 25px;
+	font-size: 22px;
+	/* Increased font size */
+	color: #555;
+	line-height: 1.6;
+}

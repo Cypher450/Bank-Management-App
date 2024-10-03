@@ -22,8 +22,8 @@
 	            <p>Address: Sector 59 Noida India</p>
 	        </div>
 
-	        <form action="/coming-soon">
-	            <input type="text" name="name" placeholder="Your Name" required>
+	        <form action="/success-page">
+	            <input type="text" name="full_name" placeholder="Your Name" required>
 	            <input type="email" name="email" placeholder="Your Email" required>
 	            <textarea name="message" placeholder="Your Message" required></textarea>
 	            <button type="submit" class="btn">Send Message</button>
