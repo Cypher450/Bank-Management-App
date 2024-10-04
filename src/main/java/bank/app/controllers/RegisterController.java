@@ -19,6 +19,7 @@ import bank.app.utility.Password;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RegisterController {
@@ -43,7 +44,7 @@ public class RegisterController {
 	}
 
 	@PostMapping("/register")
-	public String register(@ModelAttribute User user, Model model) throws SQLException, IOException {
+	public String register(@ModelAttribute User user, Model model, RedirectAttributes attributes) throws SQLException, IOException {
 
 		System.out.println(user);
 
@@ -76,10 +77,12 @@ public class RegisterController {
 
 		if (userId > 0) {
 			System.out.println("passed insertion");
+			attributes.addFlashAttribute("message", "Registration successful. You can now login after the approval.");
 			return "landingPage";
 		} else {
 
 			System.out.println("failed insertion");
+			attributes.addFlashAttribute("message", "Something went wrong! Please try again.");
 			return "userRegistration";
 		}
 	}

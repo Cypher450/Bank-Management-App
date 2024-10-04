@@ -21,7 +21,7 @@
 	    <a href="#tasks">My Tasks</a>
 	    <a href="#customers">Manage Customers</a>
 	    <a href="#reports">Approve List</a>
-	    <a href="#reports">Profile</a>
+	    <a href="/bank_emp/view-profile/${userDetails.getUsername()}">Profile</a>
 	    <a href="/logout">Logout</a>
 	</nav>
 

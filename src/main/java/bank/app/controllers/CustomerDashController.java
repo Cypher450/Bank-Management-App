@@ -53,7 +53,7 @@ public class CustomerDashController {
 
 	@GetMapping("/edit-profile")
 	public String editProfile() {
-		return "customer/editProfile";
+		return "editProfile";
 	}
 
 	@PostMapping("/updateDetails")
@@ -70,18 +70,18 @@ public class CustomerDashController {
 			attributes.addFlashAttribute("message", "Updation failed. Please try again later");
 		}
 
-		return "/customer/viewProfile";
+		return "viewProfile";
 
 	}
 
 	@GetMapping("/change-password")
 	public String openChangePassword() {
-		return "customer/changePassword";
+		return "changePassword";
 	}
 
 	@PostMapping("/change-password")
-	public String changePassword(@RequestParam String newPassword, @RequestParam String currentPassword, Model model)
-			throws SerialException, IOException, SQLException {
+	public String changePassword(@RequestParam String newPassword, @RequestParam String currentPassword, Model model,
+			RedirectAttributes attributes) throws SerialException, IOException, SQLException {
 
 		User user = (User) session.getAttribute("userDetails");
 
@@ -100,9 +100,12 @@ public class CustomerDashController {
 			String newPassHash = Password.generatePwdHash(pwdSalt + newPassword);
 
 			userDaoImpl.updatePassword(newPassHash, user);
+			attributes.addFlashAttribute("message", "Password changed successfully!");
 
 		} else {
 			System.out.println("Old Password doesnt match!!");
+			attributes.addFlashAttribute("message", "Current password is not correct!");
+			return "changePassword";
 		}
 
 		return "landingPage";
@@ -117,12 +120,12 @@ public class CustomerDashController {
 		User userDetails = (User) session.getAttribute("userDetails");
 
 		modelAndView.addObject("userDetails", userDetails);
-		modelAndView.setViewName("customer/viewProfile");
+		modelAndView.setViewName("viewProfile");
 		return modelAndView;
 	}
 
 	@GetMapping("/openAccountPage")
-	public String openAccountPage(Model model) {
+	public String openAccountPage(Model model, RedirectAttributes attributes) {
 
 		System.out.println("openAccountPage opened");
 		try {
@@ -130,6 +133,7 @@ public class CustomerDashController {
 			session.setAttribute("listOfAccountTypes", listOfAccountTypes);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			attributes.addFlashAttribute("message", "Something went wrong in fetching list of account types.");
 		}
 
 		return "customer/openAccount";

@@ -22,8 +22,8 @@
 		%>
 
 	    <nav>
-	        <a href="/customer/dashboard">Dashboard</a>
-	        <a href="/customer/view-profile/<%= userDetails.getUsername() %>">Profile</a>
+	        <a href="/${role.getRoleName().toLowerCase()}/dashboard">Dashboard</a>
+	        <a href="/${role.getRoleName().toLowerCase()}/view-profile/<%= userDetails.getUsername() %>">Profile</a>
 	        <a href="/logout">Logout</a>
 	    </nav>
 

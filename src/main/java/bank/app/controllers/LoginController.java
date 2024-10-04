@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import bank.app.dao.UserDaoImpl;
+import bank.app.entities.Roles;
 import bank.app.entities.User;
 import bank.app.utility.Password;
 import jakarta.servlet.http.HttpSession;
@@ -44,8 +47,8 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestParam String username, @RequestParam String password, Model model)
-			throws SQLException, IOException {
+	public String login(@RequestParam String username, @RequestParam String password, Model model,
+			RedirectAttributes attributes) throws SQLException, IOException {
 
 		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
 
@@ -77,19 +80,28 @@ public class LoginController {
 			model.addAttribute("userName", username);
 			model.addAttribute("userDetails", userDetails);
 
+			Roles role = userDaoImpl.fetchRoleById(userDetails.getRoleId());
+			System.out.println("Role: " + role);
+
+			session.setAttribute("role", role);
+
 			int roleId = (Integer) userData.get("role_id");
-			System.out.println(roleId);
 			if (roleId == 1) {
+				attributes.addFlashAttribute("message", "Successfully logged in as Regional Manager.");
 				return "regional_mgr/regionalManagerDash";
 			} else if (roleId == 2) {
+				attributes.addFlashAttribute("message", "Successfully logged in as Bank Manager.");
 				return "bank_mgr/bankManagerDash";
 			} else if (roleId == 3) {
+				attributes.addFlashAttribute("message", "Successfully logged in as Bank Employee.");
 				return "bank_emp/bankEmployeeDash";
 			} else if (roleId == 4) {
+				attributes.addFlashAttribute("message", "Successfully logged in as Customer.");
 				return "customer/customerDash";
 			}
-		}
-
+		} else
+			attributes.addFlashAttribute("message", "Password is incorrect.");
 		return "login";
+
 	}
 }

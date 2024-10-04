@@ -21,8 +21,8 @@
 	%>
 
     <nav>
-        <a href="#">Dashboard</a>
-        <a href="#">Logout</a>
+        <a href="/${role.getRoleName().toLowerCase()}/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
     </nav>
 
     <div class="account-container">
