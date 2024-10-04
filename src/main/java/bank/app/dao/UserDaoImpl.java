@@ -88,6 +88,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public Roles fetchRoleById(int roleId) throws SQLException, IOException {
+		String query = "SELECT * FROM roles WHERE role_id = ?";
+
+		return jdbcTemplate.queryForObject(query, new BankRolesRowMapper(), roleId);
+	}
+
+	@Override
 	public List<Branch> fetchAllBranch() {
 
 		String query = "SELECT * FROM branch ORDER BY branch_id";

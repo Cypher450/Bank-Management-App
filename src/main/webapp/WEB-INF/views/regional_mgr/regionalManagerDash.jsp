@@ -18,11 +18,11 @@
 
 	<!-- Navigation Bar -->
 	<nav>
-	    <a href="#dashboard">Dashboard</a>
+	    <a href="/regional_mgr/dashboard">Dashboard</a>
 	    <a href="#branches">Manage Branches</a>
 	    <a href="#employees">Approval List</a>
-	    <a href="#settings">Profile</a>
-	    <a href="#logout">Logout</a>
+	    <a href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
+	    <a href="/logout">Logout</a>
 	</nav>
 
 	<div class="dashboard-container">
