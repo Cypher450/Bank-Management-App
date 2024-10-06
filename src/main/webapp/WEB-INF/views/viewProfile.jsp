@@ -26,12 +26,14 @@
 
 	</header>
 
+
 	<nav>
 		<a href="/${role.getRoleName().toLowerCase()}/dashboard">Dashboard</a>
 		<%
 		if (roleName.equals("customer")) {
 		%>
-		<a href="/coming-soon">Accounts</a> <a href="/coming-soon">Transactions</a>
+		<a href="/customer/account-details">Accounts</a> 
+		<a href="/coming-soon">Transactions</a>
 		<%
 		}
 		%>

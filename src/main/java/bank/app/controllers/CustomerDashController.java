@@ -2,6 +2,7 @@ package bank.app.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.sql.rowset.serial.SerialException;
@@ -31,6 +32,7 @@ import bank.app.entities.Customer;
 @RequestMapping("customer")
 public class CustomerDashController {
 
+	
 	private User user;
 	private Customer customer;
 	private Branch branch;
@@ -114,10 +116,13 @@ public class CustomerDashController {
 	@GetMapping("/view-profile/{username}")
 	public ModelAndView viewProfile(@PathVariable String username, ModelAndView modelAndView)
 			throws SQLException, IOException {
+		System.out.println("Session ID: " + session.getId());
+		System.out.println("Session Attributes: " + Collections.list(session.getAttributeNames()));
 
 //		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
 
 		User userDetails = (User) session.getAttribute("userDetails");
+		System.out.println("view : " + userDetails);
 
 		modelAndView.addObject("userDetails", userDetails);
 		modelAndView.setViewName("viewProfile");
@@ -208,6 +213,30 @@ public class CustomerDashController {
 			attributes.addFlashAttribute("message", "Password is incorrect");
 			return "customer/openAccount";
 		}
+	}
+	
+	@GetMapping("/account-details")
+	public String accountDetails() {
+		return "customer/accountDetails";
+	}
+	
+	
+	@GetMapping("/full-account-details/{accountType}")
+	public ModelAndView fullSavingsAccDetails(@PathVariable String accountType,ModelAndView modelAndView) throws SQLException, IOException {
+		int typeId = 0;
+		if(accountType.equals("savings")) {
+			typeId = 1;
+			Account accountDetailsSavings = (Account)session.getAttribute("savingsAcc"); 
+			session.setAttribute("accountDetails", accountDetailsSavings);
+		} else {
+			typeId = 2;
+			Account accountDetailsCurrent = (Account)session.getAttribute("currentAcc"); 
+			session.setAttribute("accountDetails", accountDetailsCurrent);
+		}
+			
+		modelAndView.setViewName("customer/fullAccountDetails");
+		
+		return modelAndView;
 	}
 
 }
