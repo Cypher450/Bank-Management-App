@@ -78,11 +78,8 @@ public class TransactionController {
 			transactionTypeId = 2;
 		}
 
-		System.out.println("password in processTransaction" + password);
-
 		User user = (User) session.getAttribute("userDetails");
-		System.out.println("user in processTransaction: " + user);
-
+		
 		String pwdSalt = user.getPasswordSalt();
 		String oldPwdHash = user.getPasswordHashed();
 
