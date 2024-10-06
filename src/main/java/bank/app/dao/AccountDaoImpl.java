@@ -57,4 +57,14 @@ public class AccountDaoImpl implements AccountDao {
 		return jdbcTemplate.query(query, new AccountRowMapper(), customerId);
 	}
 
+	@Override
+	public List<Account> getAccountDetails(int customerId, int accountTypeId) throws SQLException, IOException {
+
+   
+		String query = "SELECT * FROM account where customer_id = ? AND account_type_id = ?";
+		
+		return jdbcTemplate.query(query, new AccountRowMapper(), customerId, accountTypeId);
+		
+	}
+
 }

@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="bank.app.entities.Account"%>
 <%@page import="bank.app.entities.User"%>
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,7 +15,16 @@
 </head>
 <body>
 	<%
+	Account savingsAccount = null;
 	User userDetails = (User) session.getAttribute("userDetails");
+	savingsAccount = (Account) session.getAttribute("savingsAcc");
+	
+	String accName = null;
+	if(savingsAccount.getAccountTypeId() == 1){
+		accName = "Savings Account";
+	} else{
+		accName = "Current Account";
+	}
 	%>
 
 	<header>
@@ -31,14 +42,15 @@
 	<div class="dashboard-container">
 		<div class="dashboard-card">
 			<h2>Account Overview</h2>
-			<div class="account-balance">₹ 25,000</div>
+			<div class="account-balance"><%= savingsAccount.getBalance() %></div>
 			<div class="account-details">
-				<p>Account Number: SB5671318908</p>
-				<p>Account Type: Savings Account</p>
+				<p>Account Number: <%= savingsAccount.getAccountNumber() %></p>
+				<p>Account Type: <%= accName %></p>
 			</div>
 			<button class="btn" onclick="window.location.href = '/coming-soon';">View
 				Transactions</button>
-			<button class="btn" onclick="window.location.href = '/coming-soon';">Account
+			<button class="btn"
+				onclick="window.location.href = '/customer/account-details';">Account
 				Details</button>
 		</div>
 

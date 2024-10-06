@@ -2,6 +2,7 @@ package bank.app.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import bank.app.dao.AccountDaoImpl;
 import bank.app.dao.UserDaoImpl;
+import bank.app.entities.Account;
 import bank.app.entities.Roles;
 import bank.app.entities.User;
 import bank.app.utility.Password;
@@ -25,6 +28,8 @@ public class LoginController {
 	UserDaoImpl userDaoImpl;
 	@Autowired
 	HttpSession session;
+	@Autowired
+	AccountDaoImpl accountDaoImpl;
 
 	@GetMapping("/openLoginPageCustomer")
 	public String openLoginPageCustomer() {
@@ -51,7 +56,24 @@ public class LoginController {
 			RedirectAttributes attributes) throws SQLException, IOException {
 
 		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
+		
+		List<Account> accountLists = accountDaoImpl.getAccountsByCustomerId(userDetails.getUserId());
+		
+		session.setAttribute("accountLists", accountLists);
+		
+		Account savingsAcc = null;
+		Account currentAcc = null;
 
+		if(accountLists.get(0).getAccountTypeId() == 1) {
+			savingsAcc = accountLists.get(0);
+			currentAcc = accountLists.get(1);
+		} else {
+			savingsAcc = accountLists.get(1);
+			currentAcc = accountLists.get(0);
+		}
+		session.setAttribute("currentAcc", currentAcc);
+		session.setAttribute("savingsAcc", savingsAcc);
+		
 		System.out.println("\n login request data: " + username + ", " + password);
 
 		Map<String, Object> userData = userDaoImpl.fetchPwds(username);
@@ -70,6 +92,7 @@ public class LoginController {
 
 			if (userDetails != null) {
 				session.setAttribute("userDetails", userDetails);
+				session.setMaxInactiveInterval(60*60);
 
 			} else {
 
