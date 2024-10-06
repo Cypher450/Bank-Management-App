@@ -27,12 +27,6 @@ public class TransactionDaoImpl implements TransactionDao {
 	public String saveTransaction(String accountNumber, double amount, int transactionTypeId)
 			throws SQLException, IOException {
 
-		// Insert transaction into the transaction table
-		String insertTransaction = "INSERT INTO transaction (account_no, transaction_type_id, amount, transaction_time) "
-				+ "VALUES (?, ?, ?, ?)";
-		jdbcTemplate.update(insertTransaction, accountNumber, transactionTypeId, amount,
-				new Timestamp(System.currentTimeMillis()));
-
 		// Check if it's a withdrawal and if there are sufficient funds
 		if (transactionTypeId == 2) {
 			double currentBalance = getAccountBalance(accountNumber);
@@ -40,6 +34,12 @@ public class TransactionDaoImpl implements TransactionDao {
 				return "Insufficient funds for withdrawal.";
 			}
 		}
+
+		// Insert transaction into the transaction table
+		String insertTransaction = "INSERT INTO transaction (account_no, transaction_type_id, amount, transaction_time) "
+				+ "VALUES (?, ?, ?, ?)";
+		jdbcTemplate.update(insertTransaction, accountNumber, transactionTypeId, amount,
+				new Timestamp(System.currentTimeMillis()));
 
 		// Update the balance in the account table
 		String updateBalance = transactionTypeId == 1
