@@ -62,9 +62,9 @@
 
 		<div class="dashboard-card">
 			<h2>Services</h2>
-			<button class="btn" onclick="window.location.href = '/coming-soon';">Deposit
+			<button class="btn" onclick="window.location.href = '/deposit';">Deposit
 				Money</button>
-			<button class="btn" onclick="window.location.href = '/coming-soon';">Withdraw
+			<button class="btn" onclick="window.location.href = '/withdraw';">Withdraw
 				Money</button>
 			<button class="btn" onclick="window.location.href = '/coming-soon';">Account
 				Statement</button>
