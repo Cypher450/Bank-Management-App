@@ -39,7 +39,7 @@
 	</nav>
 
 	<div class="account-details-container">
-		<h2>Savings Account Details</h2>
+		<h2><%= accName%> Account Details</h2>
 
 		<div class="account-detail">
 			<p>
