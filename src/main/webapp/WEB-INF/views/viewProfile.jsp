@@ -33,7 +33,7 @@
 		if (roleName.equals("customer")) {
 		%>
 		<a href="/customer/account-details">Accounts</a> 
-		<a href="/coming-soon">Transactions</a>
+		<a href="/customer/select-account">Transactions</a>
 		<%
 		}
 		%>

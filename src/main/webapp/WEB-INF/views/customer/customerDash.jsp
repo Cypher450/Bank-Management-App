@@ -47,7 +47,7 @@
 				<p>Account Number: <%= savingsAccount.getAccountNumber() %></p>
 				<p>Account Type: <%= accName %></p>
 			</div>
-			<button class="btn" onclick="window.location.href = '/coming-soon';">View
+			<button class="btn" onclick="window.location.href = '/customer/select-account';">View
 				Transactions</button>
 			<button class="btn"
 				onclick="window.location.href = '/customer/account-details';">Account
