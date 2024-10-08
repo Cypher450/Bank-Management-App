@@ -21,16 +21,34 @@
 			<label for="accountSelect">Choose Account:</label> <select
 				id="accountSelect" name="accountNo" required>
 				<option value="">-- Select an Account --</option>
-				<option value="<%= accDetailsSavings.getAccountNumber()%>">Savings
+				<% if(accDetailsCurrent != null && accDetailsSavings != null ){ %>
+				
+				     <option value="<%= accDetailsSavings.getAccountNumber()%>">Savings
 					Account -
 					<%=accDetailsSavings.getAccountNumber()%></option>
 				<option value="<%= accDetailsCurrent.getAccountNumber()%>">Current
 					Account -
 					<%=accDetailsCurrent.getAccountNumber()%></option>
+				
+				<% } else if (accDetailsCurrent == null && accDetailsSavings != null) {%>
+				
+				     <option value="<%= accDetailsSavings.getAccountNumber()%>">Savings
+					Account -
+					<%=accDetailsSavings.getAccountNumber()%></option>
+				      
+				<%} else { %>
+				
+				<option value="<%= accDetailsCurrent.getAccountNumber()%>">Current
+					Account -
+					<%=accDetailsCurrent.getAccountNumber()%></option>
+				    
+				<%} %>
 			</select>
 			<button type="submit" class="btn">View Transactions</button>
 		</form>
 	</div>
+	
+	<%@include file="../message.jsp" %>
 
 </body>
 </html>

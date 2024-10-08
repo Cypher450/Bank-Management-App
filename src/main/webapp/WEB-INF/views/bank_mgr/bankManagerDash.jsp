@@ -56,6 +56,7 @@
 			</div>
 		</section>
 	</div>
+	<%@include file="../message.jsp" %>
 
 	<!-- Footer -->
 	<footer>

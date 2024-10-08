@@ -80,7 +80,7 @@
 		</form>
 	</div>
 
-
+<%@include file="../message.jsp" %>
 
 	<!-- Footer -->
 	<footer>

@@ -52,6 +52,7 @@
 	                <button type="submit" class="btn">Change Password</button>
 	            </div>
 	        </form>
+	        <%@include file="message.jsp" %>
 	    </div>
 	</body>
 	</html>

@@ -12,4 +12,6 @@ public interface AccountDao {
 	List<Account> getAccountsByCustomerId(int customerId) throws SQLException, IOException;
 	
 	List<Account> getAccountDetails(int customerId, int accountTypeId) throws SQLException, IOException;
+	
+	
 }

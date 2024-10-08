@@ -78,5 +78,8 @@
             </div>
         </form>
     </div>
+    
+    <%@include file="../message.jsp" %>
+    
 </body>
 </html>
