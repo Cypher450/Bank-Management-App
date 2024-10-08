@@ -52,6 +52,11 @@ public class CustomerDashController {
 
 		return "customer/customerDash";
 	}
+	
+	@GetMapping("/select-account")
+	public String selectAccount() {
+		return "customer/selectAccount";
+	}
 
 	@GetMapping("/edit-profile")
 	public String editProfile() {
@@ -71,6 +76,8 @@ public class CustomerDashController {
 		} catch (EmptyResultDataAccessException e) {
 			attributes.addFlashAttribute("message", "Updation failed. Please try again later");
 		}
+		
+		session.setAttribute("userDetails", user);
 
 		return "viewProfile";
 

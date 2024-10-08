@@ -3,11 +3,14 @@ package bank.app.dao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import bank.app.entities.Transaction;
 
 @Repository
 public class TransactionDaoImpl implements TransactionDao {
@@ -59,4 +62,13 @@ public class TransactionDaoImpl implements TransactionDao {
 
 		return jdbcTemplate.queryForObject(query, new Object[] { accountNumber }, Double.class);
 	}
+
+	@Override
+	public List<Transaction> getLastTenTransaction(String accountNumber) throws SQLException, IOException {
+
+		String query = "SELECT * FROM transaction WHERE account_no = ? ORDER BY transaction_time DESC LIMIT 10;";
+		
+		return jdbcTemplate.query(query,new TransactionRowMapper(), accountNumber);
+	}
+
 }
