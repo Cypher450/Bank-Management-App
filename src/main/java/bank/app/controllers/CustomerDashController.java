@@ -48,10 +48,10 @@ public class CustomerDashController {
 	private HttpSession session;
 
 	@GetMapping("/dashboard")
-	public String customerDashboard() {
-
-		return "customer/customerDash";
+	public String customerDashboard(HttpSession session) {
+	    return "customer/customerDash";
 	}
+
 	
 	@GetMapping("/select-account")
 	public String selectAccount() {
@@ -210,6 +210,16 @@ public class CustomerDashController {
 			System.out.println("Password is correct.");
 			try {
 				accountDaoImpl.insertCreatedAccount(account);
+				
+				List<Account> accountLists = accountDaoImpl.getAccountsByCustomerId(userDetails.getUserId());
+				System.out.println("account list : " + accountLists);
+				session.setAttribute("accountLists", accountLists);
+				
+				if(account.getAccountTypeId() == 2) {
+					session.setAttribute("currentAcc", account);
+				} else {
+					session.setAttribute("savingsAcc", account);
+				}
 				attributes.addFlashAttribute("message", "Account created successfully");
 				return "customer/customerDash";
 			} catch (SQLException | IOException e) {
@@ -230,13 +240,10 @@ public class CustomerDashController {
 	
 	@GetMapping("/full-account-details/{accountType}")
 	public ModelAndView fullSavingsAccDetails(@PathVariable String accountType,ModelAndView modelAndView) throws SQLException, IOException {
-		int typeId = 0;
 		if(accountType.equals("savings")) {
-			typeId = 1;
 			Account accountDetailsSavings = (Account)session.getAttribute("savingsAcc"); 
 			session.setAttribute("accountDetails", accountDetailsSavings);
 		} else {
-			typeId = 2;
 			Account accountDetailsCurrent = (Account)session.getAttribute("currentAcc"); 
 			session.setAttribute("accountDetails", accountDetailsCurrent);
 		}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -115,7 +116,21 @@ public class TransactionController {
 			try {
 				resultMessage = transactionDaoImpl.saveTransaction(accountNumber, amount, transactionTypeId);
 				updatedBalance = transactionDaoImpl.getAccountBalance(accountNumber);
+				
 
+				List<Account> accounts = accountDaoImpl.getAccountsByCustomerId(user.getUserId());
+				
+				for(Account account : accounts) {
+					if(account.getAccountNumber().equals(accountNumber)) {
+
+						if(account.getAccountTypeId() == 1) {
+							session.setAttribute("savingsAcc", account);
+						} else {
+							session.setAttribute("currentAcc", account);
+						}
+					}
+				}
+							
 				attributes.addFlashAttribute("message", resultMessage);
 			} catch (Exception e) {
 				attributes.addFlashAttribute("message", "An error occured while processing transaction.");

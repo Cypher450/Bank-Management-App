@@ -18,5 +18,6 @@
 			Your new balance is: ₹<%=updatedBalance%></p>
 		<a href="/customer/dashboard">Go back to Dashboard</a>
 	</div>
+	<%@include file="../message.jsp" %>
 </body>
 </html>

@@ -59,5 +59,6 @@
 	    <p>© 2024 XYZ Bank. All rights reserved.</p>
 	</footer>
 
+<%@include file="../message.jsp" %>
 	</body>
 	</html>

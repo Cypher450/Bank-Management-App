@@ -15,9 +15,8 @@
 </head>
 <body>
 	<%
-	Account savingsAccount = null;
 	User userDetails = (User) session.getAttribute("userDetails");
-	savingsAccount = (Account) session.getAttribute("savingsAcc");
+	 Account savingsAccount = (Account) session.getAttribute("savingsAcc");
 	
 	String accName = null;
 	if(savingsAccount.getAccountTypeId() == 1){
@@ -82,7 +81,7 @@
 				Statement</button>
 		</div>
 	</div>
-
+<%@include file="../message.jsp" %>
 	<footer>
 		<p>&copy; 2024 XYZ Bank. All rights reserved.</p>
 	</footer>

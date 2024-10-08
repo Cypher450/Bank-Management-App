@@ -32,8 +32,8 @@
 		<%
 		if (roleName.equals("customer")) {
 		%>
-		<a href="/customer/account-details">Accounts</a> 
-		<a href="/customer/select-account">Transactions</a>
+		<a href="/customer/account-details">Accounts</a> <a
+			href="/customer/select-account">Transactions</a>
 		<%
 		}
 		%>
@@ -87,6 +87,7 @@
 					value="Change Password" />
 			</div>
 		</form>
+		<%@include file="message.jsp"%>
 	</div>
 </body>
 </html>

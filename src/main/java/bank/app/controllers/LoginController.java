@@ -1,6 +1,7 @@
 package bank.app.controllers;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import bank.app.dao.AccountDaoImpl;
 import bank.app.dao.UserDaoImpl;
 import bank.app.entities.Account;
 import bank.app.entities.Roles;
-import bank.app.entities.Transaction;
 import bank.app.entities.User;
 import bank.app.utility.Password;
 import jakarta.servlet.http.HttpSession;
@@ -33,7 +33,7 @@ public class LoginController {
 	AccountDaoImpl accountDaoImpl;
 
 	@GetMapping("/openLoginPageCustomer")
-	public String openLoginPageCustomer() {
+	public String openLoginPageCustomer() {	
 		return "login";
 	}
 
@@ -52,6 +52,7 @@ public class LoginController {
 		return "login";
 	}
 
+	@SuppressWarnings("unused")
 	@PostMapping("/login")
 	public String login(@RequestParam String username, @RequestParam String password, Model model,
 			RedirectAttributes attributes) throws SQLException, IOException {
@@ -61,20 +62,45 @@ public class LoginController {
 		if (userDetails.getRoleId() == 4) {
 			List<Account> accountLists = accountDaoImpl.getAccountsByCustomerId(userDetails.getUserId());
 			
-			session.setAttribute("accountLists", accountLists);
+			if(accountLists.size() == 2) {
+				session.setAttribute("accountLists", accountLists);
 
-			Account savingsAcc = null;
-			Account currentAcc = null;
+				Account savingsAcc = null;
+				Account currentAcc = null;
 
-			if (accountLists.get(0).getAccountTypeId() == 1) {
-				savingsAcc = accountLists.get(0);
-				currentAcc = accountLists.get(1);
+				if (accountLists.get(0).getAccountTypeId() == 1) {
+					savingsAcc = accountLists.get(0);
+					currentAcc = accountLists.get(1);
+				} else {
+					savingsAcc = accountLists.get(1);
+					currentAcc = accountLists.get(0);
+				}
+				session.setAttribute("currentAcc", currentAcc);
+				session.setAttribute("savingsAcc", savingsAcc);
+				
+			} else if(accountLists.size() == 1){
+				
+				session.setAttribute("accountLists", accountLists);
+
+				Account savingsAcc = null;
+				Account currentAcc = null;
+
+				if (accountLists.get(0).getAccountTypeId() == 1) {
+					savingsAcc = accountLists.get(0);
+					session.setAttribute("savingsAcc", savingsAcc);
+				} else {
+					currentAcc = accountLists.get(0);
+					session.setAttribute("currentAcc", currentAcc);
+				}				
 			} else {
-				savingsAcc = accountLists.get(1);
-				currentAcc = accountLists.get(0);
+				
+				Account savingsAcc = null;
+				Account currentAcc = null;
+				session.setAttribute("currentAcc", currentAcc);
+				session.setAttribute("savingsAcc", savingsAcc);
+				
+				System.out.println("No account found!!");
 			}
-			session.setAttribute("currentAcc", currentAcc);
-			session.setAttribute("savingsAcc", savingsAcc);
 		}
 
 		System.out.println("\n login request data: " + username + ", " + password);
@@ -98,7 +124,6 @@ public class LoginController {
 				session.setMaxInactiveInterval(60 * 60);
 
 			} else {
-
 				System.out.println("User details are null");
 			}
 

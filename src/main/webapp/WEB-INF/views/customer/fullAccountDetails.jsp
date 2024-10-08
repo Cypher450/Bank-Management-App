@@ -72,7 +72,7 @@
 			</p>
 		</div>
 	</div>
-
+<%@include file="../message.jsp" %>s
 	<footer>
 		<p>&copy; 2024 XYZ Bank. All rights reserved.</p>
 	</footer>
