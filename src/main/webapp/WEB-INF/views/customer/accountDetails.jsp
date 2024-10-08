@@ -137,107 +137,15 @@
 					<strong>Account Number:</strong> N/A
 				</p>
 			</div>
-			
+
 		</div>
 	</div>
 	<%
-	} else {
-	%>
-
-	<div class="accounts-container">
-		<!-- Savings Account -->
-		<div class="account-card">
-			<h2>Savings Account</h2>
-			<div class="account-details">
-				<p>
-					<strong>Amount:</strong> N/A
-				</p>
-				<p>
-					<strong>IFSC Code:</strong> N/A
-				</p>
-				<p>
-					<strong>Account Number:</strong> N/A
-				</p>
-			</div>
-			
-		</div>
-
-		<!-- Current Account -->
-		<div class="account-card">
-			<h2>Current Account</h2>
-			<div class="account-details">
-				<p>
-					<strong>Amount:</strong>
-					<%=accDetailsCurrent.getBalance()%>
-				</p>
-				<p>
-					<strong>IFSC Code:</strong>
-					<%=accDetailsCurrent.getIfscCode()%>
-				</p>
-				<p>
-					<strong>Account Number:</strong>
-					<%=accDetailsCurrent.getAccountNumber()%>
-				</p>
-			</div>
-			<button class="btn"
-				onclick="window.location.href = '/customer/full-account-details/current';">View
-				Details</button>
-		</div>
-	</div>
-
-	<%
-	}
-	%>
-	<%
-	} else {
-	%>
-
-	<div class="accounts-container">
-		<!-- Savings Account -->
-		<div class="account-card">
-			<h2>Savings Account</h2>
-			<div class="account-details">
-				<p>
-					<strong>Amount:</strong>
-					N/A
-				</p>
-				<p>
-					<strong>IFSC Code:</strong>
-					N/A
-				</p>
-				<p>
-					<strong>Account Number:</strong>
-					N/A
-				</p>
-			</div>
-		</div>
-
-		<!-- Current Account -->
-		<div class="account-card">
-			<h2>Current Account</h2>
-			<div class="account-details">
-				<p>
-					<strong>Amount:</strong>
-					N/A
-				</p>
-				<p>
-					<strong>IFSC Code:</strong>
-					N/A
-				</p>
-				<p>
-					<strong>Account Number:</strong>
-					N/A
-				</p>
-			</div>
-			
-		</div>
-	</div>
-
-	<%
+	} 
 	}
 	%>
 
-<%@include file="../message.jsp" %>
+	<%@include file="../message.jsp"%>
 	<footer>
 		<p>&copy; 2024 XYZ Bank. All rights reserved.</p>
 	</footer>
