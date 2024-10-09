@@ -22,8 +22,8 @@
 
 	<!-- Navigation Bar -->
 	<nav>
-		<a href="/customer/dashboard">Dashboard</a> <a href="#">Accounts</a> <a
-			href="#">Transactions</a> <a href="/logout">Logout</a>
+		<a href="/customer/dashboard">Dashboard</a> <a href="/customer/account-details">Accounts</a> <a
+			href="/customer/select-account">Transactions</a> <a href="/logout">Logout</a>
 	</nav>
 
 	<!-- Deposit Form -->

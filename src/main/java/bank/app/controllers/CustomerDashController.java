@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import bank.app.dao.AccountDaoImpl;
+import bank.app.dao.TransactionDaoImpl;
 import bank.app.entities.Account;
 import bank.app.entities.AccountType;
 import bank.app.entities.Branch;
 import bank.app.entities.Customer;
+import bank.app.entities.Transaction;
 
 @Controller
 @RequestMapping("customer")
@@ -39,6 +41,9 @@ public class CustomerDashController {
 
 	@Autowired
 	UserDaoImpl userDaoImpl;
+	
+	@Autowired
+	TransactionDaoImpl transactionDaoImpl;
 
 	@Autowired
 	AccountDaoImpl accountDaoImpl;
@@ -54,6 +59,11 @@ public class CustomerDashController {
 	@GetMapping("/select-account")
 	public String selectAccount() {
 		return "customer/selectAccount";
+	}
+	
+	@GetMapping("/select-statement-account")
+	public String selectStmtAccount() {
+		return "customer/selectAccountAccStmt";
 	}
 
 	@GetMapping("/edit-profile")
@@ -239,6 +249,34 @@ public class CustomerDashController {
 		modelAndView.setViewName("customer/fullAccountDetails");
 
 		return modelAndView;
+	}
+	
+	@GetMapping("/account-Statement")
+	public String showStatement(@RequestParam String accountNo, Model model) throws SQLException, IOException {
+
+		List<Transaction> transactions = transactionDaoImpl.getTransaction(accountNo);
+		Double totalDebits = transactionDaoImpl.totalDebits(accountNo);
+		Double totalCredits = transactionDaoImpl.totalCredits(accountNo);
+		
+		model.addAttribute("totalCredits",totalCredits);
+		model.addAttribute("totalDebits",totalDebits);
+		
+		@SuppressWarnings("unused")
+		Account accountDetailsSavings = (Account) session.getAttribute("savingsAcc");
+		Account accountDetailsCurrent = (Account) session.getAttribute("currentAcc");
+		
+		System.out.println("savings : " + accountDetailsSavings.getAccountNumber());
+
+		if (accountDetailsSavings.getAccountNumber().equals(accountNo)) {
+			model.addAttribute("accountDetails", accountDetailsSavings);
+		} else {
+			model.addAttribute("accountDetails", accountDetailsCurrent);
+		}
+
+		model.addAttribute("transactions", transactions);
+
+		return "/customer/accountStatement";
+
 	}
 
 }

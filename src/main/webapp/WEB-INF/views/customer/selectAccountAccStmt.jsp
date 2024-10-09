@@ -12,9 +12,9 @@
 	<div class="container">
 		<h1>Select Account</h1>
 
-		<form id="accountForm" action="/transaction-history" method="GET">
+		<form id="accountForm" action="/customer/account-Statement" method="GET">
 			<%@include file = "selectAccContent.jsp"%>
-			<button type="submit" class="btn">View Transactions</button>
+			<button type="submit" class="btn">View Account Statement</button>
 		</form>
 	</div>
 	
