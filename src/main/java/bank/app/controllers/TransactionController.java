@@ -1,16 +1,15 @@
 package bank.app.controllers;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import bank.app.dao.AccountDaoImpl;
 import bank.app.dao.TransactionDaoImpl;
@@ -35,26 +34,26 @@ public class TransactionController {
 	private List<Account> accounts;
 	private int transactionTypeId;
 	private double updatedBalance;
-	private String resultMessage ;
+	private String resultMessage;
 
-	
 	@GetMapping("/transaction-history")
 	public String showTransactions(@RequestParam String accountNo, Model model) throws SQLException, IOException {
-		
+
 		System.out.println("transaction history called");
 		System.out.println("account no : " + accountNo);
-		
+
 		List<Transaction> transactions = transactionDaoImpl.getLastTenTransaction(accountNo);
-		
-		System.out.println("list of transaction : "+transactions);
-		
-		model.addAttribute("transactions",transactions);
-		
+
+		System.out.println("list of transaction : " + transactions);
+
+		model.addAttribute("transactions", transactions);
+
 		return "/customer/transactionHistory";
-		
+
 	}
+
 	
-	
+
 	@GetMapping("/deposit")
 	public String showDepositForm() {
 		User user = (User) session.getAttribute("userDetails");
@@ -101,7 +100,7 @@ public class TransactionController {
 		}
 
 		User user = (User) session.getAttribute("userDetails");
-		
+
 		String pwdSalt = user.getPasswordSalt();
 		String oldPwdHash = user.getPasswordHashed();
 
@@ -116,21 +115,20 @@ public class TransactionController {
 			try {
 				resultMessage = transactionDaoImpl.saveTransaction(accountNumber, amount, transactionTypeId);
 				updatedBalance = transactionDaoImpl.getAccountBalance(accountNumber);
-				
 
 				List<Account> accounts = accountDaoImpl.getAccountsByCustomerId(user.getUserId());
-				
-				for(Account account : accounts) {
-					if(account.getAccountNumber().equals(accountNumber)) {
 
-						if(account.getAccountTypeId() == 1) {
+				for (Account account : accounts) {
+					if (account.getAccountNumber().equals(accountNumber)) {
+
+						if (account.getAccountTypeId() == 1) {
 							session.setAttribute("savingsAcc", account);
 						} else {
 							session.setAttribute("currentAcc", account);
 						}
 					}
 				}
-							
+
 				attributes.addFlashAttribute("message", resultMessage);
 			} catch (Exception e) {
 				attributes.addFlashAttribute("message", "An error occured while processing transaction.");
@@ -142,7 +140,8 @@ public class TransactionController {
 
 		session.setAttribute("updatedBalance", updatedBalance);
 
-		return resultMessage.equalsIgnoreCase("Transaction successful.")?"customer/transactionSuccess":(transactionTypeId == 1 ? "redirect:/deposit" : "redirect:/withdraw");
-		
+		return resultMessage.equalsIgnoreCase("Transaction successful.") ? "customer/transactionSuccess"
+				: (transactionTypeId == 1 ? "redirect:/deposit" : "redirect:/withdraw");
+
 	}
 }

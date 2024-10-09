@@ -12,5 +12,12 @@ public interface TransactionDao {
 	double getAccountBalance(String accountNo) throws SQLException, IOException;
 	
 	List<Transaction> getLastTenTransaction(String accountNumber) throws SQLException, IOException;
+	
+	List<Transaction> getTransaction(String accountNumber) throws SQLException, IOException;
+	
+	Double totalCredits(String accountNumber) throws SQLException, IOException;
+	
+	Double totalDebits(String accountNumber) throws SQLException, IOException;
+
 
 }
