@@ -18,7 +18,7 @@
 	<!-- Navigation Bar -->
 	<nav>
 		<a href="/bank_mgr/dashboard">Dashboard</a> 
-		<a href="#employees">ManageEmployees</a> 
+		<a href="#employees">Manage Employees</a> 
 		<a href="#customers">Manage Customers</a> 
 		<a href="/bank_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
 		<a href="/logout">Logout</a>
