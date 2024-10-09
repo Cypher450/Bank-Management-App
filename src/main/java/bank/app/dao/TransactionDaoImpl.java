@@ -1,6 +1,7 @@
 package bank.app.dao;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import bank.app.entities.Transaction;
 
@@ -67,8 +67,32 @@ public class TransactionDaoImpl implements TransactionDao {
 	public List<Transaction> getLastTenTransaction(String accountNumber) throws SQLException, IOException {
 
 		String query = "SELECT * FROM transaction WHERE account_no = ? ORDER BY transaction_time DESC LIMIT 10;";
-		
-		return jdbcTemplate.query(query,new TransactionRowMapper(), accountNumber);
+
+		return jdbcTemplate.query(query, new TransactionRowMapper(), accountNumber);
+	}
+
+	@Override
+	public List<Transaction> getTransaction(String accountNumber) throws SQLException, IOException {
+
+		String query = "SELECT * FROM transaction WHERE account_no = ? ORDER BY transaction_time DESC;";
+
+		return jdbcTemplate.query(query, new TransactionRowMapper(), accountNumber);
+
+	}
+
+	@Override
+	public Double totalCredits(String accountNumber) throws SQLException, IOException {
+
+		String query = "SELECT SUM(amount) FROM transaction WHERE account_no = ? AND transaction_type_id = 1;";
+
+		return jdbcTemplate.queryForObject(query, Double.class, accountNumber);
+	}
+
+	@Override
+	public Double totalDebits(String accountNumber) throws SQLException, IOException {
+		String query = "SELECT SUM(amount) FROM transaction WHERE account_no = ? AND transaction_type_id = 2;";
+
+		return jdbcTemplate.queryForObject(query, Double.class, accountNumber);
 	}
 
 }
