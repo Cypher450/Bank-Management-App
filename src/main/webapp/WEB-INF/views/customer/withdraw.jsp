@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deposit Page</title>
-<link rel="stylesheet" href="/css/deposit.css">
+<link rel="stylesheet" href="/css/transaction.css">
 </head>
 <body>
 
@@ -35,7 +35,7 @@
 			<!-- Account Number Input -->
 			<div class="form-group">
 				<label for="accountNumber">Account Number</label> <select
-					id="accountNumber" name="accountNumber">
+					id="accountNumber" name="accountNumber" required="required">
 					<option value="" disabled selected>Select an Option</option>
 					<%
 					for (Account account : accounts) {

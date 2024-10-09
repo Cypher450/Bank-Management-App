@@ -63,6 +63,7 @@ public class BankEmpDashController {
 			RedirectAttributes attributes) throws SerialException, IOException, SQLException {
 
 		User user = (User) session.getAttribute("userDetails");
+		System.out.println("@PostMapping(/change-password) called:");
 
 		Map<String, Object> userData = userDaoImpl.fetchPwds(user.getUsername());
 
@@ -74,19 +75,16 @@ public class BankEmpDashController {
 		String currentPassHash = Password.generatePwdHash(newPass);
 
 		if (currentPassHash.equals(dbPwdHash)) {
-			System.out.println("equal");
 
 			String newPassHash = Password.generatePwdHash(pwdSalt + newPassword);
 
 			userDaoImpl.updatePassword(newPassHash, user);
-			attributes.addFlashAttribute("message", "Password changed successfully!");
+			attributes.addFlashAttribute("message", "Password changed successfully! Please login again");
+			return "redirect:/";
 
 		} else {
-			System.out.println("Old Password doesnt match!!");
 			attributes.addFlashAttribute("message", "Current password is not correct!");
-			return "changePassword";
+			return "redirect:/customer/change-password";
 		}
-
-		return "landingPage";
 	}
 }

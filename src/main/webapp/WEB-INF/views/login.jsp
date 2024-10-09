@@ -30,8 +30,9 @@
 		<p class="register-text">
 			Not Registered? <a href="/userRegistration">Register Now</a>
 		</p>
+		<%@include file="message.jsp"%>
 	</div>
-	<%@include file="message.jsp"%>
+
 	<footer class="footer">
 		<p>&copy; 2024 XYZ Bank. All rights reserved.</p>
 	</footer>

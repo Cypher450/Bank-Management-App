@@ -52,8 +52,6 @@ public class TransactionController {
 
 	}
 
-	
-
 	@GetMapping("/deposit")
 	public String showDepositForm() {
 		User user = (User) session.getAttribute("userDetails");
@@ -129,19 +127,26 @@ public class TransactionController {
 					}
 				}
 
+				if (resultMessage.equalsIgnoreCase("Transaction successful.")) {
+					session.setAttribute("updatedBalance", updatedBalance);
+				}
+
 				attributes.addFlashAttribute("message", resultMessage);
+				return resultMessage.equalsIgnoreCase("Transaction successful.") ? "redirect:/transactionSuccess"
+						: (transactionTypeId == 1 ? "redirect:/deposit" : "redirect:/withdraw");
 			} catch (Exception e) {
 				attributes.addFlashAttribute("message", "An error occured while processing transaction.");
+				return transactionTypeId == 1 ? "redirect:/deposit" : "redirect:/withdraw";
 			}
 		} else {
 			attributes.addFlashAttribute("message", "Password is incorrect");
 			return transactionTypeId == 1 ? "redirect:/deposit" : "redirect:/withdraw";
 		}
 
-		session.setAttribute("updatedBalance", updatedBalance);
+	}
 
-		return resultMessage.equalsIgnoreCase("Transaction successful.") ? "customer/transactionSuccess"
-				: (transactionTypeId == 1 ? "redirect:/deposit" : "redirect:/withdraw");
-
+	@GetMapping("/transactionSuccess")
+	public String showTransactionPage() {
+		return "customer/transactionSuccess";
 	}
 }

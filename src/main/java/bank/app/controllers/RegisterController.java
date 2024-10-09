@@ -78,12 +78,12 @@ public class RegisterController {
 		if (userId > 0) {
 			System.out.println("passed insertion");
 			attributes.addFlashAttribute("message", "Registration successful. You can now login after the approval.");
-			return "landingPage";
+			return "redirect:/";
 		} else {
 
 			System.out.println("failed insertion");
 			attributes.addFlashAttribute("message", "Something went wrong! Please try again.");
-			return "userRegistration";
+			return "redirect:/userRegistration";
 		}
 	}
 
