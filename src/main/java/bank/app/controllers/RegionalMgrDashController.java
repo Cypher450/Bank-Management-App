@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import bank.app.dao.UserDaoImpl;
 import bank.app.entities.User;
 import bank.app.utility.Password;
@@ -76,19 +75,16 @@ public class RegionalMgrDashController {
 		String currentPassHash = Password.generatePwdHash(newPass);
 
 		if (currentPassHash.equals(dbPwdHash)) {
-			System.out.println("equal");
 
 			String newPassHash = Password.generatePwdHash(pwdSalt + newPassword);
 
 			userDaoImpl.updatePassword(newPassHash, user);
-			attributes.addFlashAttribute("message", "Password changed successfully!");
+			attributes.addFlashAttribute("message", "Password changed successfully! Please login again");
+			return "redirect:/";
 
 		} else {
-			System.out.println("Old Password doesnt match!!");
 			attributes.addFlashAttribute("message", "Current password is not correct!");
-			return "changePassword";
+			return "redirect:/customer/change-password";
 		}
-
-		return "landingPage";
 	}
 }

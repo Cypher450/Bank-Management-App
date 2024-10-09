@@ -32,7 +32,6 @@ import bank.app.entities.Customer;
 @RequestMapping("customer")
 public class CustomerDashController {
 
-	
 	private User user;
 	private Customer customer;
 	private Branch branch;
@@ -49,10 +48,9 @@ public class CustomerDashController {
 
 	@GetMapping("/dashboard")
 	public String customerDashboard(HttpSession session) {
-	    return "customer/customerDash";
+		return "customer/customerDash";
 	}
 
-	
 	@GetMapping("/select-account")
 	public String selectAccount() {
 		return "customer/selectAccount";
@@ -73,14 +71,13 @@ public class CustomerDashController {
 		try {
 			user = userDaoImpl.modifyUser(updatedUser);
 			attributes.addFlashAttribute("message", "Profile updated successfully");
+			session.setAttribute("userDetails", user);
+			String redirectUrl = String.format("/customer/view-profile/%s", user.getUsername());
+			return "redirect:" + redirectUrl; // Redirect to the profile page with the username
 		} catch (EmptyResultDataAccessException e) {
 			attributes.addFlashAttribute("message", "Updation failed. Please try again later");
+			return "redirect:/customer/edit-profile";
 		}
-		
-		session.setAttribute("userDetails", user);
-
-		return "viewProfile";
-
 	}
 
 	@GetMapping("/change-password")
@@ -104,32 +101,26 @@ public class CustomerDashController {
 		String currentPassHash = Password.generatePwdHash(newPass);
 
 		if (currentPassHash.equals(dbPwdHash)) {
-			System.out.println("equal");
 
 			String newPassHash = Password.generatePwdHash(pwdSalt + newPassword);
 
 			userDaoImpl.updatePassword(newPassHash, user);
-			attributes.addFlashAttribute("message", "Password changed successfully!");
+			attributes.addFlashAttribute("message", "Password changed successfully! Please login again");
+			return "redirect:/";
 
 		} else {
-			System.out.println("Old Password doesnt match!!");
 			attributes.addFlashAttribute("message", "Current password is not correct!");
-			return "changePassword";
+			return "redirect:/customer/change-password";
 		}
-
-		return "landingPage";
 	}
 
 	@GetMapping("/view-profile/{username}")
 	public ModelAndView viewProfile(@PathVariable String username, ModelAndView modelAndView)
 			throws SQLException, IOException {
-		System.out.println("Session ID: " + session.getId());
-		System.out.println("Session Attributes: " + Collections.list(session.getAttributeNames()));
 
 //		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
 
 		User userDetails = (User) session.getAttribute("userDetails");
-		System.out.println("view : " + userDetails);
 
 		modelAndView.addObject("userDetails", userDetails);
 		modelAndView.setViewName("viewProfile");
@@ -139,13 +130,12 @@ public class CustomerDashController {
 	@GetMapping("/openAccountPage")
 	public String openAccountPage(Model model, RedirectAttributes attributes) {
 
-		System.out.println("openAccountPage opened");
 		try {
 			List<AccountType> listOfAccountTypes = userDaoImpl.fetchAllAccountTypes();
 			session.setAttribute("listOfAccountTypes", listOfAccountTypes);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			attributes.addFlashAttribute("message", "Something went wrong in fetching list of account types.");
+			return "redirect:/customer/dashboard";
 		}
 
 		return "customer/openAccount";
@@ -172,10 +162,8 @@ public class CustomerDashController {
 		try {
 			existingAccounts = accountDaoImpl.getAccountsByCustomerId(account.getCustomerId());
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 		}
 
-		System.out.println(existingAccounts.toString());
 
 		boolean hasSavingsAccount = false;
 		boolean hasCurrentAccount = false;
@@ -191,11 +179,13 @@ public class CustomerDashController {
 
 		// Validate account creation rules
 		if (account.getAccountTypeId() == 1 && hasSavingsAccount) {
-			attributes.addFlashAttribute("message", "You already have a savings account. You cannot open another.");
-			return "customer/openAccount";
+			attributes.addFlashAttribute("message",
+					"You already have a savings account. You cannot open another savings account.");
+			return "redirect:/customer/openAccountPage";
 		} else if (account.getAccountTypeId() == 2 && hasCurrentAccount) {
-			attributes.addFlashAttribute("message", "You already have a current account. You cannot open another.");
-			return "customer/openAccount";
+			attributes.addFlashAttribute("message",
+					"You already have a current account. You cannot open another current account.");
+			return "redirect:/customer/openAccountPage";
 		}
 
 		String pwdSalt = (String) userDetails.getPasswordSalt();
@@ -207,49 +197,47 @@ public class CustomerDashController {
 		String newPasswordHash = Password.generatePwdHash(newPassword);
 
 		if (newPasswordHash.equals(oldPwdHash)) {
-			System.out.println("Password is correct.");
 			try {
 				accountDaoImpl.insertCreatedAccount(account);
-				
+
 				List<Account> accountLists = accountDaoImpl.getAccountsByCustomerId(userDetails.getUserId());
-				System.out.println("account list : " + accountLists);
 				session.setAttribute("accountLists", accountLists);
-				
-				if(account.getAccountTypeId() == 2) {
+
+				if (account.getAccountTypeId() == 2) {
 					session.setAttribute("currentAcc", account);
 				} else {
 					session.setAttribute("savingsAcc", account);
 				}
 				attributes.addFlashAttribute("message", "Account created successfully");
-				return "customer/customerDash";
+				return "redirect:/customer/dashboard";
 			} catch (SQLException | IOException e) {
 				attributes.addFlashAttribute("message", "Something went wrong!");
-				return "customer/openAccount";
+				return "redirect:/customer/openAccountPage";
 			}
 		} else {
 			attributes.addFlashAttribute("message", "Password is incorrect");
-			return "customer/openAccount";
+			return "redirect:/customer/openAccountPage";
 		}
 	}
-	
+
 	@GetMapping("/account-details")
 	public String accountDetails() {
 		return "customer/accountDetails";
 	}
-	
-	
+
 	@GetMapping("/full-account-details/{accountType}")
-	public ModelAndView fullSavingsAccDetails(@PathVariable String accountType,ModelAndView modelAndView) throws SQLException, IOException {
-		if(accountType.equals("savings")) {
-			Account accountDetailsSavings = (Account)session.getAttribute("savingsAcc"); 
+	public ModelAndView fullSavingsAccDetails(@PathVariable String accountType, ModelAndView modelAndView)
+			throws SQLException, IOException {
+		if (accountType.equals("savings")) {
+			Account accountDetailsSavings = (Account) session.getAttribute("savingsAcc");
 			session.setAttribute("accountDetails", accountDetailsSavings);
 		} else {
-			Account accountDetailsCurrent = (Account)session.getAttribute("currentAcc"); 
+			Account accountDetailsCurrent = (Account) session.getAttribute("currentAcc");
 			session.setAttribute("accountDetails", accountDetailsCurrent);
 		}
-			
+
 		modelAndView.setViewName("customer/fullAccountDetails");
-		
+
 		return modelAndView;
 	}
 
