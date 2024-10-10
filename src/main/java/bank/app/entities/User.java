@@ -18,12 +18,16 @@ public class User {
 	private String passwordHashed;
 	private String password;
 	private int branchId;
+	private String activeStatus;
 
 	public User() {
 		super();
 	}
 
-	
+	// `user_id`, `username`, `first_name`, `last_name`, `email`, `phone`,
+	// `role_id`, `address`, `dob`, `approval_status`, `salt_password`,
+	// `hashed_password`, `active`
+
 	public User(int userId, String username, String firstName, String lastName, String email, String phone, int roleId,
 			String address, Date dateOfBirth, String approvalStatus, String passwordSalt, String passwordHashed) {
 		super();
@@ -41,7 +45,24 @@ public class User {
 		this.passwordHashed = passwordHashed;
 	}
 
-
+	public User(int userId, String username, String firstName, String lastName, String email, String phone, int roleId,
+			String address, Date dateOfBirth, String approvalStatus, String passwordSalt, String passwordHashed,
+			String activeStatus) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phone = phone;
+		this.roleId = roleId;
+		this.address = address;
+		this.dateOfBirth = dateOfBirth;
+		this.approvalStatus = approvalStatus;
+		this.passwordSalt = passwordSalt;
+		this.passwordHashed = passwordHashed;
+		this.activeStatus = activeStatus;
+	}
 
 	public User(String username, String firstName, String lastName, String email, String phone, int roleId,
 			String address, Date dateOfBirth, String approvalStatus, int branchId) {
@@ -77,8 +98,6 @@ public class User {
 		this.password = password;
 		this.branchId = branchId;
 	}
-
-	
 
 	public User(String username, String firstName, String lastName, String email, String phone, String address) {
 		super();
@@ -202,12 +221,21 @@ public class User {
 		this.branchId = branchId;
 	}
 
+	public String getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(String activeStatus) {
+		this.activeStatus = activeStatus;
+	}
+
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="
+		return "\n User [userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", email=" + email + ", phone=" + phone + ", roleId=" + roleId + ", address=" + address
 				+ ", dateOfBirth=" + dateOfBirth + ", approvalStatus=" + approvalStatus + ", passwordSalt="
 				+ passwordSalt + ", passwordHashed=" + passwordHashed + ", password=" + password + ", branchId="
-				+ branchId + "]";
+				+ branchId + ", activeStatus=" + activeStatus + "]";
 	}
+
 }
