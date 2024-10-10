@@ -77,7 +77,7 @@
 				Money</button>
 			<button class="btn" onclick="window.location.href = '/withdraw';">Withdraw
 				Money</button>
-			<button class="btn" onclick="window.location.href = '/customer/select-statement-account';"">Account
+			<button class="btn" onclick="window.location.href = '/customer/select-statement-account';">Account
 				Statement</button>
 		</div>
 	</div>

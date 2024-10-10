@@ -23,10 +23,18 @@ public class BankDaoImpl implements BankDao {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getBranchIdByUserId(int empUserId) throws SQLException, IOException {
+	public int getBranchIdByEmpId(int empUserId) throws SQLException, IOException {
 		// `bank_employee`
 		String sql = "SELECT branch_id FROM bank_employee WHERE be_id = ?";
 		return jdbcTemplate.queryForObject(sql, new Object[] { empUserId }, Integer.class);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public int getbranchIdByMgrId(int mgrUserId) throws SQLException, IOException {
+		// `bank_manager`
+		String sql = "SELECT branch_id FROM bank_manager WHERE bm_id = ?";
+		return jdbcTemplate.queryForObject(sql, new Object[] { mgrUserId }, Integer.class);
 	}
 
 }

@@ -46,9 +46,15 @@ public interface UserDao {
 
 	List<User> getCustomersByBranch(int branchId) throws SerialException, IOException, SQLException;
 
+	List<User> getEmployeesByBranch(int branchId) throws SerialException, IOException, SQLException;
+
 	User getUserById(int userId) throws SerialException, IOException, SQLException;
 
 	void updateCustomer(User user) throws SerialException, IOException, SQLException;
 
+	void updateEmployee(User user) throws SerialException, IOException, SQLException;
+
 	void softDeleteCustomer(int userId) throws SerialException, IOException, SQLException;
+
+	void softDeleteEmployee(int userId) throws SerialException, IOException, SQLException;
 }

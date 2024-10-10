@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import bank.app.dao.BankDaoImpl;
 import bank.app.dao.UserDaoImpl;
 import bank.app.entities.User;
@@ -109,7 +108,7 @@ public class BankEmpDashController {
 
 		// Get branch_id associated with the bank employee
 		try {
-			branchId = bankDaoImpl.getBranchIdByUserId(empUserId);
+			branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
