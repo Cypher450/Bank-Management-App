@@ -172,11 +172,11 @@ public class UserDaoImpl implements UserDao {
 		return getUserById(user.getUserId());
 	}
 
-	private User getUserById(int userId) {
-
-		String query = "SELECT * FROM user WHERE user_id = ?";
-
-		return jdbcTemplate.queryForObject(query, new ProfileDetailsRowMapper(), userId);
+	@SuppressWarnings("deprecation")
+	@Override
+	public User getUserById(int userId) {
+		String sql = "SELECT * FROM user WHERE user_id = ?";
+		return jdbcTemplate.queryForObject(sql, new Object[] { userId }, new UserRowMapper());
 	}
 
 	@Override
@@ -190,4 +190,26 @@ public class UserDaoImpl implements UserDao {
 		return getUserById(user.getUserId());
 	}
 
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<User> getCustomersByBranch(int branchId) throws SerialException, IOException, SQLException {
+		String sql = "SELECT u.* FROM user u " + "INNER JOIN customer c ON u.user_id = c.customer_id "
+				+ "WHERE c.branch_id = ? AND u.role_id = 4 AND u.approval_status = 'approved' AND u.active_status = 'true'";
+		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
+	}
+
+	@Override
+	public void updateCustomer(User user) throws SerialException, IOException, SQLException {
+		// `first_name`, `last_name`, `email`, `phone`, `address`, `dob`
+		String sql = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, dob = ? WHERE user_id = ?";
+		jdbcTemplate.update(sql, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),
+				user.getAddress(), user.getDateOfBirth(), user.getUserId());
+
+	}
+
+	@Override
+	public void softDeleteCustomer(int userId) throws SerialException, IOException, SQLException {
+		String sql = "UPDATE user SET active_status='false' WHERE user_id = ?";
+		jdbcTemplate.update(sql, userId);
+	}
 }
