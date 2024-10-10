@@ -17,10 +17,9 @@
 
 	<!-- Navigation Bar -->
 	<nav>
-		<a href="/bank_mgr/dashboard">Dashboard</a> 
-		<a href="#employees">Manage Employees</a> 
-		<a href="#customers">Manage Customers</a> 
-		<a href="/bank_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
+		<a href="/bank_mgr/dashboard">Dashboard</a> <a
+			href="/bank_mgr/manageEmployees">Manage Employees</a> <a
+			href="/bank_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
 		<a href="/logout">Logout</a>
 	</nav>
 
@@ -50,13 +49,14 @@
 		<section class="quick-actions">
 			<h3>Quick Actions</h3>
 			<div class="actions">
-				<button>Add New Employee</button>
-				<button>Manage Customers</button>
+				<button
+					onclick="window.location.href = '/bank_mgr/manageEmployees';">Manage
+					Customers</button>
 				<button>View Approval List</button>
 			</div>
 		</section>
 	</div>
-	<%@include file="../message.jsp" %>
+	<%@include file="../message.jsp"%>
 
 	<!-- Footer -->
 	<footer>

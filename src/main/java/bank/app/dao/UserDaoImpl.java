@@ -204,12 +204,33 @@ public class UserDaoImpl implements UserDao {
 		String sql = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, dob = ? WHERE user_id = ?";
 		jdbcTemplate.update(sql, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),
 				user.getAddress(), user.getDateOfBirth(), user.getUserId());
-
 	}
 
 	@Override
 	public void softDeleteCustomer(int userId) throws SerialException, IOException, SQLException {
 		String sql = "UPDATE user SET active_status='false' WHERE user_id = ?";
 		jdbcTemplate.update(sql, userId);
+	}
+
+	@Override
+	public void softDeleteEmployee(int userId) throws SerialException, IOException, SQLException {
+		String sql = "UPDATE user SET active_status='false' WHERE user_id = ?";
+		jdbcTemplate.update(sql, userId);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<User> getEmployeesByBranch(int branchId) throws SerialException, IOException, SQLException {
+		String sql = "SELECT u.* FROM user u " + "INNER JOIN bank_employee be ON u.user_id = be.be_id "
+				+ "WHERE be.branch_id = ? AND u.role_id = 3 AND u.approval_status = 'approved' AND u.active_status = 'true'";
+		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
+	}
+
+	@Override
+	public void updateEmployee(User user) throws SerialException, IOException, SQLException {
+		// `first_name`, `last_name`, `email`, `phone`, `address`, `dob`
+		String sql = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, dob = ? WHERE user_id = ?";
+		jdbcTemplate.update(sql, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),
+				user.getAddress(), user.getDateOfBirth(), user.getUserId());
 	}
 }
