@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regional Manager Dashboard</title>
-<link rel="stylesheet" href="../css/regionalmanagerdash.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/regionalmanagerdash.css">
 
 </head>
 <body>
@@ -18,9 +18,10 @@
 
 	<!-- Navigation Bar -->
 	<nav>
-		<a href="/regional_mgr/dashboard">Dashboard</a> <a href="#branches">Manage
-			Branches</a> <a href="#employees">Approval List</a> <a
-			href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
+		<a href="/regional_mgr/dashboard">Dashboard</a>
+		<a href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> 
+		<a href="#employees">Approval List</a> 
+		<a href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
 		<a href="/logout">Logout</a>
 	</nav>
 
@@ -59,7 +60,9 @@
 			<h3>Quick Actions</h3>
 			<div class="actions">
 				<button>Add New Branch</button>
-				<button>Manage Branches</button>
+				<button
+					onclick="window.location.href = '/regional_mgr/manageBranchManagers';">Manage
+					Bank Managers</button>
 				<button>Approval List</button>
 			</div>
 		</section>

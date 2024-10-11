@@ -7,12 +7,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Branch Manager Dashboard</title>
-<link rel="stylesheet" href="../css/branchmanagerdash.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/branchmanagerdash.css">
 </head>
 <body>
 
 	<header>
-		<h1>XYZ Bank - Branch Manager Dashboard</h1>
+		<h1>XYZ Bank - Bank Manager Dashboard</h1>
 	</header>
 
 	<!-- Navigation Bar -->
@@ -51,7 +51,7 @@
 			<div class="actions">
 				<button
 					onclick="window.location.href = '/bank_mgr/manageEmployees';">Manage
-					Customers</button>
+					Employees</button>
 				<button>View Approval List</button>
 			</div>
 		</section>

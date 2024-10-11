@@ -49,8 +49,6 @@ public class BankEmpDashController {
 	public ModelAndView viewProfile(@PathVariable String username, ModelAndView modelAndView)
 			throws SQLException, IOException {
 
-//		User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
-
 		User userDetails = (User) session.getAttribute("userDetails");
 
 		modelAndView.addObject("userDetails", userDetails);
@@ -94,18 +92,16 @@ public class BankEmpDashController {
 
 		} else {
 			attributes.addFlashAttribute("message", "Current password is not correct!");
-			return "redirect:/customer/change-password";
+			return "redirect:/bank_emp/change-password";
 		}
 	}
 
-	@GetMapping("manageCustomers")
+	@GetMapping("/manageCustomers")
 	public String manageCustomers() {
 		// Get bank employee details from session
 		User userDetails = (User) session.getAttribute("userDetails");
 		int empUserId = userDetails.getUserId();
-
-		System.out.println("empId in manageCustomers: " + empUserId);
-
+		
 		// Get branch_id associated with the bank employee
 		try {
 			branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
@@ -114,8 +110,6 @@ public class BankEmpDashController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("branchId associated with employee " + empUserId + " is " + branchId);
 
 		// Fetch customers associated with the same branch
 		try {
@@ -127,8 +121,6 @@ public class BankEmpDashController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("customers in manageCustomers: " + customers);
 
 		session.setAttribute("customers", customers);
 
@@ -144,7 +136,6 @@ public class BankEmpDashController {
 
 	@PostMapping("/updateCustomer")
 	public String updateCustomer(@ModelAttribute User customer, RedirectAttributes attributes) {
-		System.out.println("customer in updateCustomer: " + customer.getUserId());
 		try {
 			userDaoImpl.updateCustomer(customer);
 			attributes.addFlashAttribute("message", "Customer details updated successfully!");

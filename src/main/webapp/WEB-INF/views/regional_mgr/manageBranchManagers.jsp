@@ -8,19 +8,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manage Customers</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/manageemployees.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/managebranchmanager.css">
 </head>
 <body>
 
 	<!-- Navbar -->
 	<nav>
-		<a href="/bank_mgr/dashboard">Dashboard</a> <a href="/logout">Logout</a>
+		<a href="/regional_mgr/dashboard">Dashboard</a> <a href="/logout">Logout</a>
 	</nav>
 
-	<h2>Manage Employees</h2>
+	<h2>Manage Bank Managers</h2>
 
 	<%
-	List<User> employees = (List<User>) session.getAttribute("employees");
+	List<User> branchManagers = (List<User>) session.getAttribute("branchManagers");
 	%>
 
 	<table>
@@ -35,18 +35,18 @@
 		</thead>
 		<tbody>
 			<%
-			if (employees.size() != 0) {
-				for (User employee : employees) {
+			if (branchManagers.size() != 0) {
+				for (User branchManager : branchManagers) {
 			%>
 			<tr>
-				<td><%=employee.getUsername()%></td>
-				<td><%=employee.getFirstName()%></td>
-				<td><%=employee.getLastName()%></td>
-				<td><%=employee.getEmail()%></td>
+				<td><%=branchManager.getUsername()%></td>
+				<td><%=branchManager.getFirstName()%></td>
+				<td><%=branchManager.getLastName()%></td>
+				<td><%=branchManager.getEmail()%></td>
 				<td class="action-links"><a
-					href="/bank_mgr/editEmployee/<%=employee.getUserId()%>">Edit</a>
-					<button onclick="deleteEmployee(<%=employee.getUserId()%>)">Delete</button>
-					<a href="/bank_mgr/viewEmployeeInfo/<%=employee.getUserId()%>">View
+					href="/regional_mgr/editBankManager/<%=branchManager.getUserId()%>">Edit</a>
+					<button onclick="deleteBankManager(<%=branchManager.getUserId()%>)">Delete</button>
+					<a href="/regional_mgr/viewBankManagerInfo/<%=branchManager.getUserId()%>">View
 						Info</a></td>
 			</tr>
 			<%
@@ -54,7 +54,7 @@
 			} else {
 			%>
 			<tr>
-				<td colspan="5" class="empty-message">No Employees available.</td>
+				<td colspan="5" class="empty-message">No Branch Manager Available.</td>
 			</tr>
 			<%
 			}
@@ -63,9 +63,9 @@
 	</table>
 
 	<script>
-        function deleteEmployee(userId) {
-            if (confirm("Do you really want to delete this employee?")) {
-                fetch('/bank_mgr/deleteEmployee', {
+        function deleteBankManager(userId) {
+            if (confirm("Do you really want to delete this branch manager?")) {
+                fetch('/regional_mgr/deleteBankManager', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({ userId: userId })
@@ -73,7 +73,7 @@
                 .then(response => response.text())
                 .then(result => {
                     if (result === 'success') {
-                        alert("Employee deleted successfully!");
+                        alert("Bank Manager deleted successfully!");
                         location.reload();
                     }
                 });

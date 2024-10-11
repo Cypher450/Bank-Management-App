@@ -118,7 +118,12 @@ h2 {
 	border-radius: 8px;
 	font-size: 16px;
 	cursor: pointer;
-	width: 30%;
+	width: calc(30% - 10px); 
+	margin-right: 10px; 
+}
+
+.actions button:last-child {
+	margin-right: 0; 
 }
 
 .actions button:hover {

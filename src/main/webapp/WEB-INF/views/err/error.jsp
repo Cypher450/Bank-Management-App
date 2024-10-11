@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Oops! Something Went Wrong</title>
-    <link href="../css/error-style.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/css/error-style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <h1>Oops! Something Went Wrong</h1>

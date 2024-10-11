@@ -8,13 +8,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manage Customers</title>
-<link rel="stylesheet" href="../css/managecustomers.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/managecustomers.css">
 </head>
 <body>
 
 	<!-- Navbar -->
 	<nav>
-		<a href="/bank_emp/dashboard">Dashboard</a> <a href="/logout">Logout</a>
+		<a href="/bank_emp/dashboard">Dashboard</a> 
+		<a href="/logout">Logout</a>
 	</nav>
 
 	<h2>Manage Customers</h2>
@@ -35,7 +36,7 @@
 		</thead>
 		<tbody>
 			<%
-			if (customers != null) {
+			if (customers.size() != 0) {
 				for (User customer : customers) {
 			%>
 			<tr>
@@ -43,11 +44,11 @@
 				<td><%=customer.getFirstName()%></td>
 				<td><%=customer.getLastName()%></td>
 				<td><%=customer.getEmail()%></td>
-				<td class="action-links"><a
-					href="/bank_emp/editCustomer/<%=customer.getUserId()%>">Edit</a>
-					<button onclick="deleteCustomer(<%=customer.getUserId()%>)">Delete</button>
-					<a href="/bank_emp/viewCustomerInfo/<%=customer.getUserId()%>">View
-						Info</a></td>
+				<td class="action-links">
+				  <a href="/bank_emp/editCustomer/<%=customer.getUserId()%>">Edit</a>
+				  <button onclick="deleteCustomer(<%=customer.getUserId()%>)">Delete</button>
+				  <a href="/bank_emp/viewCustomerInfo/<%=customer.getUserId()%>">View Info</a>
+				</td>
 			</tr>
 			<%
 			}

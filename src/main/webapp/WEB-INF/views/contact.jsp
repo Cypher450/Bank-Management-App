@@ -8,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Contact Us - XYZ Bank</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/Contact.css">
+	href="${pageContext.request.contextPath}/css/contact.css">
 </head>
 <body>
 	<header>
