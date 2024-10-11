@@ -7,18 +7,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Branch Employee Dashboard</title>
-<link rel="stylesheet" href="../css/bankemployeedash.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bankemployeedash.css">
 
 </head>
 <body>
 
 	<header>
-		<h1>XYZ Bank - Branch Employee Dashboard</h1>
+		<h1>XYZ Bank - Bank Employee Dashboard</h1>
 	</header>
 
 	<!-- Navigation Bar -->
 	<nav>
-		<a href="#tasks">My Tasks</a> 
 		<a href="/bank_emp/manageCustomers">Manage Customers</a> 
 		<a href="#reports">Approve List</a> 
 		<a href="/bank_emp/view-profile/${userDetails.getUsername()}">Profile</a>
@@ -48,7 +47,7 @@
 			<h3>Quick Actions</h3>
 			<div class="actions">
 				<button>Add New Customer</button>
-				<button>View Customer Details</button>
+				<button onclick="window.location.href = '/bank_emp/manageCustomers';">Manage Customers</button>
 				<button>Approve List</button>
 			</div>
 		</section>

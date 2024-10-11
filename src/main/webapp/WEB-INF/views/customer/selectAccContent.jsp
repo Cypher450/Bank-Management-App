@@ -1,6 +1,4 @@
 <%@page import="bank.app.entities.Account"%>
-
-
 <%
 Account accDetailsSavings = (Account) session.getAttribute("savingsAcc");
 Account accDetailsCurrent = (Account) session.getAttribute("currentAcc");

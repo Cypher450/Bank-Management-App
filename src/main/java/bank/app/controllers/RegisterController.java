@@ -55,7 +55,7 @@ public class RegisterController {
 
 		String passwordHash = Password.generatePwdHash(newPassword);
 		user.setPasswordHashed(passwordHash);
-		user.setApprovalStatus("Pending");
+		user.setApprovalStatus("pending");
 
 		int userId = userDaoImpl.insertUser(user);
 

@@ -43,12 +43,10 @@ public class TransactionController {
 		System.out.println("account no : " + accountNo);
 
 		List<Transaction> transactions = transactionDaoImpl.getLastTenTransaction(accountNo);
-
-		System.out.println("list of transaction : " + transactions);
-
+		
 		model.addAttribute("transactions", transactions);
 
-		return "/customer/transactionHistory";
+		return "customer/transactionHistory";
 
 	}
 
