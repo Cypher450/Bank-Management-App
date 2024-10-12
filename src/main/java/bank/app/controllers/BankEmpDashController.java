@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import bank.app.dao.AccountDaoImpl;
 import bank.app.dao.BankDaoImpl;
 import bank.app.dao.UserDaoImpl;
+import bank.app.entities.Account;
+import bank.app.entities.Branch;
+import bank.app.entities.Customer;
 import bank.app.entities.User;
 import bank.app.utility.Password;
 import jakarta.servlet.http.HttpSession;
@@ -27,11 +31,17 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("bank_emp")
 public class BankEmpDashController {
 
+	private Customer customer;
+	private Branch branch;
+
 	@Autowired
 	UserDaoImpl userDaoImpl;
 
 	@Autowired
 	BankDaoImpl bankDaoImpl;
+
+	@Autowired
+	AccountDaoImpl accountDaoImpl;
 
 	@Autowired
 	private HttpSession session;
@@ -59,6 +69,148 @@ public class BankEmpDashController {
 	@GetMapping("/edit-profile")
 	public String editProfile() {
 		return "editProfile";
+	}
+
+	@GetMapping("/approval-list")
+	public String showApprovalList() {
+
+		User userDetails = (User) session.getAttribute("userDetails");
+		int empUserId = userDetails.getUserId();
+
+		System.out.println("empId in manageCustomers: " + empUserId);
+
+		try {
+			branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("branchId associated with employee " + empUserId + " is " + branchId);
+
+		// Fetch customers associated with the same branch
+		try {
+			customers = userDaoImpl.getCustomersApprovalList(branchId);
+		} catch (SerialException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("customers in manageCustomers: " + customers);
+
+		session.setAttribute("customerApprovalList", customers);
+
+		return "bank_emp/customerApprovalList";
+	}
+
+	@PostMapping("/customerApprove/{userId}")
+	public String customerApprove(@PathVariable int userId, RedirectAttributes attributes) {
+
+		System.out.println("post approval called : " + userId);
+
+		userDaoImpl.changeApprovalStatus(userId);
+
+		attributes.addFlashAttribute("message", "Customer Approved!");
+
+		return "redirect:/bank_emp/approval-list";
+	}
+
+	@PostMapping("/customerReject/{userId}")
+	public String customerReject(@PathVariable int userId, RedirectAttributes attributes) {
+
+		return "redirect:/bank_emp/approval-list";
+	}
+
+	@GetMapping("/open-acc-pending-list")
+	public String customerAccPendingList() {
+
+		User userDetails = (User) session.getAttribute("userDetails");
+		int empUserId = userDetails.getUserId();
+
+		System.out.println("empId in manageCustomers: " + empUserId);
+
+		try {
+			branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("branchId associated with employee " + empUserId + " is " + branchId);
+
+		// Fetch customers associated with the same branch
+		try {
+			customers = userDaoImpl.getCustomerPendingAccount(branchId);
+		} catch (SerialException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("customers in manageCustomers: " + customers);
+
+		session.setAttribute("savingsAccountOpeningList", customers);
+		return "bank_emp/openAccPendList";
+	}
+
+	@GetMapping("/employee-open-savings-account-form/{userId}")
+	public String empOpenSavingsAcc(@PathVariable int userId, Model model) {
+
+		model.addAttribute("SavingsAccountOpeningUserId", userId);
+
+		return "bank_emp/custOpenAccountSavings";
+	}
+
+	@PostMapping("/accountOpenSuccess/{custUserId}")
+	public String accountOpenSuccess(@PathVariable int custUserId, @ModelAttribute Account account,
+			RedirectAttributes attributes) {
+
+		User userDetails = (User) session.getAttribute("userDetails");
+		System.out.println("Cust acc details in emp dash : " + account);
+
+		try {
+			customer = userDaoImpl.fetchCustomerById(custUserId);
+			branch = userDaoImpl.fetchBranchById(customer.getBranchId());
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+
+		String accountNo = bank.app.utility.Account.accountNoGenerator(branch);
+		String ifscCode = bank.app.utility.Account.ifsccodegenerator(branch);
+
+		account.setAccountNumber(accountNo);
+		account.setIfscCode(ifscCode);
+		account.setCustomerId(customer.getCustomerId());
+
+		String pwdSalt = (String) userDetails.getPasswordSalt();
+		String oldPwdHash = (String) userDetails.getPasswordHashed();
+		String password = account.getPassword();
+
+		// Check credentials
+		String newPassword = pwdSalt + password;
+		String newPasswordHash = Password.generatePwdHash(newPassword);
+
+		if (newPasswordHash.equals(oldPwdHash)) {
+			try {
+				accountDaoImpl.insertCreatedAccount(account);
+
+				attributes.addFlashAttribute("message", "Account created successfully");
+				return "redirect:/bank_emp/open-acc-pending-list";
+			} catch (SQLException | IOException e) {
+				attributes.addFlashAttribute("message", "Something went wrong!");
+				return "redirect:/bank_emp/open-acc-pending-list";
+			}
+		} else {
+			attributes.addFlashAttribute("message", "Password is incorrect");
+			return "redirect:/bank_emp/employee-open-savings-account-form/" + custUserId;
+		}
 	}
 
 	@GetMapping("/change-password")
@@ -101,7 +253,7 @@ public class BankEmpDashController {
 		// Get bank employee details from session
 		User userDetails = (User) session.getAttribute("userDetails");
 		int empUserId = userDetails.getUserId();
-		
+
 		// Get branch_id associated with the bank employee
 		try {
 			branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
