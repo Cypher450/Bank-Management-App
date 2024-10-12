@@ -1,6 +1,7 @@
 package bank.app.dao;
 
 import java.io.IOException;
+
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import bank.app.entities.Account;
+import jakarta.transaction.Transactional;
 
 @Repository
 public class AccountDaoImpl implements AccountDao {
@@ -35,19 +37,23 @@ public class AccountDaoImpl implements AccountDao {
 		return imageBlob;
 	}
 
+	@Transactional
 	@Override
-	public int insertCreatedAccount(Account account) throws SQLException, IOException {
+	public void insertCreatedAccount(Account account) throws SQLException, IOException {
 		// `account_number`, `ifsc_code`, `customer_id`, `balance`, `opened_date`,
 		// `account_type_id`, `id_proof`
 
 		Blob idProof = getBlob(account.getIdProof());
 
-		String query = "INSERT INTO account "
+		String createAcc = "INSERT INTO account "
 				+ "(account_number, ifsc_code, customer_id, balance, opened_date, account_type_id, id_proof )"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?);";
+		String updateActiveStatus = "UPDATE user SET active_status = 'true' where user_id = ?";
 
-		return jdbcTemplate.update(query, account.getAccountNumber(), account.getIfscCode(), account.getCustomerId(),
+		jdbcTemplate.update(createAcc, account.getAccountNumber(), account.getIfscCode(), account.getCustomerId(),
 				account.getBalance(), account.getOpenedDate(), account.getAccountTypeId(), idProof);
+		
+		jdbcTemplate.update(updateActiveStatus, account.getCustomerId());
 	}
 
 	@Override

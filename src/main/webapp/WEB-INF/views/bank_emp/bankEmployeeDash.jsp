@@ -20,7 +20,7 @@
 	<nav>
 		<a href="#tasks">My Tasks</a> 
 		<a href="/bank_emp/manageCustomers">Manage Customers</a> 
-		<a href="#reports">Approve List</a> 
+		<a href="/bank_emp/approval-list">Approval List</a> 
 		<a href="/bank_emp/view-profile/${userDetails.getUsername()}">Profile</a>
 		<a href="/logout">Logout</a>
 	</nav>
@@ -47,9 +47,9 @@
 		<section class="quick-actions">
 			<h3>Quick Actions</h3>
 			<div class="actions">
-				<button>Add New Customer</button>
-				<button>View Customer Details</button>
-				<button>Approve List</button>
+				<button class="btn" onclick="window.location.href='/bank_emp/open-acc-pending-list';">Open Account</button>
+				<button class="btn" onclick="window.location.href='/bank_emp/manageCustomers';">Manage Customers</button>
+				<button class="btn" onclick="window.location.href='/bank_emp/approval-list';">Approve List</button>
 			</div>
 		</section>
 	</div>

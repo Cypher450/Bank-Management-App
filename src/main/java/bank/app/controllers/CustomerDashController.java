@@ -151,7 +151,7 @@ public class CustomerDashController {
 		return "customer/openAccount";
 	}
 
-	@PostMapping("openAccountSuccess")
+	@PostMapping("/openAccountSuccess")
 	public String openAccountSuccess(@ModelAttribute Account account, RedirectAttributes attributes) {
 		User userDetails = (User) session.getAttribute("userDetails");
 

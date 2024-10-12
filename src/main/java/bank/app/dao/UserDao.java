@@ -51,4 +51,8 @@ public interface UserDao {
 	void updateCustomer(User user) throws SerialException, IOException, SQLException;
 
 	void softDeleteCustomer(int userId) throws SerialException, IOException, SQLException;
+
+	List<User> getCustomersApprovalList(int branchId) throws SerialException, IOException, SQLException;
+
+	List<User> getCustomerPendingAccount(int branchId) throws SerialException, IOException, SQLException;
 }
