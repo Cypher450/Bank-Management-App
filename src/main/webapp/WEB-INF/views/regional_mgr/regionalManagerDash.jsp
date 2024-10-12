@@ -59,7 +59,9 @@
 		<section class="quick-actions">
 			<h3>Quick Actions</h3>
 			<div class="actions">
-				<button>Add New Branch</button>
+
+				<button onclick="window.location.href='/regional_mgr/addNewBranch';">Add New Branch</button>
+
 				<button
 					onclick="window.location.href = '/regional_mgr/manageBranchManagers';">Manage
 					Bank Managers</button>
