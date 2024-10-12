@@ -7,20 +7,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Branch Manager Dashboard</title>
-<link rel="stylesheet" href="../css/branchmanagerdash.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/branchmanagerdash.css">
 </head>
 <body>
 
 	<header>
-		<h1>XYZ Bank - Branch Manager Dashboard</h1>
+		<h1>XYZ Bank - Bank Manager Dashboard</h1>
 	</header>
 
 	<!-- Navigation Bar -->
 	<nav>
-		<a href="/bank_mgr/dashboard">Dashboard</a> 
-		<a href="#employees">Manage Employees</a> 
-		<a href="#customers">Manage Customers</a> 
-		<a href="/bank_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
+		<a href="/bank_mgr/dashboard">Dashboard</a> <a
+			href="/bank_mgr/manageEmployees">Manage Employees</a> <a
+			href="/bank_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
 		<a href="/logout">Logout</a>
 	</nav>
 
@@ -50,13 +49,14 @@
 		<section class="quick-actions">
 			<h3>Quick Actions</h3>
 			<div class="actions">
-				<button>Add New Employee</button>
-				<button>Manage Customers</button>
+				<button
+					onclick="window.location.href = '/bank_mgr/manageEmployees';">Manage
+					Employees</button>
 				<button>View Approval List</button>
 			</div>
 		</section>
 	</div>
-	<%@include file="../message.jsp" %>
+	<%@include file="../message.jsp"%>
 
 	<!-- Footer -->
 	<footer>

@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Customer Dashboard - XYZ Bank</title>
-<link rel="stylesheet" href="../css/customerdash.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/customerdash.css">
 </head>
 <body>
 	<%
@@ -77,7 +77,7 @@
 				Money</button>
 			<button class="btn" onclick="window.location.href = '/withdraw';">Withdraw
 				Money</button>
-			<button class="btn" onclick="window.location.href = '/customer/select-statement-account';"">Account
+			<button class="btn" onclick="window.location.href = '/customer/select-statement-account';">Account
 				Statement</button>
 		</div>
 	</div>

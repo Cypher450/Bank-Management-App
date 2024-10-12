@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Open Your Bank Account</title>
-<link rel="stylesheet" href="../css/openaccount.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/openaccount.css">
 </head>
 <body>
 	<header>

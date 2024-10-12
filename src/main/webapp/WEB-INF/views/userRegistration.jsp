@@ -11,7 +11,7 @@
 <title>Register Page</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/registration.css">
-<script src="../js/registerPageValidation.js"></script>
+<script src="${pageContext.request.contextPath}/js/registerPageValidation.js"></script>
 </head>
 <body>
 	<header>

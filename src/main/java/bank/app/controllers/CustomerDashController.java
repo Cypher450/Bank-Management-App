@@ -41,7 +41,7 @@ public class CustomerDashController {
 
 	@Autowired
 	UserDaoImpl userDaoImpl;
-	
+
 	@Autowired
 	TransactionDaoImpl transactionDaoImpl;
 
@@ -60,7 +60,7 @@ public class CustomerDashController {
 	public String selectAccount() {
 		return "customer/selectAccount";
 	}
-	
+
 	@GetMapping("/select-statement-account")
 	public String selectStmtAccount() {
 		return "customer/selectAccountAccStmt";
@@ -174,7 +174,6 @@ public class CustomerDashController {
 		} catch (Exception e) {
 		}
 
-
 		boolean hasSavingsAccount = false;
 		boolean hasCurrentAccount = false;
 
@@ -250,22 +249,20 @@ public class CustomerDashController {
 
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/account-Statement")
 	public String showStatement(@RequestParam String accountNo, Model model) throws SQLException, IOException {
 
 		List<Transaction> transactions = transactionDaoImpl.getTransaction(accountNo);
 		Double totalDebits = transactionDaoImpl.totalDebits(accountNo);
 		Double totalCredits = transactionDaoImpl.totalCredits(accountNo);
-		
-		model.addAttribute("totalCredits",totalCredits);
-		model.addAttribute("totalDebits",totalDebits);
-		
+
+		model.addAttribute("totalCredits", totalCredits);
+		model.addAttribute("totalDebits", totalDebits);
+
 		@SuppressWarnings("unused")
 		Account accountDetailsSavings = (Account) session.getAttribute("savingsAcc");
 		Account accountDetailsCurrent = (Account) session.getAttribute("currentAcc");
-		
-		System.out.println("savings : " + accountDetailsSavings.getAccountNumber());
 
 		if (accountDetailsSavings.getAccountNumber().equals(accountNo)) {
 			model.addAttribute("accountDetails", accountDetailsSavings);
@@ -275,7 +272,7 @@ public class CustomerDashController {
 
 		model.addAttribute("transactions", transactions);
 
-		return "/customer/accountStatement";
+		return "customer/accountStatement";
 
 	}
 

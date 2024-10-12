@@ -2,9 +2,13 @@ package bank.app.dao;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.sql.rowset.serial.SerialException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +22,7 @@ import bank.app.entities.Branch;
 import bank.app.entities.Customer;
 import bank.app.entities.Roles;
 import bank.app.entities.User;
+import jakarta.transaction.Transactional;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -204,12 +209,75 @@ public class UserDaoImpl implements UserDao {
 		String sql = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, dob = ? WHERE user_id = ?";
 		jdbcTemplate.update(sql, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),
 				user.getAddress(), user.getDateOfBirth(), user.getUserId());
-
 	}
 
 	@Override
+	public void updateBankManager(User user) throws SerialException, IOException, SQLException {
+		// `first_name`, `last_name`, `email`, `phone`, `address`, `dob`
+		String sql = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, dob = ? WHERE user_id = ?";
+		jdbcTemplate.update(sql, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),
+				user.getAddress(), user.getDateOfBirth(), user.getUserId());
+	}
+
+	@Transactional
+	@Override
 	public void softDeleteCustomer(int userId) throws SerialException, IOException, SQLException {
+		String sqlDeactivateUser = "UPDATE user SET active_status='false' WHERE user_id = ?";
+		String sqlDeleteAccounts = "DELETE FROM account WHERE customer_id = ?";
+
+		jdbcTemplate.update(sqlDeactivateUser, userId);
+		jdbcTemplate.update(sqlDeleteAccounts, userId);
+	}
+
+	@Override
+	public void softDeleteEmployee(int userId) throws SerialException, IOException, SQLException {
 		String sql = "UPDATE user SET active_status='false' WHERE user_id = ?";
 		jdbcTemplate.update(sql, userId);
 	}
+
+	@Override
+	public void softDeleteBankManager(int userId) throws SerialException, IOException, SQLException {
+		String sql = "UPDATE user SET active_status='false' WHERE user_id = ?";
+		jdbcTemplate.update(sql, userId);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<User> getEmployeesByBranch(int branchId) throws SerialException, IOException, SQLException {
+		String sql = "SELECT u.* FROM user u " + "INNER JOIN bank_employee be ON u.user_id = be.be_id "
+				+ "WHERE be.branch_id = ? AND u.role_id = 3 AND u.approval_status = 'approved' AND u.active_status = 'true'";
+		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
+	}
+
+	@Override
+	public void updateEmployee(User user) throws SerialException, IOException, SQLException {
+		// `first_name`, `last_name`, `email`, `phone`, `address`, `dob`
+		String sql = "UPDATE user SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, dob = ? WHERE user_id = ?";
+		jdbcTemplate.update(sql, user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),
+				user.getAddress(), user.getDateOfBirth(), user.getUserId());
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<User> getBranchManagersForRegion(List<Branch> branches)
+			throws SerialException, IOException, SQLException {
+		if (branches == null || branches.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		// Extract branch IDs from the List<Branch>
+		List<Integer> branchIds = branches.stream().map(Branch::getBranchId).collect(Collectors.toList());
+
+		// Create a comma-separated string of placeholders for the IN clause
+		String placeholders = String.join(",", Collections.nCopies(branchIds.size(), "?"));
+
+		String sql = "SELECT u.* FROM user u INNER JOIN bank_manager bm ON u.user_id = bm.bm_id WHERE bm.branch_id IN ("
+				+ placeholders + ") AND active_status='true'";
+
+		// Convert the List<Integer> to an array of Objects for the query
+		Object[] params = branchIds.toArray();
+
+		return jdbcTemplate.query(sql, params, new UserRowMapper());
+	}
+
 }

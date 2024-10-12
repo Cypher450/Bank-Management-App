@@ -6,45 +6,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>View Customer Info</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/viewcustomerinfo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/viewemployeeinfo.css">
 </head>
 <body>
 
-	<h2>Customer Information</h2>
+	<h2>Employee Information</h2>
 
 	<table>
 		<tr>
 			<th>Username</th>
-			<td>${customer.username}</td>
+			<td>${employee.username}</td>
 		</tr>
 		<tr>
 			<th>First Name</th>
-			<td>${customer.firstName}</td>
+			<td>${employee.firstName}</td>
 		</tr>
 		<tr>
 			<th>Last Name</th>
-			<td>${customer.lastName}</td>
+			<td>${employee.lastName}</td>
 		</tr>
 		<tr>
 			<th>Email</th>
-			<td>${customer.email}</td>
+			<td>${employee.email}</td>
 		</tr>
 		<tr>
 			<th>Phone</th>
-			<td>${customer.phone}</td>
+			<td>${employee.phone}</td>
 		</tr>
 		<tr>
 			<th>Address</th>
-			<td>${customer.address}</td>
+			<td>${employee.address}</td>
 		</tr>
 		<tr>
 			<th>Date of Birth</th>
-			<td>${customer.dateOfBirth}</td>
+			<td>${employee.dateOfBirth}</td>
 		</tr>
 	</table>
 
-	<a href="/bank_emp/manageCustomers" class="btn-back">Back to Manage
-		Customers</a>
+	<a href="/bank_mgr/manageEmployees" class="btn-back">Back to Manage
+		Employees</a>
 
 </body>
 </html>
