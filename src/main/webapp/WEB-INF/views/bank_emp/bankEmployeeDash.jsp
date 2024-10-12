@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Branch Employee Dashboard</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bankemployeedash.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/bankemployeedash.css">
 
 </head>
 <body>
@@ -18,9 +19,9 @@
 
 	<!-- Navigation Bar -->
 	<nav>
-		<a href="/bank_emp/manageCustomers">Manage Customers</a> 
-		<a href="#reports">Approve List</a> 
-		<a href="/bank_emp/view-profile/${userDetails.getUsername()}">Profile</a>
+		<a href="/bank_emp/manageCustomers">Manage Customers</a> <a
+			href="/bank_emp/approval-list">Approval List</a> <a
+			href="/bank_emp/view-profile/${userDetails.getUsername()}">Profile</a>
 		<a href="/logout">Logout</a>
 	</nav>
 
@@ -46,9 +47,16 @@
 		<section class="quick-actions">
 			<h3>Quick Actions</h3>
 			<div class="actions">
-				<button>Add New Customer</button>
-				<button onclick="window.location.href = '/bank_emp/manageCustomers';">Manage Customers</button>
-				<button>Approve List</button>
+
+				<button class="btn"
+					onclick="window.location.href='/bank_emp/open-acc-pending-list';">Open
+					Account</button>
+				<button class="btn"
+					onclick="window.location.href='/bank_emp/manageCustomers';">Manage
+					Customers</button>
+				<button class="btn"
+					onclick="window.location.href='/bank_emp/approval-list';">Approve
+					List</button>
 			</div>
 		</section>
 	</div>
@@ -57,6 +65,6 @@
 	<footer>
 		<p>© 2024 XYZ Bank. All rights reserved.</p>
 	</footer>
-	
+
 </body>
 </html>

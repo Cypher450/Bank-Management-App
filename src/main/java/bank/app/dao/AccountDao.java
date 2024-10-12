@@ -7,7 +7,7 @@ import java.util.List;
 import bank.app.entities.Account;
 
 public interface AccountDao {
-	int insertCreatedAccount(Account account) throws SQLException, IOException;
+	void insertCreatedAccount(Account account) throws SQLException, IOException;
 
 	List<Account> getAccountsByCustomerId(int customerId) throws SQLException, IOException;
 
