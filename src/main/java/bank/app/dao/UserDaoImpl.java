@@ -203,6 +203,21 @@ public class UserDaoImpl implements UserDao {
 		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
 	}
 
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<User> getCustomersApprovalList(int branchId) throws SerialException, IOException, SQLException {
+		String sql = "SELECT u.* FROM user u " + "INNER JOIN customer c ON u.user_id = c.customer_id "
+				+ "WHERE c.branch_id = ? AND u.role_id = 4 AND u.approval_status = 'pending' AND u.active_status = 'false'";
+		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<User> getCustomerPendingAccount(int branchId) throws SerialException, IOException, SQLException {
+		String sql = "SELECT u.* FROM user u INNER JOIN customer c ON u.user_id = c.customer_id WHERE c.branch_id = ? AND u.role_id = 4 AND u.approval_status = 'approved' AND u.active_status = 'false'";
+		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
+	}
+
 	@Override
 	public void updateCustomer(User user) throws SerialException, IOException, SQLException {
 		// `first_name`, `last_name`, `email`, `phone`, `address`, `dob`
@@ -278,6 +293,14 @@ public class UserDaoImpl implements UserDao {
 		Object[] params = branchIds.toArray();
 
 		return jdbcTemplate.query(sql, params, new UserRowMapper());
+	}
+
+	public void changeApprovalStatus(int userId) {
+
+		System.out.println("User approval id : " + userId);
+
+		String query = "UPDATE user SET approval_status = 'approved' WHERE user_id = ?;";
+		jdbcTemplate.update(query, userId);
 	}
 
 }

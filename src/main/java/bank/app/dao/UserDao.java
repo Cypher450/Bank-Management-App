@@ -63,4 +63,8 @@ public interface UserDao {
 	void softDeleteBankManager(int userId) throws SerialException, IOException, SQLException;
 
 	List<User> getBranchManagersForRegion(List<Branch> branches) throws SerialException, IOException, SQLException;
+
+	List<User> getCustomersApprovalList(int branchId) throws SerialException, IOException, SQLException;
+
+	List<User> getCustomerPendingAccount(int branchId) throws SerialException, IOException, SQLException;
 }
