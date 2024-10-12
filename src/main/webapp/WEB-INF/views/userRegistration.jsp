@@ -114,9 +114,6 @@
 					}
 					%>
 
-
-
-
 				</select>
 			</div>
 			<button type="submit">Register</button>
