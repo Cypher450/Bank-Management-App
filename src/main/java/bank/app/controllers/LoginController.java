@@ -3,10 +3,12 @@ package bank.app.controllers;
 import java.io.IOException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import bank.app.dao.AccountDaoImpl;
+import bank.app.dao.BankDaoImpl;
 import bank.app.dao.UserDaoImpl;
 import bank.app.entities.Account;
+import bank.app.entities.Branch;
 import bank.app.entities.Roles;
 import bank.app.entities.User;
 import bank.app.utility.Password;
@@ -25,43 +29,114 @@ import jakarta.servlet.http.HttpSession;
 public class LoginController {
 
 	@Autowired
-	UserDaoImpl userDaoImpl;
+	JdbcTemplate jdbcTemplate;
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
 	@Autowired
-	HttpSession session;
+	private UserDaoImpl userDaoImpl;
 	@Autowired
-	AccountDaoImpl accountDaoImpl;
+	private HttpSession session;
+	@Autowired
+	private AccountDaoImpl accountDaoImpl;
+
+	@Autowired
+	private BankDaoImpl bankDaoImpl;
+
+	private User userDetails;
+	private int branchId;
+	private List<User> customers;
+	private List<User> employees;
+	private int regionId;
+	private List<Branch> branches;
+	private List<User> branchManagers;
 
 	@GetMapping("/openLoginPageCustomer")
-	public String openLoginPageCustomer() {
+	public String openLoginPageCustomer(Model model) {
+		model.addAttribute("roleId", 4);
 		return "login";
 	}
 
 	@GetMapping("/openLoginPageBankEmp")
-	public String openLoginPageBankEmp() {
+	public String openLoginPageBankEmp(Model model) {
+		model.addAttribute("roleId", 3);
 		return "login";
 	}
 
 	@GetMapping("/openLoginPageBankMgr")
-	public String openLoginPageBankMgr() {
+	public String openLoginPageBankMgr(Model model) {
+		model.addAttribute("roleId", 2);
 		return "login";
 	}
 
 	@GetMapping("/openLoginPageRegionalMgr")
-	public String openLoginPageRegionalMgr() {
+	public String openLoginPageRegionalMgr(Model model) {
+		model.addAttribute("roleId", 1);
 		return "login";
 	}
 
 	@SuppressWarnings("unused")
 	@PostMapping("/login")
-	public String login(@RequestParam String username, @RequestParam String password, Model model,
-			RedirectAttributes attributes) throws SQLException, IOException {
+	public String login(@RequestParam String username, @RequestParam String password, @RequestParam int roleId,
+			RedirectAttributes attributes, Model model) throws SQLException, IOException {
 
-		try {
-			User userDetails = userDaoImpl.fetchAllDetails(username).get(0);
+		// Your authentication logic here
+		boolean isAuthenticated = authenticateUser(username, roleId);
+
+		if (isAuthenticated) {
+			userDetails = userDaoImpl.fetchAllDetails(username).get(0);
+			if (roleId == 3) {
+				int empUserId = userDetails.getUserId();
+				branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
+				customers = userDaoImpl.getCustomersByBranch(branchId);
+				session.setAttribute("customers", customers);
+			} else if (roleId == 2) {
+				int mgrUserId = userDetails.getUserId();
+				branchId = bankDaoImpl.getbranchIdByMgrId(mgrUserId);
+				customers = userDaoImpl.getCustomersByBranch(branchId);
+				session.setAttribute("customers", customers);
+				employees = userDaoImpl.getEmployeesByBranch(branchId);
+				session.setAttribute("employees", employees);
+			} else if (roleId == 1) {
+				int regionalMgrUserId = userDetails.getUserId();
+				regionId = bankDaoImpl.getRegionIdByMgrId(regionalMgrUserId);
+				branches = bankDaoImpl.getBranchesByRegionId(regionId);
+				session.setAttribute("branches", branches);
+				branchManagers = userDaoImpl.getBranchManagersForRegion(branches);
+				session.setAttribute("branchManagers", branchManagers);
+
+				List<User> allCustomers = new ArrayList<>();
+				List<User> allEmployees = new ArrayList<>();
+
+				// Loop through each branch and get customers and employees by branchId
+				for (Branch branch : branches) {
+					int branchId = branch.getBranchId();
+
+					// Get customers for the current branch
+					List<User> filteredCustomers = userDaoImpl.getCustomersByBranch(branchId);
+					allCustomers.addAll(filteredCustomers); // Add filtered customers to allCustomers list
+
+					// Get employees for the current branch
+					List<User> filteredEmployees = userDaoImpl.getEmployeesByBranch(branchId);
+					allEmployees.addAll(filteredEmployees); // Add filtered employees to allEmployees list
+				}
+
+				System.out.println("Total employees: " + allEmployees);
+				System.out.println("Total customers: " + allCustomers);
+
+				// Set the consolidated lists in the session
+				session.setAttribute("customers", allCustomers);
+				session.setAttribute("employees", allEmployees);
+			}
 
 			if (userDetails.getRoleId() == 4) {
 				List<Account> accountLists = accountDaoImpl.getAccountsByCustomerId(userDetails.getUserId());
-
 				if (accountLists.size() == 2) {
 					session.setAttribute("accountLists", accountLists);
 
@@ -107,12 +182,8 @@ public class LoginController {
 			String newPasswordHash = Password.generatePwdHash(newPassword);
 
 			if (newPasswordHash.equals(oldPwdHash)) {
-
 				if (userDetails != null) {
 					session.setAttribute("userDetails", userDetails);
-					session.setMaxInactiveInterval(60 * 60);
-				} else {
-					System.out.println("User details are null");
 				}
 
 				model.addAttribute("userData", userData);
@@ -120,39 +191,57 @@ public class LoginController {
 				model.addAttribute("userDetails", userDetails);
 
 				Roles role = userDaoImpl.fetchRoleById(userDetails.getRoleId());
-				System.out.println("Role: " + role);
 
 				session.setAttribute("role", role);
 
-				int roleId = (Integer) userData.get("role_id");
-				if (roleId == 1) {
-					attributes.addFlashAttribute("message", "Successfully logged in as Regional Manager.");
-					return "redirect:/regional_mgr/dashboard";
-				} else if (roleId == 2) {
-					attributes.addFlashAttribute("message", "Successfully logged in as Bank Manager.");
-					return "redirect:/bank_mgr/dashboard";
-				} else if (roleId == 3) {
-					attributes.addFlashAttribute("message", "Successfully logged in as Bank Employee.");
-					return "redirect:/bank_emp/dashboard";
-				} else if (roleId == 4) {
-					attributes.addFlashAttribute("message", "Successfully logged in as Customer.");
-					return "redirect:/customer/dashboard";
+				if (userDetails.getApprovalStatus().equals("approved")
+						&& userDetails.getActiveStatus().equals("true")) {
+					switch (roleId) {
+					case 4:
+						return "redirect:/customer/dashboard";
+					case 3:
+						return "redirect:/bank_emp/dashboard";
+					case 2:
+						return "redirect:/bank_mgr/dashboard";
+					case 1:
+						return "redirect:/regional_mgr/dashboard";
+					}
+				} else {
+					attributes.addFlashAttribute("message", "You have not been approved yet, please try again later!");
+					return getRedirectUrlByRoleId(roleId);
 				}
 			} else {
-				attributes.addFlashAttribute("message", "Password is incorrect.");
-				return "redirect:/openLoginPageCustomer";
+				attributes.addFlashAttribute("message", "Invalid Password");
+				return getRedirectUrlByRoleId(roleId);
 			}
-		} catch (IndexOutOfBoundsException e) {
-			// Handle case when username is incorrect
-			attributes.addFlashAttribute("message", "Username not found.");
-			return "redirect:/openLoginPageCustomer"; // Return to login page
-		} catch (Exception e) {
-			// Handle any other exceptions that might occur
-			attributes.addFlashAttribute("message", "An error occurred. Please try again.");
-			return "redirect:/openLoginPageCustomer"; // Return to login page
+
+		} else {
+			attributes.addFlashAttribute("message", "Invalid username");
+			return getRedirectUrlByRoleId(roleId);
 		}
 
-		return "login"; // Default return in case of error
+		return "landingPage";
+	}
 
+	private boolean authenticateUser(String username, int roleId) {
+		String sql = "SELECT COUNT(*) FROM user WHERE username = ? AND role_id = ?";
+		@SuppressWarnings("deprecation")
+		Integer count = jdbcTemplate.queryForObject(sql, new Object[] { username, roleId }, Integer.class);
+		return count != null && count > 0;
+	}
+
+	private String getRedirectUrlByRoleId(int roleId) {
+		switch (roleId) {
+		case 1:
+			return "redirect:/openLoginPageRegionalMgr";
+		case 2:
+			return "redirect:/openLoginPageBankMgr";
+		case 3:
+			return "redirect:/openLoginPageBankEmp";
+		case 4:
+			return "redirect:/openLoginPageCustomer";
+		default:
+			return "redirect:/";
+		}
 	}
 }

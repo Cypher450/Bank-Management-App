@@ -17,6 +17,7 @@
 
 		<h2>Login</h2>
 		<form action="/login" method="POST">
+			<input type="hidden" name="roleId" value="${roleId}" />
 			<div class="input-group">
 				<label for="username">Username</label> <input type="text"
 					id="username" name="username" required>
