@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Branch Manager Dashboard</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/branchmanagerdash.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/branchmanagerdash.css">
 </head>
 <body>
 
@@ -32,15 +33,11 @@
 			<div class="stats">
 				<div class="stat">
 					<h4>Total Customers</h4>
-					<p>320</p>
+					<p>${customers.size()}</p>
 				</div>
 				<div class="stat">
 					<h4>Total Employees</h4>
-					<p>25</p>
-				</div>
-				<div class="stat">
-					<h4>Branch Performance</h4>
-					<p>85%</p>
+					<p>${employees.size()}</p>
 				</div>
 			</div>
 		</section>

@@ -34,11 +34,7 @@
 			<div class="stats">
 				<div class="stat">
 					<h4>Total Customers Served</h4>
-					<p>150</p>
-				</div>
-				<div class="stat">
-					<h4>Pending Tasks</h4>
-					<p>5</p>
+					<p>${customers.size()}</p>
 				</div>
 			</div>
 		</section>

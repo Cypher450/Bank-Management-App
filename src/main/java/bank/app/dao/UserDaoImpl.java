@@ -133,7 +133,7 @@ public class UserDaoImpl implements UserDao {
 
 		String query = "SELECT * FROM user WHERE username = ?";
 
-		return jdbcTemplate.query(query, new ProfileDetailsRowMapper(), username);
+		return jdbcTemplate.query(query, new UserRowMapper(), username);
 	}
 
 	@Override
