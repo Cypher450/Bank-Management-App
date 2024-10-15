@@ -19,17 +19,11 @@
 
 	<!-- Navigation Bar -->
 	<nav>
-<<<<<<< HEAD
+
 		<a href="/regional_mgr/dashboard">Dashboard</a>
 		<a href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> 
 		<a href="/regional_mgr/managerApprovalList">Approval List</a> 
 		<a href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
-=======
-		<a href="/regional_mgr/dashboard">Dashboard</a> <a
-			href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> <a
-			href="#employees">Approval List</a> <a
-			href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
->>>>>>> 2f46453daaa3dc0d983132527cafa0bbbaa1f3c1
 		<a href="/logout">Logout</a>
 	</nav>
 
