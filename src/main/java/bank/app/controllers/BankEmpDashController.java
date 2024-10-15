@@ -122,6 +122,10 @@ public class BankEmpDashController {
 	@PostMapping("/customerReject/{userId}")
 	public String customerReject(@PathVariable int userId, RedirectAttributes attributes) {
 
+		userDaoImpl.changeApprovalStatusReject(userId);
+
+		attributes.addFlashAttribute("message", "Customer Rejected!");
+		
 		return "redirect:/bank_emp/approval-list";
 	}
 

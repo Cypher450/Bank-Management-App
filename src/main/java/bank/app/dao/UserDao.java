@@ -67,4 +67,16 @@ public interface UserDao {
 	List<User> getCustomersApprovalList(int branchId) throws SerialException, IOException, SQLException;
 
 	List<User> getCustomerPendingAccount(int branchId) throws SerialException, IOException, SQLException;
+
+	List<User> getEmployeeApprovalList(int branchId) throws SerialException, IOException, SQLException;
+	
+	List<User> getManagerApprovalList() throws SerialException, IOException, SQLException;
+
+	void changeMgrApprovalStatus(int userId);
+
+	void changeEmpApprovalStatus(int userId);
+
+	void changeApprovalStatus(int userId);
+
+	void changeApprovalStatusReject(int userId);
 }

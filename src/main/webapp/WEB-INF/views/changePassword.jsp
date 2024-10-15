@@ -10,19 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Change Password</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/changepassword.css">
-
-    <script>
-        function validatePassword() {
-            const newPassword = document.getElementById("newPassword").value;
-            const confirmPassword = document.getElementById("confirmPassword").value;
-
-            if (newPassword !== confirmPassword) {
-                alert("New Password and Confirm Password do not match.");
-                return false; 
-            }
-            return true; 
-        }
-    </script>
+	<script src="${pageContext.request.contextPath}/js/changePasswordValidation.js"></script>
 </head>
 <body>
     <header>
@@ -44,21 +32,23 @@
             <h2>Update Your Password</h2>
         </div>
 
-        <form action="/customer/change-password" method="POST" onsubmit="return validatePassword()">
+        <form action="/customer/change-password" method="POST" onsubmit="return newPasswordValidation()">
             <div class="password-info">
                 <label for="current_password">Current Password:</label>
                 <input type="password" id="currentPassword" name="currentPassword" required>
             </div>
 
-            <div class="password-info">
-                <label for="new_password">New Password:</label>
-                <input type="password" id="newPassword" name="newPassword" required>
-            </div>
+			<div class="password-info">
+			    <label for="new_password">New Password:</label>
+			    <input type="password" id="newPassword" name="newPassword" required>
+				<b><span id="newPasswordError" style="color: red;"></span></b>
+			</div>
 
             <div class="password-info">
                 <label for="confirm_password">Confirm New Password:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
             </div>
+			
 
             <div class="btn-container">
                 <button type="submit" class="btn">Change Password</button>

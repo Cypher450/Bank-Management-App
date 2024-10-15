@@ -12,10 +12,7 @@
 <script>
 	function handleApproval(button) {
 		const actionCell = button.closest('td');
-
-		button.textContent = 'Processing...';
 		button.disabled = true;
-
 		return true; 
 	}
 </script>

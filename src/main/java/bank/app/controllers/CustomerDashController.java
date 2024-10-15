@@ -96,8 +96,13 @@ public class CustomerDashController {
 	}
 
 	@PostMapping("/change-password")
-	public String changePassword(@RequestParam String newPassword, @RequestParam String currentPassword, Model model,
+	public String changePassword(@RequestParam String newPassword, @RequestParam String currentPassword,@RequestParam String confirmPassword, Model model,
 			RedirectAttributes attributes) throws SerialException, IOException, SQLException {
+		
+		if(newPassword.equals(currentPassword)) {
+			attributes.addFlashAttribute("message","Current Password and New Password Should not be equal");
+			return "redirect:/customer/change-password";
+		}
 
 		User user = (User) session.getAttribute("userDetails");
 

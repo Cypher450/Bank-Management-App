@@ -213,6 +213,13 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("deprecation")
 	@Override
+	public List<User> getEmployeeApprovalList(int branchId) throws SerialException, IOException, SQLException {
+		String sql = "SELECT u.* FROM user u INNER JOIN bank_employee be ON u.user_id = be.be_id WHERE be.branch_id = ? AND u.role_id = 3 AND u.approval_status = 'pending' AND u.active_status = 'false';";
+		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
 	public List<User> getCustomerPendingAccount(int branchId) throws SerialException, IOException, SQLException {
 		String sql = "SELECT u.* FROM user u INNER JOIN customer c ON u.user_id = c.customer_id WHERE c.branch_id = ? AND u.role_id = 4 AND u.approval_status = 'approved' AND u.active_status = 'false'";
 		return jdbcTemplate.query(sql, new Object[] { branchId }, new UserRowMapper());
@@ -295,12 +302,46 @@ public class UserDaoImpl implements UserDao {
 		return jdbcTemplate.query(sql, params, new UserRowMapper());
 	}
 
+	@Override
 	public void changeApprovalStatus(int userId) {
 
 		System.out.println("User approval id : " + userId);
 
 		String query = "UPDATE user SET approval_status = 'approved' WHERE user_id = ?;";
 		jdbcTemplate.update(query, userId);
+	}
+
+	@Override
+	public void changeEmpApprovalStatus(int userId) {
+
+		System.out.println("User approval id : " + userId);
+
+		String query = "UPDATE user SET approval_status = 'approved', active_status= 'true' WHERE user_id = ?;";
+		jdbcTemplate.update(query, userId);
+	}
+
+	@Override
+	public void changeMgrApprovalStatus(int userId) {
+
+		System.out.println("User approval id : " + userId);
+
+		String query = "UPDATE user SET approval_status = 'approved', active_status= 'true' WHERE user_id = ?;";
+		jdbcTemplate.update(query, userId);
+	}
+	
+	@Override
+	public void changeApprovalStatusReject(int userId) {
+
+		String query = "UPDATE user SET approval_status = 'rejected', active_status= 'false' WHERE user_id = ?;";
+		jdbcTemplate.update(query, userId);
+	}
+
+	@Override
+	public List<User> getManagerApprovalList() throws SerialException, IOException, SQLException {
+
+		String sql = "SELECT * FROM user  WHERE  role_id = 2 AND  approval_Status = 'pending';";
+
+		return jdbcTemplate.query(sql, new UserRowMapper());
 	}
 
 }

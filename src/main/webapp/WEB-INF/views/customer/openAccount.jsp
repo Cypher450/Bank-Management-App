@@ -10,6 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Open Your Bank Account</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/openaccount.css">
+<script src="${pageContext.request.contextPath}/js/openAccountValidation.js"></script>
 </head>
 <body>
 	<header>
@@ -31,7 +32,7 @@
 		</div>
 
 		<form action="openAccountSuccess" Method="POST"
-			enctype="multipart/form-data">
+			enctype="multipart/form-data" onsubmit="return openAccountValidation()">
 			<div class="form-group">
 				<label for="balance">Initial Deposit (Minimum 1000):</label> <input
 					type="number" id="balance" name="balance" min="1000" required>
@@ -66,7 +67,8 @@
 
 			<div class="form-group">
 				<label for="idProof">ID Proof:</label> <input type="file"
-					id="idProof" name="idProof" required>
+					id="idProof" name="idProof">
+					<b><span id="idProofError" style="color: red;"></span></b>
 			</div>
 
 			<div class="form-group">

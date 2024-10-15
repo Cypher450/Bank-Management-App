@@ -25,6 +25,8 @@ import bank.app.dao.UserDaoImpl;
 import bank.app.entities.User;
 import bank.app.utility.Password;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("bank_mgr")
@@ -175,5 +177,65 @@ public class BankMgrDashController {
 
 		return "bank_mgr/viewEmployeeInfo";
 	}
+	
+	
+	@GetMapping("/employeeApprovalList")
+	public String getMethodName() {
+		User userDetails = (User) session.getAttribute("userDetails");
+		int mgrUserId = userDetails.getUserId();
+
+		System.out.println("empId in manageCustomers: " + mgrUserId);
+
+		try {
+			branchId = bankDaoImpl.getbranchIdByMgrId(mgrUserId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("branchId associated with manager " + mgrUserId + " is " + branchId);
+
+		// Fetch employees associated with the same branch
+		try {
+			employees = userDaoImpl.getEmployeeApprovalList(branchId);
+		} catch (SerialException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("employees in manageCustomers: " + employees);
+
+		session.setAttribute("employeeApprovalList", employees);		
+		
+		return "bank_mgr/employeeApprovalList";
+	}
+	
+	@PostMapping("/employeeApprove/{userId}")
+	public String customerApprove(@PathVariable int userId, RedirectAttributes attributes) {
+
+		System.out.println("post approval called : " + userId);
+
+		userDaoImpl.changeEmpApprovalStatus(userId);
+
+		attributes.addFlashAttribute("message", "Employee Approved!");
+
+		return "redirect:/bank_mgr/employeeApprovalList";
+	}
+	
+	@PostMapping("/employeeReject/{userId}")
+	public String employeeReject(@PathVariable int userId, RedirectAttributes attributes) {
+
+		userDaoImpl.changeApprovalStatusReject(userId);
+
+		attributes.addFlashAttribute("message", "Employee Rejected!");
+		
+		return "redirect:/bank_mgr/employeeApprovalList";
+	}
+	
+	
 
 }
