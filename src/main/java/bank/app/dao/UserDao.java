@@ -18,6 +18,10 @@ public interface UserDao {
 
 	int insertUser(User user) throws SQLException, IOException;
 
+	public boolean usernameExists(String username) throws SQLException, IOException;
+
+	public boolean isBankManagerAssigned(int branchId) throws SQLException, IOException;
+
 	List<Roles> fetchAllRoles() throws SQLException, IOException;
 
 	Roles fetchRoleById(int roleId) throws SQLException, IOException;

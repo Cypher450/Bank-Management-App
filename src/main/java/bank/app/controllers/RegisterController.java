@@ -18,6 +18,8 @@ import bank.app.entities.User;
 import bank.app.utility.Password;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,8 +45,37 @@ public class RegisterController {
 		return modelAndView;
 	}
 
+	@GetMapping("/checkUsername")
+	@ResponseBody
+	public String checkUsername(@RequestParam("username") String username) {
+		boolean exists = false;
+		try {
+			exists = userDaoImpl.usernameExists(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return exists ? "exists" : "available";
+	}
+
+	@GetMapping("/checkBankManager")
+	@ResponseBody
+	public String checkBankManager(@RequestParam("branchId") int branchId) {
+		boolean exists = false;
+		try {
+			exists = userDaoImpl.isBankManagerAssigned(branchId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return exists ? "exists" : "available";
+	}
+
 	@PostMapping("/register")
-	public String register(@ModelAttribute User user, Model model, RedirectAttributes attributes) throws SQLException, IOException {
+	public String register(@ModelAttribute User user, Model model, RedirectAttributes attributes)
+			throws SQLException, IOException {
 
 		System.out.println(user);
 

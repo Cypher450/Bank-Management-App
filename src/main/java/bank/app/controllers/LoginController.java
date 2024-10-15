@@ -206,6 +206,11 @@ public class LoginController {
 					case 1:
 						return "redirect:/regional_mgr/dashboard";
 					}
+				} else if (userDetails.getApprovalStatus().equals("rejected")
+						&& userDetails.getActiveStatus().equals("false")) {
+					attributes.addFlashAttribute("message",
+							"You have been rejected due to some reasons, Please Register Again!");
+					return getRedirectUrlByRoleId(roleId);
 				} else {
 					attributes.addFlashAttribute("message", "You have not been approved yet, please try again later!");
 					return getRedirectUrlByRoleId(roleId);
