@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regional Manager Dashboard</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/regionalmanagerdash.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/regionalmanagerdash.css">
 
 </head>
 <body>
@@ -18,10 +19,17 @@
 
 	<!-- Navigation Bar -->
 	<nav>
+<<<<<<< HEAD
 		<a href="/regional_mgr/dashboard">Dashboard</a>
 		<a href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> 
 		<a href="/regional_mgr/managerApprovalList">Approval List</a> 
 		<a href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
+=======
+		<a href="/regional_mgr/dashboard">Dashboard</a> <a
+			href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> <a
+			href="#employees">Approval List</a> <a
+			href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
+>>>>>>> 2f46453daaa3dc0d983132527cafa0bbbaa1f3c1
 		<a href="/logout">Logout</a>
 	</nav>
 
@@ -34,15 +42,15 @@
 			<div class="stats">
 				<div class="stat">
 					<h4>Total Branches</h4>
-					<p>45</p>
+					<p>${branches.size()}</p>
 				</div>
 				<div class="stat">
 					<h4>Total Employees</h4>
-					<p>120</p>
+					<p>${employees.size()}</p>
 				</div>
 				<div class="stat">
 					<h4>Total Customers</h4>
-					<p>90</p>
+					<p>${customers.size()}</p>
 				</div>
 			</div>
 		</section>
@@ -53,7 +61,8 @@
 			<h3>Quick Actions</h3>
 			<div class="actions">
 
-				<button onclick="window.location.href='/regional_mgr/addNewBranch';">Add New Branch</button>
+				<button onclick="window.location.href='/regional_mgr/addNewBranch';">Add
+					New Branch</button>
 
 				<button
 					onclick="window.location.href = '/regional_mgr/manageBranchManagers';">Manage
