@@ -11,7 +11,8 @@
 <title>Register Page</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/registration.css">
-<script src="${pageContext.request.contextPath}/js/registerPageValidation.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/registerPageValidation.js"></script>
 </head>
 <body>
 	<header>
@@ -44,49 +45,50 @@
 			onsubmit="return validateForm()">
 
 			<div class="input-group">
-				<label for="firstName">FirstName</label> <input type="text"
-					id="firstName" name="firstName"> <b><span
-					id="firstName-error" style="color: red;"></span></b>
+				<label for="firstName">FirstName</label> 
+				<input type="text" id="firstName" name="firstName"> 
+				<span id="firstName-error" style="color: red;"></span>
 			</div>
 			<div class="input-group">
-				<label for="lastName">LastName</label> <input type="text"
-					id="lastName" name="lastName"> <b><span
-					id="lastName-error" style="color: red;"></span></b>
+				<label for="lastName">LastName</label> 
+				<input type="text" id="lastName" name="lastName"> 
+				<span id="lastName-error" style="color: red;"></span>
 			</div>
 			<div class="input-group">
-				<label for="username">Username</label> <input type="text"
-					id="username" name="username"> <b><span
-					id="username-error" style="color: red;"></span></b>
+				<label for="username">Username</label> 
+				<input type="text" id="username" name="username" onkeyup="checkUsername()" required>
+				<span id="username-error" style="color: red;"></span>
+				<span id="usernameMessage"></span>
 			</div>
 			<div class="input-group">
-				<label for="password">Password</label> <input type="password"
-					id="password" name="password"> <b><span
-					id="password-error" style="color: red;"></span></b>
+				<label for="password">Password</label> 
+				<input type="password" id="password" name="password"> 
+				<span id="password-error" style="color: red;"></span>
 			</div>
 			<div class="input-group">
-				<label for="email">Email</label> <input type="email" id="email"
-					name="email"> <b><span id="email-error"
-					style="color: red;"></span></b>
+				<label for="email">Email</label> 
+				<input type="email" id="email" name="email"> 
+				<span id="email-error" style="color: red;"></span>
 			</div>
 			<div class="input-group">
-				<label for="dateOfBirth">DateOfBirth</label> <input type="date"
-					id="dateOfBirth" name="dateOfBirth"> <b><span
-					id="dob-error" style="color: red;"></span></b>
+				<label for="dateOfBirth">Date of Birth</label> 
+				<input type="date" id="dateOfBirth" name="dateOfBirth"> 
+				<span id="dob-error" style="color: red;"></span>
 			</div>
 			<div class="input-group">
-				<label for="phone">Phone</label> <input type="tel" id="phone"
-					name="phone"> <b><span id="phone-error"
-					style="color: red;"></span></b>
+				<label for="phone">Phone</label> 
+				<input type="tel" id="phone" name="phone"> 
+				<span id="phone-error" style="color: red;"></span>
 			</div>
 			<div class="input-group">
-				<label for="branchId">Branch</label> <select id="branchId"
-					name="branchId">
+				<label for="branchId">Branch</label> 
+				<select id="branchId" name="branchId">
 					<option>Select an Option</option>
 					<%
 					for (Branch branch : branchList) {
 					%>
 					<option value="<%=branch.getBranchId()%>">
-						<%=branch.getBranchName() + " : " + branch.getBranchId()%>
+					  <p>Branch Id: <%=branch.getBranchId()%> & Branch Name: <%=branch.getBranchName()%></p>
 					</option>
 					<%
 					}
@@ -95,13 +97,13 @@
 				</select>
 			</div>
 			<div class="input-group">
-				<label for="address">Address</label> <input type="text" id="address"
-					name="address"> <b><span id="address-error"
-					style="color: red;"></span></b>
+				<label for="address">Address</label> 
+				<input type="text" id="address" name="address"> 
+				<span id="address-error" style="color: red;"></span>
 			</div>
 			<div class="input-group">
-				<label for="role">Role</label> <select id="role" name="roleId"
-					required>
+				<label for="role">Role</label> 
+				<select id="role" name="roleId" required>
 					<option>Select an Option</option>
 
 					<%
@@ -115,6 +117,7 @@
 					%>
 
 				</select>
+				 <span id="branchMessage"></span>
 			</div>
 			<button type="submit">Register</button>
 		</form>
@@ -122,6 +125,59 @@
 			Already have an account? <a href="/">Login here</a>
 		</p>
 	</div>
+
+	<script type="text/javascript">
+    function checkUsername() {
+        var username = document.getElementById("username").value;
+
+        // Use fetch to send a GET request
+        fetch("/checkUsername?username=" + username)
+            .then(response => response.text())
+            .then(data => {
+                var message = document.getElementById("usernameMessage");
+                if (data === "exists") {
+                    message.textContent = "*Username is already taken.";
+                    message.style.color = "red";
+                } else {
+                    message.textContent = "*Username is available.";
+                    message.style.color = "green";
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    
+    document.getElementById("branchId").addEventListener("change", function() {
+        var branchId = this.value;
+        checkBankManager(branchId);
+    });
+    
+    function checkBankManager(branchId) {
+        fetch("/checkBankManager?branchId=" + branchId)
+            .then(response => response.text())
+            .then(data => {
+                var roleDropdown = document.getElementById("role");
+                var message = document.getElementById("branchMessage");
+
+                if (data === "exists") {
+                    for (let i = 0; i < roleDropdown.options.length; i++) {
+                        if (roleDropdown.options[i].text.includes("Bank Manager")) {
+                            roleDropdown.options[i].style.display = "none";  
+                        }
+                    }
+                    message.textContent = "*Bank manager is already present for this branch.";
+                    message.style.color = "red";
+                } else {
+                    for (let i = 0; i < roleDropdown.options.length; i++) {
+                        if (roleDropdown.options[i].text.includes("Bank Manager")) {
+                            roleDropdown.options[i].style.display = "block"; 
+                        }
+                    }
+                    message.textContent = "";  
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+   </script>
 
 	<%@include file="message.jsp"%>
 

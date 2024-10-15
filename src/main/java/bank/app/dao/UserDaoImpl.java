@@ -85,6 +85,22 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public boolean usernameExists(String username) throws SQLException, IOException {
+		String sql = "SELECT COUNT(*) FROM user WHERE username = ?";
+		@SuppressWarnings("deprecation")
+		int count = jdbcTemplate.queryForObject(sql, new Object[] { username }, Integer.class);
+		return count > 0;
+	}
+
+	@Override
+	public boolean isBankManagerAssigned(int branchId) throws SQLException, IOException {
+		String sql = "SELECT COUNT(*) FROM bank_manager WHERE branch_id = ?";
+		@SuppressWarnings("deprecation")
+		int count = jdbcTemplate.queryForObject(sql, new Object[] { branchId }, Integer.class);
+		return count > 0;
+	}
+
+	@Override
 	public List<Roles> fetchAllRoles() {
 
 		String query = "SELECT * FROM roles WHERE role_id > 1 ORDER BY role_id";

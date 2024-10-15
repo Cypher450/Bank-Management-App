@@ -165,25 +165,25 @@ function validateForm() {
 		const dayDiff = today.getDate() - dob.getDate();
 
 		if (age < 18 || (age === 18 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))) {
-			dobError.textContent = "You must be at least 18 years old.";
+			dobError.textContent = "*You must be at least 18 years old.";
 			alert("*You must be at least 18 years old.");
 			isValid = false;
 		}
 	}
 
-	// Phone number validation
-	const phoneRegex = /^\d{10}$/;
+	// Phone number validation (must be 10 digits and start with 9, 8, 7, or 6)
+	const phoneRegex = /^[6-9]\d{9}$/;
 
 	if (!phoneRegex.test(phone)) {
-		phoneError.textContent = "Phone number must be exactly 10 digits.";
-		alert("Phone number must be exactly 10 digits.");
+		phoneError.textContent = "*Phone number must be exactly 10 digits and start with 9, 8, 7, or 6.";
+		alert("*Phone number must be exactly 10 digits and start with 9, 8, 7, or 6.");
 		isValid = false;
 	}
 
 	// Address validation
 	if (address.length > 255) {
-		addressError.textContent = "Address cannot be more than 255 characters.";
-		alert("Address cannot be more than 255 characters.");
+		addressError.textContent = "*Address cannot be more than 255 characters.";
+		alert("*Address cannot be more than 255 characters.");
 		isValid = false;
 	}
 
