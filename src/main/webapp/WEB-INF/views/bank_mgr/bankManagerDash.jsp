@@ -49,7 +49,7 @@
 				<button
 					onclick="window.location.href = '/bank_mgr/manageEmployees';">Manage
 					Employees</button>
-				<button>View Approval List</button>
+				<button onclick="window.location.href = '/bank_mgr/employeeApprovalList';">View Approval List</button>
 			</div>
 		</section>
 	</div>

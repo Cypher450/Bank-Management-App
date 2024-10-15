@@ -1,13 +1,10 @@
 package bank.app.dao;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
 import javax.sql.rowset.serial.SerialException;
-
 import bank.app.entities.AccountType;
 import bank.app.entities.Branch;
 import bank.app.entities.Customer;
@@ -71,4 +68,16 @@ public interface UserDao {
 	List<User> getCustomersApprovalList(int branchId) throws SerialException, IOException, SQLException;
 
 	List<User> getCustomerPendingAccount(int branchId) throws SerialException, IOException, SQLException;
+
+	List<User> getEmployeeApprovalList(int branchId) throws SerialException, IOException, SQLException;
+	
+	List<User> getManagerApprovalList() throws SerialException, IOException, SQLException;
+
+	void changeMgrApprovalStatus(int userId);
+
+	void changeEmpApprovalStatus(int userId);
+
+	void changeApprovalStatus(int userId);
+
+	void changeApprovalStatusReject(int userId);
 }

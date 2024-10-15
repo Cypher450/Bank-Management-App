@@ -19,10 +19,11 @@
 
 	<!-- Navigation Bar -->
 	<nav>
-		<a href="/regional_mgr/dashboard">Dashboard</a> <a
-			href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> <a
-			href="#employees">Approval List</a> <a
-			href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
+
+		<a href="/regional_mgr/dashboard">Dashboard</a>
+		<a href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> 
+		<a href="/regional_mgr/managerApprovalList">Approval List</a> 
+		<a href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
 		<a href="/logout">Logout</a>
 	</nav>
 
@@ -48,14 +49,7 @@
 			</div>
 		</section>
 
-		<!-- Chart Section -->
-		<section class="charts">
-			<h3>Branch Performance</h3>
-			<div class="chart-placeholder">
-				<p>Chart will go here</p>
-			</div>
-		</section>
-
+		
 		<!-- Quick Actions Section -->
 		<section class="quick-actions">
 			<h3>Quick Actions</h3>
@@ -67,7 +61,7 @@
 				<button
 					onclick="window.location.href = '/regional_mgr/manageBranchManagers';">Manage
 					Bank Managers</button>
-				<button>Approval List</button>
+				<button  onclick="window.location.href = '/regional_mgr/managerApprovalList';">Approval List</button>
 			</div>
 		</section>
 	</div>

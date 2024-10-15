@@ -26,6 +26,8 @@ import bank.app.entities.Branch;
 import bank.app.entities.User;
 import bank.app.utility.Password;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("regional_mgr")
@@ -177,5 +179,45 @@ public class RegionalMgrDashController {
 
 		return "regional_mgr/viewBankManagerInfo";
 	}
+	
+	@GetMapping("/managerApprovalList")
+	public String managerApprovalList() {
+
+		try {
+			branchManagers = userDaoImpl.getManagerApprovalList();
+		} catch (SerialException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		session.setAttribute("managerApprovalList", branchManagers);		
+		
+		return "regional_mgr/managerApprovalList";
+	}
+	
+	@PostMapping("/managerApprove/{mgrUserId}")
+	public String managerApprove(@PathVariable int mgrUserId, RedirectAttributes attributes) {
+
+		userDaoImpl.changeMgrApprovalStatus(mgrUserId);
+
+		attributes.addFlashAttribute("message", "Employee Approved!");
+
+		return "redirect:/regional_mgr/managerApprovalList";
+	}
+	
+	
+	@PostMapping("/managerReject/{mgrUserId}")
+	public String managerReject(@PathVariable int mgrUserId, RedirectAttributes attributes) {
+
+		userDaoImpl.changeApprovalStatusReject(mgrUserId);
+
+		attributes.addFlashAttribute("message", "Manager Rejected!");
+
+		return "redirect:/regional_mgr/managerApprovalList";
+	}
+	
 
 }
