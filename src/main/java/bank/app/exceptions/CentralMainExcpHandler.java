@@ -17,6 +17,7 @@ public class CentralMainExcpHandler {
 	public ModelAndView handleNPE(NullPointerException ex) {
 		System.out.println("\n Inside handleNullPointerException");
 		ModelAndView modelAndView = new ModelAndView();
+		ex.printStackTrace();
 		modelAndView.setViewName("err/error");
 		modelAndView.addObject("message", ex.getMessage());
 		return modelAndView;
@@ -27,6 +28,7 @@ public class CentralMainExcpHandler {
 	public ModelAndView handleNOTFoundExcps(Exception ex) {
 		System.out.println("\n Inside handleNOTFoundExcps");
 		ModelAndView modelAndView = new ModelAndView();
+		ex.printStackTrace();
 		modelAndView.setViewName("err/error");
 		modelAndView.addObject("message", ex.getMessage());
 		return modelAndView;
@@ -37,6 +39,7 @@ public class CentralMainExcpHandler {
 	public ModelAndView handleExcps(Exception ex) {
 		System.out.println("\n Inside handleExcps");
 		ModelAndView modelAndView = new ModelAndView();
+		ex.printStackTrace();
 		modelAndView.setViewName("err/error");
 		modelAndView.addObject("message", ex.getMessage());
 		return modelAndView;
