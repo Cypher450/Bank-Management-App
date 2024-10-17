@@ -26,7 +26,7 @@
 		<a href="/${role.getRoleName().toLowerCase()}/dashboard">Dashboard</a>
 		<a
 			href="/${role.getRoleName().toLowerCase()}/view-profile/<%= userDetails.getUsername() %>">Profile</a>
-		<a href="/logout">Logout</a>
+		<a href="/logout" class = "logout-btn">Logout</a>
 	</nav>
 
 	<div class="login-container">

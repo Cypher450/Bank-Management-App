@@ -18,10 +18,11 @@ header h1 {
 }
 
 nav {
-	background-color: #34495e;
+	background-color: #2c3e50; 
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
+	background-color: #34495e; 
 }
 
 nav a {
@@ -34,7 +35,7 @@ nav a {
 }
 
 nav a:hover {
-	background-color: #2980b9;
+	background-color: #1abc9c; /* Aligns with the button hover color for uniformity */
 }
 
 .profile-container {
@@ -98,9 +99,13 @@ nav a:hover {
 }
 
 .btn:hover {
-	background-color: #1abc9c;
+	background-color: #1abc9c; 
 }
 
 .logout-btn {
-	background-color: #e74c3c;
+	background-color: #2980b9; 
+}
+
+.logout-btn:hover {
+	background-color: #1abc9c; /* Darker red for hover effect */
 }
