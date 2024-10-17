@@ -35,9 +35,6 @@ public class RegisterController {
 		List<Roles> listOfRoles = userDaoImpl.fetchAllRoles();
 		List<Branch> listOfBranch = userDaoImpl.fetchAllBranch();
 
-		System.out.println("userRegistration invoked");
-		System.out.println("Roles : " + listOfRoles);
-
 		modelAndView.addObject("listOfRoles", listOfRoles);
 		modelAndView.addObject("listOfBranch", listOfBranch);
 		modelAndView.setViewName("userRegistration");

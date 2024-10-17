@@ -17,6 +17,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import bank.app.entities.Account;
 import bank.app.entities.AccountType;
 import bank.app.entities.Branch;
 import bank.app.entities.Customer;
@@ -259,11 +261,20 @@ public class UserDaoImpl implements UserDao {
 
 	@Transactional
 	@Override
-	public void softDeleteCustomer(int userId) throws SerialException, IOException, SQLException {
+	public void softDeleteCustomer(int userId, List<Account> accountList)
+			throws SerialException, IOException, SQLException {
 		String sqlDeactivateUser = "UPDATE user SET active_status='false' WHERE user_id = ?";
 		String sqlDeleteAccounts = "DELETE FROM account WHERE customer_id = ?";
 
 		jdbcTemplate.update(sqlDeactivateUser, userId);
+
+		for (Account account : accountList) {
+			String accountNo = account.getAccountNumber();
+
+			String deleteTransactions = "DELETE FROM transaction WHERE account_no =?";
+			jdbcTemplate.update(deleteTransactions, accountNo);
+		}
+
 		jdbcTemplate.update(sqlDeleteAccounts, userId);
 	}
 
@@ -344,7 +355,7 @@ public class UserDaoImpl implements UserDao {
 		String query = "UPDATE user SET approval_status = 'approved', active_status= 'true' WHERE user_id = ?;";
 		jdbcTemplate.update(query, userId);
 	}
-	
+
 	@Override
 	public void changeApprovalStatusReject(int userId) {
 

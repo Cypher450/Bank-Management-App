@@ -39,9 +39,6 @@ public class TransactionController {
 	@GetMapping("/transaction-history")
 	public String showTransactions(@RequestParam String accountNo, Model model) throws SQLException, IOException {
 
-		System.out.println("transaction history called");
-		System.out.println("account no : " + accountNo);
-
 		List<Transaction> transactions = transactionDaoImpl.getLastTenTransaction(accountNo);
 		
 		model.addAttribute("transactions", transactions);
