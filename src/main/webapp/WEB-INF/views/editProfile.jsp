@@ -32,7 +32,7 @@
 	<div class="login-container">
 		<h2>Edit Profile</h2>
 		<form action="/customer/updateDetails" method="POST"
-			onsubmit="return validateForm()">
+			onsubmit="return editProfileValidation()">
 			<div class="input-group">
 				<label for="firstName">First Name</label> <input type="text"
 					id="firstName" name="firstName"
