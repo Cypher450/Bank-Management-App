@@ -24,7 +24,7 @@
     <nav>
         <a href="/${role.getRoleName().toLowerCase()}/dashboard">Dashboard</a>
         <a href="/${role.getRoleName().toLowerCase()}/view-profile/<%= userDetails.getUsername() %>">Profile</a>
-        <a href="/logout">Logout</a>
+        <a href="/logout" class = "logout-btn">Logout</a>
     </nav>
 
     <div class="password-container">
@@ -41,8 +41,8 @@
 			<div class="password-info">
 			    <label for="new_password">New Password:</label>
 			    <input type="password" id="newPassword" name="newPassword" required>
-				<b><span id="newPasswordError" style="color: red;"></span></b>
 			</div>
+			<b><span id="newPasswordError" style="color: red;"></span></b>
 
             <div class="password-info">
                 <label for="confirm_password">Confirm New Password:</label>

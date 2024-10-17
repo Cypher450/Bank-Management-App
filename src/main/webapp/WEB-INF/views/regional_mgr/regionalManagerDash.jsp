@@ -24,11 +24,11 @@
 		<a href="/regional_mgr/manageBranchManagers">Manage Bank Managers</a> 
 		<a href="/regional_mgr/managerApprovalList">Approval List</a> 
 		<a href="/regional_mgr/view-profile/${userDetails.getUsername()}">Profile</a>
-		<a href="/logout">Logout</a>
+		<a href="/logout" class = "logout-btn">Logout</a>
 	</nav>
 
 	<div class="dashboard-container">
-		<h2>Welcome, Regional Manager</h2>
+		<h2>Welcome, ${userDetails.getFirstName()} ${userDetails.getLastName()} </h2>
 
 		<!-- Overview Section -->
 		<section class="overview">

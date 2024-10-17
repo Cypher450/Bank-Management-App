@@ -22,11 +22,11 @@
 		<a href="/bank_emp/manageCustomers">Manage Customers</a> <a
 			href="/bank_emp/approval-list">Approval List</a> <a
 			href="/bank_emp/view-profile/${userDetails.getUsername()}">Profile</a>
-		<a href="/logout">Logout</a>
+		<a href="/logout" class = "logout-btn">Logout</a>
 	</nav>
 
 	<div class="dashboard-container">
-		<h2>Welcome, Employee</h2>
+		<h2>Welcome, ${userDetails.getFirstName()} ${userDetails.getLastName()} </h2>
 
 		<!-- Overview Section -->
 		<section class="overview">
