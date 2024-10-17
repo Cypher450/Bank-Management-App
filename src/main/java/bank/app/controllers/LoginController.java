@@ -127,9 +127,6 @@ public class LoginController {
 					allEmployees.addAll(filteredEmployees); // Add filtered employees to allEmployees list
 				}
 
-				System.out.println("Total employees: " + allEmployees);
-				System.out.println("Total customers: " + allCustomers);
-
 				// Set the consolidated lists in the session
 				session.setAttribute("customers", allCustomers);
 				session.setAttribute("employees", allEmployees);

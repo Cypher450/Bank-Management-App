@@ -48,6 +48,7 @@ public class BankEmpDashController {
 
 	int branchId;
 	List<User> customers;
+	List<Account> accountList;
 
 	@GetMapping("/dashboard")
 	public String BankEmployeeDashboard() {
@@ -76,8 +77,6 @@ public class BankEmpDashController {
 
 		User userDetails = (User) session.getAttribute("userDetails");
 		int empUserId = userDetails.getUserId();
-
-		System.out.println("empId in manageCustomers: " + empUserId);
 
 		try {
 			branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
@@ -125,7 +124,7 @@ public class BankEmpDashController {
 		userDaoImpl.changeApprovalStatusReject(userId);
 
 		attributes.addFlashAttribute("message", "Customer Rejected!");
-		
+
 		return "redirect:/bank_emp/approval-list";
 	}
 
@@ -310,8 +309,10 @@ public class BankEmpDashController {
 	@PostMapping("/deleteCustomer")
 	@ResponseBody
 	public String deleteCustomer(@RequestParam int userId) {
+
 		try {
-			userDaoImpl.softDeleteCustomer(userId);
+			accountList = accountDaoImpl.getAccountsByCustomerId(userId);
+			userDaoImpl.softDeleteCustomer(userId, accountList);
 		} catch (SerialException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

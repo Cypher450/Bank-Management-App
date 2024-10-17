@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import javax.sql.rowset.serial.SerialException;
+
+import bank.app.entities.Account;
 import bank.app.entities.AccountType;
 import bank.app.entities.Branch;
 import bank.app.entities.Customer;
@@ -57,7 +59,7 @@ public interface UserDao {
 
 	void updateBankManager(User user) throws SerialException, IOException, SQLException;
 
-	void softDeleteCustomer(int userId) throws SerialException, IOException, SQLException;
+	void softDeleteCustomer(int userId, List<Account> accountList) throws SerialException, IOException, SQLException;
 
 	void softDeleteEmployee(int userId) throws SerialException, IOException, SQLException;
 
@@ -70,7 +72,7 @@ public interface UserDao {
 	List<User> getCustomerPendingAccount(int branchId) throws SerialException, IOException, SQLException;
 
 	List<User> getEmployeeApprovalList(int branchId) throws SerialException, IOException, SQLException;
-	
+
 	List<User> getManagerApprovalList() throws SerialException, IOException, SQLException;
 
 	void changeMgrApprovalStatus(int userId);

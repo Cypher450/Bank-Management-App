@@ -184,8 +184,6 @@ public class BankMgrDashController {
 		User userDetails = (User) session.getAttribute("userDetails");
 		int mgrUserId = userDetails.getUserId();
 
-		System.out.println("empId in manageCustomers: " + mgrUserId);
-
 		try {
 			branchId = bankDaoImpl.getbranchIdByMgrId(mgrUserId);
 		} catch (SQLException e) {
