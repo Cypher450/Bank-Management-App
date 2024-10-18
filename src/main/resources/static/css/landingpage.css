@@ -81,12 +81,11 @@ footer {
 	color: white;
 	padding: 20px;
 	text-align: center;
-	margin-top: auto;
-	/* Ensures the footer stays at the bottom */
+	width: 100%;
 }
 
 footer p {
-	margin: 0;
+	font-size: 15px;
 }
 
 .cta {

@@ -17,8 +17,9 @@
 	</header>
 
 	<nav>
-		<a href="/">Home</a> <a href="/services">Services</a> <a
-			href="/coming-soon">Accounts</a> <a href="/contact-us">Contact Us</a>
+		<a href="/">Home</a> 
+		<a href="/services">Services</a>
+		<a href="/contact-us">Contact Us</a>
 	</nav>
 
 	<section>
