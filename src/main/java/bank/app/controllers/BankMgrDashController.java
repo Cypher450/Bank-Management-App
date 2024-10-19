@@ -192,7 +192,6 @@ public class BankMgrDashController {
 			e.printStackTrace();
 		}
 
-		System.out.println("branchId associated with manager " + mgrUserId + " is " + branchId);
 
 		// Fetch employees associated with the same branch
 		try {
@@ -205,7 +204,6 @@ public class BankMgrDashController {
 			e.printStackTrace();
 		}
 
-		System.out.println("employees in manageCustomers: " + employees);
 
 		session.setAttribute("employeeApprovalList", employees);		
 		
@@ -214,8 +212,6 @@ public class BankMgrDashController {
 	
 	@PostMapping("/employeeApprove/{userId}")
 	public String customerApprove(@PathVariable int userId, RedirectAttributes attributes) {
-
-		System.out.println("post approval called : " + userId);
 
 		userDaoImpl.changeEmpApprovalStatus(userId);
 

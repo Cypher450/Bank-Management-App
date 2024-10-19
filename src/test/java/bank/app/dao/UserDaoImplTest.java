@@ -21,6 +21,7 @@ public class UserDaoImplTest {
 
 	private User dummyUser;
 	private int generatedId;
+	private boolean usernameExists;
 
 	@BeforeEach
 	public void setUp() {
@@ -51,5 +52,16 @@ public class UserDaoImplTest {
 
 		Assertions.assertTrue(generatedId > 0);
 	}
-}
 
+	@Test
+	void testUsernameExists() {
+		try {
+			usernameExists = userDaoImpl.usernameExists("aman.yadav");
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+			Assertions.fail("Exception occurred: " + e.getMessage());
+		}
+
+		Assertions.assertTrue(usernameExists, "Username should exist in the database.");
+	}
+}

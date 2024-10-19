@@ -19,7 +19,6 @@
 	<%
 	String accName = null;
 	User userDetails = (User) session.getAttribute("userDetails");
-	System.out.print(userDetails);
 	Account accountDetails = (Account) session.getAttribute("accountDetails");
 	if(accountDetails.getAccountTypeId() == 1) 
 		accName = "Savings";
