@@ -86,8 +86,6 @@ public class BankEmpDashController {
 			e.printStackTrace();
 		}
 
-		System.out.println("branchId associated with employee " + empUserId + " is " + branchId);
-
 		// Fetch customers associated with the same branch
 		try {
 			customers = userDaoImpl.getCustomersApprovalList(branchId);
@@ -99,8 +97,6 @@ public class BankEmpDashController {
 			e.printStackTrace();
 		}
 
-		System.out.println("customers in manageCustomers: " + customers);
-
 		session.setAttribute("customerApprovalList", customers);
 
 		return "bank_emp/customerApprovalList";
@@ -108,8 +104,6 @@ public class BankEmpDashController {
 
 	@PostMapping("/customerApprove/{userId}")
 	public String customerApprove(@PathVariable int userId, RedirectAttributes attributes) {
-
-		System.out.println("post approval called : " + userId);
 
 		userDaoImpl.changeApprovalStatus(userId);
 
@@ -134,8 +128,6 @@ public class BankEmpDashController {
 		User userDetails = (User) session.getAttribute("userDetails");
 		int empUserId = userDetails.getUserId();
 
-		System.out.println("empId in manageCustomers: " + empUserId);
-
 		try {
 			branchId = bankDaoImpl.getBranchIdByEmpId(empUserId);
 		} catch (SQLException e) {
@@ -144,7 +136,6 @@ public class BankEmpDashController {
 			e.printStackTrace();
 		}
 
-		System.out.println("branchId associated with employee " + empUserId + " is " + branchId);
 
 		// Fetch customers associated with the same branch
 		try {
@@ -156,8 +147,6 @@ public class BankEmpDashController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("customers in manageCustomers: " + customers);
 
 		session.setAttribute("savingsAccountOpeningList", customers);
 		return "bank_emp/openAccPendList";
@@ -176,7 +165,6 @@ public class BankEmpDashController {
 			RedirectAttributes attributes) {
 
 		User userDetails = (User) session.getAttribute("userDetails");
-		System.out.println("Cust acc details in emp dash : " + account);
 
 		try {
 			customer = userDaoImpl.fetchCustomerById(custUserId);
@@ -226,7 +214,6 @@ public class BankEmpDashController {
 			RedirectAttributes attributes) throws SerialException, IOException, SQLException {
 
 		User user = (User) session.getAttribute("userDetails");
-		System.out.println("@PostMapping(/change-password) called:");
 
 		Map<String, Object> userData = userDaoImpl.fetchPwds(user.getUsername());
 

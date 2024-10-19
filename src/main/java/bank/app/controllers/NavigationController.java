@@ -19,11 +19,6 @@ public class NavigationController {
 		return "landingPage";
 	}
 
-	@GetMapping("/services")
-	public String openServicesPage() {
-		return "forward:/services.html";
-	}
-
 	@GetMapping("/contact-us")
 	public String openContactUsPage() {
 		return "contact";

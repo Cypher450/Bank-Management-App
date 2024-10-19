@@ -74,8 +74,6 @@ public class RegisterController {
 	public String register(@ModelAttribute User user, Model model, RedirectAttributes attributes)
 			throws SQLException, IOException {
 
-		System.out.println(user);
-
 		String passwordSalt = Password.generatePwdSalt(10);
 		user.setPasswordSalt(passwordSalt);
 
@@ -104,12 +102,9 @@ public class RegisterController {
 		}
 
 		if (userId > 0) {
-			System.out.println("passed insertion");
 			attributes.addFlashAttribute("message", "Registration successful. You can now login after the approval.");
 			return "redirect:/";
 		} else {
-
-			System.out.println("failed insertion");
 			attributes.addFlashAttribute("message", "Something went wrong! Please try again.");
 			return "redirect:/userRegistration";
 		}
