@@ -95,6 +95,14 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public boolean emailExists(String email, int roleId) throws SQLException, IOException {
+		String sql = "SELECT COUNT(*) FROM user WHERE email = ? AND role_id=?";
+		@SuppressWarnings("deprecation")
+		int count = jdbcTemplate.queryForObject(sql, new Object[] { email, roleId }, Integer.class);
+		return count > 0;
+	}
+
+	@Override
 	public boolean isBankManagerAssigned(int branchId) throws SQLException, IOException {
 		String sql = "SELECT COUNT(*) FROM bank_manager WHERE branch_id = ?";
 		@SuppressWarnings("deprecation")

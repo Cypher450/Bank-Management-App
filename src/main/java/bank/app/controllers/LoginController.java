@@ -58,26 +58,26 @@ public class LoginController {
 	private List<User> branchManagers;
 
 	@GetMapping("/openLoginPageCustomer")
-	public String openLoginPageCustomer(Model model) {
-		model.addAttribute("roleId", 4);
+	public String openLoginPageCustomer(HttpSession session) {
+		session.setAttribute("roleId", 4);
 		return "login";
 	}
 
 	@GetMapping("/openLoginPageBankEmp")
-	public String openLoginPageBankEmp(Model model) {
-		model.addAttribute("roleId", 3);
+	public String openLoginPageBankEmp(HttpSession session) {
+		session.setAttribute("roleId", 3);
 		return "login";
 	}
 
 	@GetMapping("/openLoginPageBankMgr")
-	public String openLoginPageBankMgr(Model model) {
-		model.addAttribute("roleId", 2);
+	public String openLoginPageBankMgr(HttpSession session) {
+		session.setAttribute("roleId", 2);
 		return "login";
 	}
 
 	@GetMapping("/openLoginPageRegionalMgr")
-	public String openLoginPageRegionalMgr(Model model) {
-		model.addAttribute("roleId", 1);
+	public String openLoginPageRegionalMgr(HttpSession session) {
+		session.setAttribute("roleId", 1);
 		return "login";
 	}
 
@@ -85,7 +85,7 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(@RequestParam String username, @RequestParam String password, @RequestParam int roleId,
 			RedirectAttributes attributes, Model model) throws SQLException, IOException {
-
+		
 		// Your authentication logic here
 		boolean isAuthenticated = authenticateUser(username, roleId);
 
