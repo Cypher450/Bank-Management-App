@@ -28,6 +28,8 @@
 			</div>
 			<button type="submit">Login</button>
 		</form>
+
+		<button onclick="window.location.href='/auth/forgot-password'">Forgot Password</button>
 		<p class="register-text">
 			Not Registered? <a href="/userRegistration">Register Now</a>
 		</p>
