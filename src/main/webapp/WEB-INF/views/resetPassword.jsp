@@ -4,6 +4,7 @@
 <html>
 <head>
 <title>Reset Password</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
 	<h1>Reset Password</h1>

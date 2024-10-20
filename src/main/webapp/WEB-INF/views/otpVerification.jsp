@@ -4,6 +4,7 @@
 <html>
 <head>
 <title>Verify OTP</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
 	<h1>Verify OTP</h1>
